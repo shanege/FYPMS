@@ -1,0 +1,9 @@
+{
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.22",
+        "league/flysystem": "3.0",
+        "league/flysystem-aws-s3-v3": "3.0",
+        "aws/aws-sdk-php": "^3.218",
+        "twbs/bootstrap": "5.1.3"
+    }
+}
