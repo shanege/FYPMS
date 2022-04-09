@@ -32,47 +32,43 @@ function userExists($con, $userID)
 {
     // prepared statement to check if user exists
     $sql = "SELECT * FROM users WHERE userID = ?;";
-    $stmt = mysqli_stmt_init($con);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
+    try {
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(1, $userID, PDO::PARAM_STR);
+        $stmt->execute();
+
+        if ($row = $stmt->fetch()) {
+            return $row;
+        } else {
+            $result = false;
+            return $result;
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
         header("location: ../signup.php?error=stmtfailed");
         exit();
     }
-
-    mysqli_stmt_bind_param($stmt, "s", $userID);
-    mysqli_stmt_execute($stmt);
-
-    $resultData = mysqli_stmt_get_result($stmt);
-
-    if ($row = mysqli_fetch_assoc($resultData)) {
-        return $row;
-    } else {
-        $result = false;
-        return $result;
-    }
-
-    mysqli_stmt_close($stmt);
 }
 
 function createUser($con, $userID, $password)
 {
+    // updates whenever PHP discovers the hashing algorithm is no longer secure
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     // prepared statement to create user
     $sql = "INSERT INTO users (userID, password) VALUES (?, ?);";
+    try {
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(1, $userID, PDO::PARAM_STR);
+        $stmt->bindParam(2, $hashedPassword, PDO::PARAM_STR);
+        $stmt->execute();
 
-    $stmt = mysqli_stmt_init($con);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("Location: ../index.php");
+        exit();
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
         header("location: ../signup.php?error=stmtfailed");
         exit();
     }
-
-    // updates whenever PHP discovers the hashing algorithm is no longer secure
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    mysqli_stmt_bind_param($stmt, "ss", $userID, $hashedPassword);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-
-    header("Location: ../index.php");
-    exit();
 }
 
 function loginUser($con, $userID, $password)
@@ -100,30 +96,27 @@ function loginUser($con, $userID, $password)
 
 function checkLogin($con)
 {
-
     // check if session value exists
     if (isset($_SESSION['userID'])) {
         $id = $_SESSION['userID'];
         $sql = "SELECT * FROM users WHERE userID = ?;";
-        $stmt = mysqli_stmt_init($con);
-        if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+        try {
+            $stmt = $con->prepare($sql);
+            $stmt->bindParam(1, $id, PDO::PARAM_STR);
+            $stmt->execute();
+
+            if ($row = $stmt->fetch()) {
+                return $row;
+            } else {
+                $result = false;
+                return $result;
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
             header("location: ../index.php?error=stmtfailed");
             exit();
         }
-
-        mysqli_stmt_bind_param($stmt, "s", $id);
-        mysqli_stmt_execute($stmt);
-
-        $resultData = mysqli_stmt_get_result($stmt);
-
-        if ($row = mysqli_fetch_assoc($resultData)) {
-            return $row;
-        } else {
-            $result = false;
-            return $result;
-        }
-
-        mysqli_stmt_close($stmt);
     }
 
     // if not, redirect to login
@@ -133,6 +126,35 @@ function checkLogin($con)
 
 function getAllLecturers($con)
 {
+    $sql = "SELECT name, research_area, email FROM supervisor_details;";
+
+    try {
+        $stmt = $con->prepare($sql);
+
+        if ($stmt->execute()) {
+            $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            echo '<table class="table table-striped">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Research Area(s)</th>
+                            <th scope="col">Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>';
+
+            while ($result = $stmt->fetch()) {
+                echo '<tr>';
+                echo '<td>' . $result["name"] . '</td>';
+                echo '<td>' . $result["research_area"] . '</td>';
+                echo '<td>' . $result["email"] . '</td>';
+                echo '</tr>';
+            }
+            echo '</tbody></table>';
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
 }
 
 function mimeToExtension($mimeType)

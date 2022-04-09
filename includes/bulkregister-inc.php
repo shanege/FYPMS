@@ -41,23 +41,18 @@ if ($_FILES['registerFile']['name'] != '') {
             $userCount = $rowCount - 1;
 
             $sql = "INSERT INTO users (userID, password, role) VALUES (?, ?, ?)";
-            $stmt = mysqli_stmt_init($con);
-            if (!mysqli_stmt_prepare($stmt, $sql)) {
-                echo "Something went wrong";
-                exit();
-            }
+            try {
+                $stmt = $con->prepare($sql);
+                for ($i = 0; $i < $userCount; $i++) {
+                    $stmt->bindParam(1, $userID[$i], PDO::PARAM_STR);
+                    $stmt->bindParam(2, $hashedPassword[$i], PDO::PARAM_STR);
+                    $stmt->bindParam(3, $role[$i], PDO::PARAM_STR);
 
-            for ($i = 0; $i < $userCount; $i++) {
-                mysqli_stmt_bind_param($stmt, "sss", $userID[$i], $hashedPassword[$i], $role[$i]);
-
-                $executionResult = mysqli_stmt_execute($stmt);
-
-                if ($executionResult === false) {
-                    echo "Error: " . $userID[$i] . " could not be added due to " . mysqli_error($con) . "<br>";
+                    $executionResult = $stmt->execute();
                 }
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
             }
-
-            mysqli_stmt_close($stmt);
         }
     } else {
         echo 'Only .csv .xls or .xlsx files are allowed';
