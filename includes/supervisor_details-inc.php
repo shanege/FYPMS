@@ -1,7 +1,7 @@
 <?php
 require_once '../vendor/autoload.php';
-require_once 'connection-inc.php';
 require_once '../vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/IOFactory.php';
+require_once 'connection-inc.php';
 
 if ($_FILES['supervisorFile']['name'] != '') {
 
@@ -23,7 +23,7 @@ if ($_FILES['supervisorFile']['name'] != '') {
         $sheetData = $spreadsheet->getActiveSheet()->toArray();
         $rowCount = $spreadsheet->getActiveSheet()->getHighestDataRow();
 
-        $userID = [];
+        $supervisorID = [];
         $name = [];
         $research_area = [];
         $email = [];
@@ -33,7 +33,7 @@ if ($_FILES['supervisorFile']['name'] != '') {
             // IMPORTANT: settings in the sheet such as "Wrap Text" will cause the reader to think its not empty, 
             // use "Clear All" under the Editing tab in Excel to be safe
             for ($i = 1; $i < $rowCount; $i++) {
-                array_push($userID, $sheetData[$i][0]);
+                array_push($supervisorID, $sheetData[$i][0]);
                 array_push($name, $sheetData[$i][1]);
                 array_push($research_area, $sheetData[$i][2]);
                 array_push($email, $sheetData[$i][3]);
@@ -41,24 +41,28 @@ if ($_FILES['supervisorFile']['name'] != '') {
 
             $userCount = $rowCount - 1;
 
-            $sql = "INSERT INTO supervisor_details (userID, name, research_area, email) VALUES (?, ?, ?, ?)";
-            $stmt = mysqli_stmt_init($con);
-            if (!mysqli_stmt_prepare($stmt, $sql)) {
-                echo "Something went wrong";
-                exit();
-            }
+            $sql = "UPDATE supervisor_details SET name = ?, research_area = ?, email = ? WHERE supervisorID = ?";
+            try {
+                $stmt = $con->prepare($sql);
+                for ($i = 0; $i < $userCount; $i++) {
+                    $stmt->bindParam(1, $name[$i], PDO::PARAM_STR);
+                    $stmt->bindParam(2, $research_area[$i], PDO::PARAM_STR);
+                    $stmt->bindParam(3, $email[$i], PDO::PARAM_STR);
+                    $stmt->bindParam(4, $supervisorID[$i], PDO::PARAM_STR);
 
-            for ($i = 0; $i < $userCount; $i++) {
-                mysqli_stmt_bind_param($stmt, "ssss", $userID[$i], $name[$i], $research_area[$i], $email[$i]);
-
-                $executionResult = mysqli_stmt_execute($stmt);
-
-                if ($executionResult === false) {
-                    echo "Error: " . $userID[$i] . " could not be added due to " . mysqli_error($con) . "<br>";
+                    try {
+                        $stmt->execute();
+                    } catch (PDOException $e) {
+                        if (str_contains($e->getMessage(), "Integrity constraint violation: 1452")) {
+                            echo "Error: " . $supervisorID[$i] . " could not be added. Is this person a user in the system yet? <br>";
+                        } else {
+                            echo "Error: " . $supervisorID[$i] . " could not be added due to " . $e->getMessage() . "<br>";
+                        }
+                    }
                 }
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
             }
-
-            mysqli_stmt_close($stmt);
         }
     } else {
         echo 'Only .csv .xls or .xlsx files are allowed';

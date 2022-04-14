@@ -35,7 +35,7 @@ Manage supervisors details
         $('#registerUsersExcel').on('submit', function(event) {
             event.preventDefault();
             $.ajax({
-                url: "includes/bulkregister-inc.php",
+                url: "includes/bulk_register-inc.php",
                 method: "POST",
                 data: new FormData(this),
                 contentType: false,
@@ -58,7 +58,7 @@ Manage supervisors details
         $('#manageSupervisorsExcel').on('submit', function(event) {
             event.preventDefault();
             $.ajax({
-                url: "includes/supervisordetails-inc.php",
+                url: "includes/supervisor_details-inc.php",
                 method: "POST",
                 data: new FormData(this),
                 contentType: false,

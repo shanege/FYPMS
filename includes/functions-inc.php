@@ -120,37 +120,59 @@ function checkLogin($con)
     }
 
     // if not, redirect to login
-    header("Location: ../login.php");
+    header("Location: login.php");
     die;
+}
+
+function getLecturer($con, $supervisorID)
+{
+    $sql = "SELECT name, research_area, email, proposed_topics, description FROM supervisor_details WHERE supervisorID = ?;";
+
+    try {
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(1, $supervisorID, PDO::PARAM_STR);
+
+        $stmt->execute();
+        if ($row = $stmt->fetch()) {
+            return $row;
+        } else {
+            $result = false;
+            return $result;
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
 }
 
 function getAllLecturers($con)
 {
-    $sql = "SELECT name, research_area, email FROM supervisor_details;";
+    $sql = "SELECT supervisorID, name, research_area, email FROM supervisor_details ORDER BY name;";
 
     try {
         $stmt = $con->prepare($sql);
 
         if ($stmt->execute()) {
-            $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-            echo '<table class="table table-striped">
-                    <thead class="table-light">
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Research Area(s)</th>
-                            <th scope="col">Email</th>
-                        </tr>
-                    </thead>
-                    <tbody>';
+            $result = $stmt->fetchAll();
+            return $result;
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
 
-            while ($result = $stmt->fetch()) {
-                echo '<tr>';
-                echo '<td>' . $result["name"] . '</td>';
-                echo '<td>' . $result["research_area"] . '</td>';
-                echo '<td>' . $result["email"] . '</td>';
-                echo '</tr>';
-            }
-            echo '</tbody></table>';
+function requestExists($con, $userID)
+{
+    $sql = "SELECT * FROM supervisor_requests WHERE studentID = ?;";
+    try {
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(1, $userID, PDO::PARAM_STR);
+        $stmt->execute();
+
+        if ($row = $stmt->fetch()) {
+            return $row;
+        } else {
+            $result = false;
+            return $result;
         }
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();

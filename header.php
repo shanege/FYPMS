@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 include("includes/connection-inc.php");
 include("includes/functions-inc.php");
 
-$user_data = checkLogin($con);
+$userData = checkLogin($con);
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +33,7 @@ $user_data = checkLogin($con);
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <?php
-                            echo $user_data['userID']; ?>
+                            echo $userData['userID']; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="#">Action</a></li>
@@ -44,7 +44,3 @@ $user_data = checkLogin($con);
             </div>
         </div>
     </nav>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-</body>
-
-</html>

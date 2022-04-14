@@ -1,7 +1,7 @@
 <?php
 require_once '../vendor/autoload.php';
-require_once 'connection-inc.php';
 require_once '../vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/IOFactory.php';
+require_once 'connection-inc.php';
 
 if ($_FILES['registerFile']['name'] != '') {
 
@@ -48,7 +48,15 @@ if ($_FILES['registerFile']['name'] != '') {
                     $stmt->bindParam(2, $hashedPassword[$i], PDO::PARAM_STR);
                     $stmt->bindParam(3, $role[$i], PDO::PARAM_STR);
 
-                    $executionResult = $stmt->execute();
+                    try {
+                        $stmt->execute();
+                    } catch (PDOException $e) {
+                        if (str_contains($e->getMessage(), "Integrity constraint violation: 1062")) {
+                            echo "Error: " . $userID[$i] . " could not be added. Is this a duplicate entry? <br>";
+                        } else {
+                            echo "Error: " . $userID[$i] . " could not be added due to " . $e->getMessage() . "<br>";
+                        }
+                    }
                 }
             } catch (PDOException $e) {
                 echo "Error: " . $e->getMessage();
