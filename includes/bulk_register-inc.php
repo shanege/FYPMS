@@ -63,7 +63,7 @@ if ($_FILES['registerFile']['name'] != '') {
             }
         }
     } else {
-        echo 'Only .csv .xls or .xlsx files are allowed';
+        echo 'Only .csv, .xls, or .xlsx files are allowed';
     }
 } else {
     echo 'Please select a file';

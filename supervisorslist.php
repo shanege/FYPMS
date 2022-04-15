@@ -25,7 +25,7 @@ require_once 'header.php';
 
             foreach ($supervisorDetailsList as $key => $value) {
                 echo '<tr>';
-                echo '<td><a href="supervisor.php?id=' . $value["supervisorID"] . '">' . $value["name"] . '</a></td>';
+                echo '<td><a href="supervisor_profile.php?id=' . $value["supervisorID"] . '">' . $value["name"] . '</a></td>';
                 echo '<td>' . $value["research_area"] . '</td>';
                 echo '<td>' . $value["email"] . '</td>';
                 echo '</tr>';
@@ -36,7 +36,3 @@ require_once 'header.php';
         ?>
     </div>
 </div>
-
-</body>
-
-</html>

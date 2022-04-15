@@ -17,14 +17,14 @@ if (isset($_POST['requestingStudentID']) && isset($_POST['requestedSupervisorID'
         echo json_encode(
             array(
                 'success' => true,
-                'error' => "none"
+                'errors' => "none"
             )
         );
     } catch (PDOException $e) {
         echo json_encode(
             array(
                 'success' => false,
-                'error' => $e->getMessage(),
+                'errors' => $e->getMessage(),
             )
         );
     }

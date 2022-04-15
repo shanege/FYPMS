@@ -1,6 +1,6 @@
 <?php
 require_once 'header.php';
-if ($user_data["role"] != "coordinator") {
+if ($userData["role"] != "coordinator") {
     exit("You are not allowed to access this page");
 }
 ?>
@@ -15,18 +15,19 @@ Register users by bulk
         </tr>
     </table>
 </form>
+<span id="response1"></span>
 
-Manage supervisors details
-<form id="manageSupervisorsExcel" method="POST" enctype="multipart/form-data">
+Update supervisors details
+<form id="updateSupervisorsDetailsExcel" method="POST" enctype="multipart/form-data">
     <table>
         <tr>
             <td width="25%">Select Excel file</td>
             <td width="50%"><input type="file" name="supervisorFile"></td>
-            <td width="25%"><input type="submit" name="manageSupervisors" id="manageSupervisors" value="Import"></td>
+            <td width="25%"><input type="submit" name="updateSupervisors" id="updateSupervisors" value="Import"></td>
         </tr>
     </table>
 </form>
-<span id="message"></span>
+<span id="response2"></span>
 </body>
 
 </html>
@@ -46,16 +47,14 @@ Manage supervisors details
                     $('#registerUsers').val('Importing...');
                 },
                 success: function(data) {
-                    $('#message').html(data);
+                    $('#response1').html(data);
                     $('#registerUsersExcel')[0].reset();
                     $('#registerUsers').attr('disabled', false);
                     $('#registerUsers').val('Import');
                 }
             })
         });
-    });
-    $(document).ready(function() {
-        $('#manageSupervisorsExcel').on('submit', function(event) {
+        $('#updateSupervisorsDetailsExcel').on('submit', function(event) {
             event.preventDefault();
             $.ajax({
                 url: "includes/supervisor_details-inc.php",
@@ -65,14 +64,14 @@ Manage supervisors details
                 cache: false,
                 processData: false,
                 beforeSend: function() {
-                    $('#manageSupervisors').attr('disabled', 'disabled');
-                    $('#manageSupervisors').val('Importing...');
+                    $('#updateSupervisors').attr('disabled', 'disabled');
+                    $('#updateSupervisors').val('Importing...');
                 },
                 success: function(data) {
-                    $('#message').html(data);
-                    $('#manageSupervisorsExcel')[0].reset();
-                    $('#manageSupervisors').attr('disabled', false);
-                    $('#manageSupervisors').val('Import');
+                    $('#response2').html(data);
+                    $('#updateSupervisorsDetailsExcel')[0].reset();
+                    $('#updateSupervisors').attr('disabled', false);
+                    $('#updateSupervisors').val('Import');
                 }
             })
         });

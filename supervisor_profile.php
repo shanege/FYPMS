@@ -36,29 +36,38 @@ require_once 'header.php';
                                 </tr>
                             </tbody></table></div>';
         }
-        $supervisorRequest = requestExists($con, $userData["userID"]);
 
         if ($userData["role"] == "student") {
+            $supervisorRequest = requestExists($con, $userData["userID"]);
+
+            // if the student has button to trigger request supervisor modal
             if ($supervisorRequest == false) {
                 echo
                 '<div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#requestSupervisorModal">
+                    <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#requestSupervisorModal">
                         Request to be supervisor
                     </button>
                 </div>';
-            } // button to trigger modal
+            } // button to trigger request supervisor modal
 
             else if ($supervisorRequest["supervisorID"] == $supervisorID && $supervisorRequest["status"] == "Pending") {
                 echo
                 '<div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#cancelRequestModal">
+                    <button type="button" class="btn btn-secondary mx-2" data-bs-toggle="modal" data-bs-target="#cancelRequestModal">
                         Cancel request
                     </button>
-                    <button type="button" class="btn btn-primary" disabled>
+                    <button type="button" class="btn btn-primary mx-2" disabled>
                         Request pending...
                     </button>
                 </div>';
             }
+        } else if ($userData["role"] == "supervisor" && $userData['userID'] == $supervisorID) {
+            echo
+            '<div class="d-flex justify-content-end">
+                <a href="editprofile.php" type="button" class="btn btn-primary mx-2">
+                    Edit Profile
+                </a>
+            </div>';
         }
         ?>
     </div>
@@ -107,7 +116,6 @@ if ($userData["role"] == "student") {
 }
 ?>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
         $('#requestBtn').click(function(event) {
@@ -117,7 +125,7 @@ if ($userData["role"] == "student") {
                 url: "includes/request_supervisor-inc.php",
                 method: "POST",
                 data: {
-                    requestingStudentID: "<?php echo $userData["userID"] ?>",
+                    requestingStudentID: "<?php echo $_SESSION['userID'] ?>",
                     requestedSupervisorID: "<?php echo $supervisorID ?>"
                 },
                 cache: false,
@@ -126,11 +134,12 @@ if ($userData["role"] == "student") {
                     $('#requestBtn').text('Sending request...');
                 },
                 success: function(data) {
+                    console.log(data);
                     var response = JSON.parse(data);
 
                     if (!response.success) {
                         // force page reload after user closes alert dialog box
-                        if (!alert("Could not make request due to an error: " + response.error)) {
+                        if (!alert("Could not make request due to an error: " + response.errors)) {
                             window.location.reload();
                         }
                     }
@@ -141,12 +150,12 @@ if ($userData["role"] == "student") {
         });
         $('#cancelBtn').click(function(event) {
 
-            // event.preventDefault();
+            event.preventDefault();
             $.ajax({
                 url: "includes/cancel_supervisor-inc.php",
                 method: "POST",
                 data: {
-                    requestingStudentID: "<?php echo $userData["userID"] ?>",
+                    requestingStudentID: "<?php echo $_SESSION['userID'] ?>",
                     requestedSupervisorID: "<?php echo $supervisorID ?>"
                 },
                 cache: false,
@@ -155,11 +164,12 @@ if ($userData["role"] == "student") {
                     $('#cancelBtn').text('Cancelling request...');
                 },
                 success: function(data) {
+                    console.log(data);
                     var response = JSON.parse(data);
 
                     if (!response.success) {
                         // force page reload after user closes alert dialog box
-                        if (!alert("Could not make request due to an error: " + response.error)) {
+                        if (!alert("Could not make request due to an error: " + response.errors)) {
                             window.location.reload();
                         }
                     }

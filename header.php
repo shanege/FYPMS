@@ -2,8 +2,8 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-include("includes/connection-inc.php");
-include("includes/functions-inc.php");
+require_once 'includes/connection-inc.php';
+require_once 'includes/functions-inc.php';
 
 $userData = checkLogin($con);
 ?>
@@ -36,7 +36,9 @@ $userData = checkLogin($con);
                             echo $userData['userID']; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <?php
+                            echo '<li><a class="dropdown-item" href="profile.php?id=' . $userData['userID'] . '">Profile</a></li>';
+                            ?>
                             <li><a class="dropdown-item" href="includes/logout-inc.php">Logout</a></li>
                         </ul>
                     </li>
@@ -44,3 +46,4 @@ $userData = checkLogin($con);
             </div>
         </div>
     </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

@@ -25,8 +25,8 @@ if ($_FILES['supervisorFile']['name'] != '') {
 
         $supervisorID = [];
         $name = [];
-        $research_area = [];
         $email = [];
+        $research_area = [];
 
         if (!empty($sheetData)) {
             // starts reading from line 1, taking into account the Excel sheet has a header
@@ -41,23 +41,19 @@ if ($_FILES['supervisorFile']['name'] != '') {
 
             $userCount = $rowCount - 1;
 
-            $sql = "UPDATE supervisor_details SET name = ?, research_area = ?, email = ? WHERE supervisorID = ?";
+            $sql = "UPDATE supervisor_details SET name = ?, email = ?, research_area = ? WHERE supervisorID = ?";
             try {
                 $stmt = $con->prepare($sql);
                 for ($i = 0; $i < $userCount; $i++) {
                     $stmt->bindParam(1, $name[$i], PDO::PARAM_STR);
-                    $stmt->bindParam(2, $research_area[$i], PDO::PARAM_STR);
-                    $stmt->bindParam(3, $email[$i], PDO::PARAM_STR);
+                    $stmt->bindParam(2, $email[$i], PDO::PARAM_STR);
+                    $stmt->bindParam(3, $research_area[$i], PDO::PARAM_STR);
                     $stmt->bindParam(4, $supervisorID[$i], PDO::PARAM_STR);
 
                     try {
                         $stmt->execute();
                     } catch (PDOException $e) {
-                        if (str_contains($e->getMessage(), "Integrity constraint violation: 1452")) {
-                            echo "Error: " . $supervisorID[$i] . " could not be added. Is this person a user in the system yet? <br>";
-                        } else {
-                            echo "Error: " . $supervisorID[$i] . " could not be added due to " . $e->getMessage() . "<br>";
-                        }
+                        echo "Error: " . $supervisorID[$i] . "'s details could not be updated due to " . $e->getMessage() . "<br>";
                     }
                 }
             } catch (PDOException $e) {
@@ -65,7 +61,7 @@ if ($_FILES['supervisorFile']['name'] != '') {
             }
         }
     } else {
-        echo 'Only .csv .xls or .xlsx files are allowed';
+        echo 'Only .csv, .xls, or .xlsx files are allowed';
     }
 } else {
     echo 'Please select a file';
