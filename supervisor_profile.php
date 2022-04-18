@@ -1,56 +1,56 @@
-<?php
-require_once 'header.php';
-?>
-
 <div class="position-relative">
-    <div class="position-absolute top-0 start-50 translate-middle-x">
+    <div class="position-absolute top-0 start-50 translate-middle-x my-3">
         <?php
-        $supervisorID = $_GET['id'];
-        $supervisorDetails = getLecturer($con, $supervisorID);
+        $supervisorDetails = getSupervisor($con, $id);
 
         if (!$supervisorDetails) {
             echo 'This supervisor could not be found.';
         } else {
-            echo '<div class="table-responsive">
-                    <table class="table table-striped" style="width:50rem;">
-                            <tbody>
-                                <tr>
-                                    <th scope="row">Name</th>
-                                    <td>' . $supervisorDetails["name"] . '</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Research area(s)</th>
-                                    <td>' . $supervisorDetails["research_area"] . '</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Email</th>
-                                    <td>' . $supervisorDetails["email"] . '</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Proposed topic(s)</th>
-                                    <td>' . $supervisorDetails["proposed_topics"] . '</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Description</th>
-                                    <td>' . $supervisorDetails["description"] . '</td>
-                                </tr>
-                            </tbody></table></div>';
+            echo
+            '<div class="table-responsive">
+                <table class="table table-striped" style="width:50rem;">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Name</th>
+                            <td>' . $supervisorDetails["name"] . '</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Research area(s)</th>
+                            <td>' . $supervisorDetails["research_area"] . '</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Email</th>
+                            <td>' . $supervisorDetails["email"] . '</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Proposed topic(s)</th>
+                            <td>' . $supervisorDetails["proposed_topics"] . '</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Description</th>
+                            <td>' . $supervisorDetails["description"] . '</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>';
         }
 
-        if ($userData["role"] == "student") {
-            $supervisorRequest = requestExists($con, $userData["userID"]);
+        if ($userData['role'] == "student") {
+            $supervisorRequest = requestExists($con, $userData['userID']);
 
-            // if the student has button to trigger request supervisor modal
+            // if the student does not have an existing request button
             if ($supervisorRequest == false) {
+                // create button to trigger request supervisor modal
                 echo
                 '<div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#requestSupervisorModal">
                         Request to be supervisor
                     </button>
                 </div>';
-            } // button to trigger request supervisor modal
-
-            else if ($supervisorRequest["supervisorID"] == $supervisorID && $supervisorRequest["status"] == "Pending") {
+            }
+            // if the student has a request and it is for this supervisor
+            else if ($supervisorRequest['supervisorID'] == $id && $supervisorRequest['status'] == "Pending") {
+                // create button for triggering cancel request modal
                 echo
                 '<div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-secondary mx-2" data-bs-toggle="modal" data-bs-target="#cancelRequestModal">
@@ -61,7 +61,7 @@ require_once 'header.php';
                     </button>
                 </div>';
             }
-        } else if ($userData["role"] == "supervisor" && $userData['userID'] == $supervisorID) {
+        } else if ($userData['role'] == "supervisor" && $userData['userID'] == $id) {
             echo
             '<div class="d-flex justify-content-end">
                 <a href="editprofile.php" type="button" class="btn btn-primary mx-2">
@@ -71,13 +71,12 @@ require_once 'header.php';
         }
         ?>
     </div>
-</div>
-<?php
-if ($userData["role"] == "student") {
-    if ($supervisorRequest == false) {
-        // modal for sending request
-        echo
-        '<div class="modal fade" id="requestSupervisorModal" tabindex="-1" aria-labelledby="requestSupervisorModalLabel" aria-hidden="true">
+    <?php
+    if ($userData['role'] == "student") {
+        if ($supervisorRequest == false) {
+            // modal for sending request
+            echo
+            '<div class="modal fade" id="requestSupervisorModal" tabindex="-1" aria-labelledby="requestSupervisorModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -93,10 +92,10 @@ if ($userData["role"] == "student") {
                 </div>
             </div>
         </div>';
-    } else if ($supervisorRequest["supervisorID"] == $supervisorID && $supervisorRequest["status"] == "Pending") {
-        // modal for cancelling request
-        echo
-        '<div class="modal fade" id="cancelRequestModal" tabindex="-1" aria-labelledby="cancelRequestModalLabel" aria-hidden="true">
+        } else if ($supervisorRequest['supervisorID'] == $id && $supervisorRequest["status"] == "Pending") {
+            // modal for cancelling request
+            echo
+            '<div class="modal fade" id="cancelRequestModal" tabindex="-1" aria-labelledby="cancelRequestModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -112,13 +111,28 @@ if ($userData["role"] == "student") {
                 </div>
             </div>
         </div>';
+        }
     }
-}
-?>
 
+    if (isset($_POST['editResult']) && $_POST['editResult'] == "success") {
+        echo '
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div id="editSuccessToast" class="toast align-items-center text-white bg-success bg-opacity-75 border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                    Success! Changes saved
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>';
+    }
+    ?>
+</div>
 <script>
     $(document).ready(function() {
         $('#requestBtn').click(function(event) {
+            var thisBtn = $(this);
 
             event.preventDefault();
             $.ajax({
@@ -126,15 +140,14 @@ if ($userData["role"] == "student") {
                 method: "POST",
                 data: {
                     requestingStudentID: "<?php echo $_SESSION['userID'] ?>",
-                    requestedSupervisorID: "<?php echo $supervisorID ?>"
+                    requestedSupervisorID: "<?php echo $id ?>"
                 },
                 cache: false,
                 beforeSend: function() {
-                    $('#requestBtn').attr('disabled', 'disabled');
-                    $('#requestBtn').text('Sending request...');
+                    thisBtn.attr('disabled', 'disabled');
+                    thisBtn.text('Sending request...');
                 },
                 success: function(data) {
-                    console.log(data);
                     var response = JSON.parse(data);
 
                     if (!response.success) {
@@ -143,12 +156,13 @@ if ($userData["role"] == "student") {
                             window.location.reload();
                         }
                     }
-                    $('#requestBtn').removeClass('btn-primary').addClass('btn-secondary');
-                    $('#requestBtn').text('Request sent!');
+                    thisBtn.removeClass('btn-primary').addClass('btn-secondary');
+                    thisBtn.text('Request sent!');
                 }
             })
         });
         $('#cancelBtn').click(function(event) {
+            var thisBtn = $(this);
 
             event.preventDefault();
             $.ajax({
@@ -156,15 +170,14 @@ if ($userData["role"] == "student") {
                 method: "POST",
                 data: {
                     requestingStudentID: "<?php echo $_SESSION['userID'] ?>",
-                    requestedSupervisorID: "<?php echo $supervisorID ?>"
+                    requestedSupervisorID: "<?php echo $id ?>"
                 },
                 cache: false,
                 beforeSend: function() {
-                    $('#cancelBtn').attr('disabled', 'disabled');
-                    $('#cancelBtn').text('Cancelling request...');
+                    thisBtn.attr('disabled', 'disabled');
+                    thisBtn.text('Cancelling request...');
                 },
                 success: function(data) {
-                    console.log(data);
                     var response = JSON.parse(data);
 
                     if (!response.success) {
@@ -173,7 +186,7 @@ if ($userData["role"] == "student") {
                             window.location.reload();
                         }
                     }
-                    $('#cancelBtn').text('Done!');
+                    thisBtn.text('Done!');
                 }
             })
         });
@@ -199,6 +212,13 @@ if ($userData["role"] == "student") {
             })
         }
     });
+
+    var editSuccessToast = document.getElementById('editSuccessToast');
+    if (editSuccessToast) {
+        var toast = new bootstrap.Toast(editSuccessToast);
+
+        toast.show();
+    }
 </script>
 </body>
 

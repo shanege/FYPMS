@@ -124,7 +124,7 @@ function checkLogin($con)
     die;
 }
 
-function getLecturer($con, $supervisorID)
+function getSupervisor($con, $supervisorID)
 {
     $sql = "SELECT name, research_area, email, proposed_topics, description FROM supervisor_details WHERE supervisorID = ?;";
 
@@ -160,9 +160,29 @@ function getAllLecturers($con)
     }
 }
 
+function getStudent($con, $studentID)
+{
+    $sql = "SELECT name, email, working_title, fyp_status FROM student_details WHERE studentID = ?;";
+
+    try {
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(1, $studentID, PDO::PARAM_STR);
+
+        $stmt->execute();
+        if ($row = $stmt->fetch()) {
+            return $row;
+        } else {
+            $result = false;
+            return $result;
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
 function requestExists($con, $userID)
 {
-    $sql = "SELECT * FROM supervisor_requests WHERE studentID = ?;";
+    $sql = "SELECT * FROM supervisor_student_pairs WHERE studentID = ?;";
     try {
         $stmt = $con->prepare($sql);
         $stmt->bindParam(1, $userID, PDO::PARAM_STR);
@@ -172,6 +192,22 @@ function requestExists($con, $userID)
             return $row;
         } else {
             $result = false;
+            return $result;
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+function getAllStudentsForSupervisor($con, $supervisorID)
+{
+    $sql = "SELECT * FROM supervisor_student_pairs WHERE supervisorID = ? ;";
+    try {
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(1, $supervisorID, PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            $result = $stmt->fetchAll();
             return $result;
         }
     } catch (PDOException $e) {

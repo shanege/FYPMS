@@ -1,10 +1,14 @@
 <?php
-include_once 'header.php';
+require_once 'header.php';
 
-if ($userData["role"] == "student") {
-    include_once 'student_profile.php';
-} else if ($userData["role"] == "supervisor") {
-    include_once 'supervisor_profile.php';
-} else if ($userData["role"] == "coordinator") {
-    include_once 'coordinator_profile.php';
+$id = $_GET['id'];
+
+$user = userExists($con, $id);
+
+if ($user == false) {
+    echo '<div class="text-center">This user does not exist</div>';
+} else if ($user["role"] == "student") {
+    require_once 'student_profile.php';
+} else if ($user["role"] == "supervisor") {
+    require_once 'supervisor_profile.php';
 }

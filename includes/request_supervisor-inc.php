@@ -6,7 +6,7 @@ if (isset($_POST['requestingStudentID']) && isset($_POST['requestedSupervisorID'
     $supervisorID = $_POST['requestedSupervisorID'];
     $status = "Pending";
 
-    $sql = "INSERT INTO supervisor_requests (studentID, supervisorID, status) VALUES (?, ?, ?);";
+    $sql = "INSERT INTO supervisor_student_pairs (studentID, supervisorID, status) VALUES (?, ?, ?);";
     try {
         $stmt = $con->prepare($sql);
         $stmt->bindParam(1, $studentID, PDO::PARAM_STR);
@@ -28,4 +28,7 @@ if (isset($_POST['requestingStudentID']) && isset($_POST['requestedSupervisorID'
             )
         );
     }
+} else {
+    header("location: ../index.php");
+    exit();
 }

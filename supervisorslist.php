@@ -6,29 +6,31 @@ require_once 'header.php';
 ?>
 
 <div class="position-relative">
-    <div class="position-absolute top-0 start-50 translate-middle-x">
+    <div class="position-absolute top-0 start-50 translate-middle-x my-3">
         <?php
         $supervisorDetailsList = getAllLecturers($con);
 
         if (!empty($supervisorDetailsList)) {
-            echo '<div class="table-responsive">
-                    <table class="table table-striped" style="width:80rem;">
-                        <thead class="table-light">
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Research Area(s)</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Quota</th>
-                            </tr>
-                        </thead>
-                        <tbody>';
+            echo
+            '<div class="table-responsive">
+                <table class="table table-striped" style="width:80rem;">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Research Area(s)</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Quota</th>
+                        </tr>
+                    </thead>
+                <tbody>';
 
             foreach ($supervisorDetailsList as $key => $value) {
-                echo '<tr>';
-                echo '<td><a href="supervisor_profile.php?id=' . $value["supervisorID"] . '">' . $value["name"] . '</a></td>';
-                echo '<td>' . $value["research_area"] . '</td>';
-                echo '<td>' . $value["email"] . '</td>';
-                echo '</tr>';
+                echo
+                '<tr>
+                    <td><a href="profile.php?id=' . $value["supervisorID"] . '">' . $value["name"] . '</a></td>
+                    <td>' . $value["research_area"] . '</td>
+                    <td>' . $value["email"] . '</td>
+                </tr>';
             }
 
             echo '</tbody></table></div>';
