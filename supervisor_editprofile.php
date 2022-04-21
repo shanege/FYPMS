@@ -66,28 +66,28 @@
                     console.log(response);
 
                     if (!response.success) {
-                        if (response.errors?.name) {
+                        if (response.errors.name) {
                             $("#nameInput").addClass("is-invalid");
                             $("#nameGroup").append(
                                 '<div class="invalid-feedback">' + response.errors.name + "</div>"
                             );
                         }
 
-                        if (response.errors?.email) {
+                        if (response.errors.email) {
                             $("#emailInput").addClass("is-invalid");
                             $("#emailGroup").append(
                                 '<div class="invalid-feedback">' + response.errors.email + "</div>"
                             );
                         }
 
-                        if (response.errors?.researchAreas) {
+                        if (response.errors.researchAreas) {
                             $("#researchAreasInput").addClass("is-invalid");
                             $("#researchAreasGroup").append(
                                 '<div class="invalid-feedback">' + response.errors.researchAreas + "</div>"
                             );
                         }
 
-                        if (response.errors?.sql) {
+                        if (response.errors.sql) {
                             $("#message").html(response.errors.sql).removeClass("bg-body").addClass("bg-danger");
                         }
                     } else {

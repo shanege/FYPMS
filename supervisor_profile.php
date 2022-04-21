@@ -77,40 +77,40 @@
             // modal for sending request
             echo
             '<div class="modal fade" id="requestSupervisorModal" tabindex="-1" aria-labelledby="requestSupervisorModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="requestSupervisorModalLabel">Before you proceed!</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Please make sure you have contacted this supervisor (e.g., via email or Microsoft Teams) and have gotten their agreement to be your supervisor
-                    </div>
-                    <div class="modal-footer">
-                        <button id="requestBtn" type="button" class="btn btn-primary" >Make request</button>
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="requestSupervisorModalLabel">Before you proceed!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Please make sure you have contacted this supervisor (e.g., via email or Microsoft Teams) and have gotten their agreement to be your supervisor
+                        </div>
+                        <div class="modal-footer">
+                            <button id="requestBtn" type="button" class="btn btn-primary" >Make request</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>';
+            </div>';
         } else if ($supervisorRequest['supervisorID'] == $id && $supervisorRequest["status"] == "Pending") {
             // modal for cancelling request
             echo
             '<div class="modal fade" id="cancelRequestModal" tabindex="-1" aria-labelledby="cancelRequestModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="cancelRequestModalLabel">Before you proceed!</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Are you sure you want to cancel your request?
-                    </div>
-                    <div class="modal-footer">
-                        <button id="cancelBtn" type="button" class="btn btn-primary" >Cancel request</button>
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="cancelRequestModalLabel">Before you proceed!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to cancel your request?
+                        </div>
+                        <div class="modal-footer">
+                            <button id="cancelBtn" type="button" class="btn btn-primary" >Cancel request</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>';
+            </div>';
         }
     }
 

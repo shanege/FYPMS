@@ -22,14 +22,12 @@ if (isset($_POST['rowNum']) && isset($_POST['studentID'])) {
     }
 
     if ($pendingStudentsIDs[$_POST['rowNum']] == $_POST['studentID']) {
-        $status = "Ongoing";
         $studentID = $_POST['studentID'];
 
-        $sql = "UPDATE supervisor_student_pairs SET status = ? WHERE studentID = ?";
+        $sql = "DELETE FROM supervisor_student_pairs WHERE studentID = ?";
         try {
             $stmt = $con->prepare($sql);
-            $stmt->bindParam(1, $status, PDO::PARAM_STR);
-            $stmt->bindParam(2, $studentID, PDO::PARAM_STR);
+            $stmt->bindParam(1, $studentID, PDO::PARAM_STR);
 
             $stmt->execute();
         } catch (PDOException $e) {
@@ -44,7 +42,7 @@ if (isset($_POST['rowNum']) && isset($_POST['studentID'])) {
         $data['errors'] = $errors;
     } else {
         $data['success'] = true;
-        $data['message'] = $_POST['studentID'] . ' has been accepted as your FYP student';
+        $data['message'] = $_POST['studentID'] . ' has been rejected';
     }
 
     echo json_encode($data);
