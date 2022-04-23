@@ -8,7 +8,7 @@ require_once 'header.php';
 <div class="position-relative">
     <div class="position-absolute top-0 start-50 translate-middle-x my-3">
         <?php
-        $supervisorDetailsList = getAllLecturers($con);
+        $supervisorDetailsList = getAllSupervisors($con);
 
         if (!empty($supervisorDetailsList)) {
             echo
@@ -28,7 +28,7 @@ require_once 'header.php';
                 echo
                 '<tr>
                     <td><a href="profile.php?id=' . $value["supervisorID"] . '">' . $value["name"] . '</a></td>
-                    <td>' . $value["research_area"] . '</td>
+                    <td>' . $value["research_areas"] . '</td>
                     <td>' . $value["email"] . '</td>
                 </tr>';
             }

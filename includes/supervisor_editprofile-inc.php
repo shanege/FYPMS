@@ -1,7 +1,7 @@
 <?php
-session_start();
-
 if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['researchAreas'])) {
+    session_start();
+
     require_once 'connection-inc.php';
 
     $data = [];
@@ -25,9 +25,16 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['researchAre
         $researchAreas = $_POST['researchAreas'];
         $proposedTopics = $_POST['proposedTopics'];
         $description = $_POST['description'];
-        $supervisorID = $_SESSION['userID'];
 
-        $sql = "UPDATE supervisor_details SET name = ?, email = ?, research_area = ?, proposed_topics = ?, description = ? WHERE supervisorID = ?";
+        // if this page is accessed by supervisor, supervisorID is their user id
+        // if this page is accessed by a coordinator, the supervisorID is taken from the posted supervisorID
+        if ($_SESSION['role'] == "supervisor") {
+            $supervisorID = $_SESSION['userID'];
+        } else if ($_SESSION['role'] == "coordinator") {
+            $supervisorID = $_POST['supervisorID'];
+        }
+
+        $sql = "UPDATE supervisor_details SET name = ?, email = ?, research_areas = ?, proposed_topics = ?, description = ? WHERE supervisorID = ?";
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindParam(1, $name, PDO::PARAM_STR);

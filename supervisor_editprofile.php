@@ -18,7 +18,7 @@
                     </div>
                     <div id="researchAreasGroup" class="mb-3">
                         <label for="researchAreas" class="form-label">Research area(s)<span class="text-danger">&#42;</span></label>
-                        <textarea id="researchAreasInput" name="researchAreas" class="form-control">' . $supervisorDetails['research_area'] . '</textarea>
+                        <textarea id="researchAreasInput" name="researchAreas" class="form-control">' . $supervisorDetails['research_areas'] . '</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="proposedTopics" class="form-label">Proposed topic(s)</label>
@@ -63,7 +63,6 @@
                 },
                 success: function(data) {
                     var response = JSON.parse(data);
-                    console.log(response);
 
                     if (!response.success) {
                         if (response.errors.name) {
@@ -107,6 +106,7 @@
                         $(form).submit();
                     }
 
+                    // resets the forms inputs
                     $('#editProfileForm')[0].reset();
                     $('#saveBtn').attr('disabled', false);
                     $('#saveBtn').val('Save changes');

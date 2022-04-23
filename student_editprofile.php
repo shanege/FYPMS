@@ -53,7 +53,6 @@
                 },
                 success: function(data) {
                     var response = JSON.parse(data);
-                    console.log(response);
 
                     if (!response.success) {
                         if (response.errors?.name) {
@@ -90,7 +89,12 @@
                         $(form).submit();
                     }
 
+                    // resets the forms inputs, but does not affect textareas
                     $('#editProfileForm')[0].reset();
+
+                    // resets the forms textareas
+                    $('#editProfileForm textarea').val('');
+
                     $('#saveBtn').attr('disabled', false);
                     $('#saveBtn').val('Save changes');
                 }

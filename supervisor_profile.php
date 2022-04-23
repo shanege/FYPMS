@@ -16,7 +16,7 @@
                         </tr>
                         <tr>
                             <th scope="row">Research area(s)</th>
-                            <td>' . $supervisorDetails["research_area"] . '</td>
+                            <td>' . $supervisorDetails["research_areas"] . '</td>
                         </tr>
                         <tr>
                             <th scope="row">Email</th>
@@ -218,6 +218,10 @@
         var toast = new bootstrap.Toast(editSuccessToast);
 
         toast.show();
+
+        editSuccessToast.on('hidden.bs.toast', function() {
+            $(this).remove();
+        });
     }
 </script>
 </body>

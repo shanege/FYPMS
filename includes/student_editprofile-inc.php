@@ -1,7 +1,7 @@
 <?php
-session_start();
-
 if (isset($_POST['name']) && isset($_POST['email'])) {
+    session_start();
+
     require_once 'connection-inc.php';
 
     $data = [];

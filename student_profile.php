@@ -63,6 +63,10 @@
         var toast = new bootstrap.Toast(editSuccessToast);
 
         toast.show();
+
+        editSuccessToast.on('hidden.bs.toast', function() {
+            $(this).remove();
+        });
     }
 </script>
 </body>

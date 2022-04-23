@@ -50,8 +50,7 @@ if ($userData["role"] != "supervisor") {
         echo '</tbody></table></div>';
         ?>
     </div>
-    <div class="position-fixed bottom-0 end-0 p-3 toast-container" style="z-index: 11">
-    </div>
+    <div class="position-fixed bottom-0 end-0 p-3 toast-container" style="z-index: 11"></div>
 </div>
 <script>
     $(document).ready(function() {
@@ -78,7 +77,7 @@ if ($userData["role"] != "supervisor") {
 
             // event listener to destroy the data on the DOM element once it is closed
             confirmModal.on('hidden.bs.modal', function() {
-                confirmModal.dispose();
+                $(this).remove();
             });
 
             // create bootstrap modal and show it
@@ -131,11 +130,15 @@ if ($userData["role"] != "supervisor") {
                             row.remove();
                             var toast = $(createToast(response.message));
 
+                            toast.on('hidden.bs.toast', function() {
+                                $(this).remove();
+                            });
+
                             $(".toast-container").append(toast);
 
                             // create bootstrap toast and show it
-                            var successToast = new bootstrap.Toast(toast);
-                            successToast.show();
+                            var bsToast = new bootstrap.Toast(toast);
+                            bsToast.show();
                         }
                     }
                 });
@@ -169,7 +172,7 @@ if ($userData["role"] != "supervisor") {
 
             // event listener to destroy the data on the DOM element once it is closed
             confirmModal.on('hidden.bs.modal', function() {
-                confirmModal.dispose();
+                $(this).remove();
             });
 
             // create bootstrap modal and show it
@@ -222,11 +225,15 @@ if ($userData["role"] != "supervisor") {
                             row.remove();
                             var toast = $(createToast(response.message));
 
+                            toast.on('hidden.bs.toast', function() {
+                                $(this).remove();
+                            });
+
                             $(".toast-container").append(toast);
 
                             // create bootstrap toast and show it
-                            var successToast = new bootstrap.Toast(toast);
-                            successToast.show();
+                            var bsToast = new bootstrap.Toast(toast);
+                            bsToast.show();
                         }
                     }
                 });

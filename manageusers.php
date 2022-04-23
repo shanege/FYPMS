@@ -5,6 +5,40 @@ if ($userData["role"] != "coordinator") {
 }
 ?>
 
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-auto">
+            <a class="btn" href="managestudents.php" role="button">
+                <div class="card text-center" style="width: 18rem;">
+                    <i class="bi bi-people card-img-top " style="font-size: 8rem;"></i>
+                    <div class="card-body">
+                        <p class="card-text">Add users</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-auto">
+            <a class="btn" href="managestudents.php" role="button">
+                <div class="card text-center" style="width: 18rem;">
+                    <i class="bi bi-people card-img-top " style="font-size: 8rem;"></i>
+                    <div class="card-body">
+                        <p class="card-text">Manage students</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-auto">
+            <a class="btn" href="managesupervisors.php" role="button">
+                <div class="card text-center" style="width: 18rem;">
+                    <i class="bi bi-people card-img-top " style="font-size: 8rem;"></i>
+                    <div class="card-body">
+                        <p class="card-text">Manage supervisors</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
 Register users by bulk
 <form id="registerUsersExcel" method="POST" enctype="multipart/form-data">
     <table>
@@ -17,17 +51,7 @@ Register users by bulk
 </form>
 <span id="response1"></span>
 
-Update supervisors details
-<form id="updateSupervisorsDetailsExcel" method="POST" enctype="multipart/form-data">
-    <table>
-        <tr>
-            <td width="25%">Select Excel file</td>
-            <td width="50%"><input type="file" name="supervisorFile"></td>
-            <td width="25%"><input type="submit" name="updateSupervisors" id="updateSupervisors" value="Import"></td>
-        </tr>
-    </table>
-</form>
-<span id="response2"></span>
+
 </body>
 
 </html>
@@ -47,31 +71,10 @@ Update supervisors details
                     $('#registerUsers').val('Importing...');
                 },
                 success: function(data) {
-                    $('#response1').html(data);
+                    $('#response').html(data);
                     $('#registerUsersExcel')[0].reset();
                     $('#registerUsers').attr('disabled', false);
                     $('#registerUsers').val('Import');
-                }
-            })
-        });
-        $('#updateSupervisorsDetailsExcel').on('submit', function(event) {
-            event.preventDefault();
-            $.ajax({
-                url: "includes/supervisor_details-inc.php",
-                method: "POST",
-                data: new FormData(this),
-                contentType: false,
-                cache: false,
-                processData: false,
-                beforeSend: function() {
-                    $('#updateSupervisors').attr('disabled', 'disabled');
-                    $('#updateSupervisors').val('Importing...');
-                },
-                success: function(data) {
-                    $('#response2').html(data);
-                    $('#updateSupervisorsDetailsExcel')[0].reset();
-                    $('#updateSupervisors').attr('disabled', false);
-                    $('#updateSupervisors').val('Import');
                 }
             })
         });

@@ -1,6 +1,35 @@
 <?php
 if (count(get_included_files()) == 1) exit("Direct access not permitted.");
 
+// $data = [];
+// $errors = [];
+
+// if (isset($_POST['function']) && isset($_POST['arguments'])) {
+//     switch ($_POST['function']) {
+//         case 'getSupervisor':
+//             if (!is_array($_POST['arguments']) || (count($_POST['arguments']) < 2)) {
+//                 $errors['arguments'] = "Error in arguments";
+//             } else {
+//                 $result = getSupervisor($_POST['arguments'][0], $_POST['arguments'][1]);
+//             }
+//             break;
+
+//         default:
+//             $errors['function'] = 'Function ' . $_POST['function'] . 'not found';
+//             break;
+//     }
+
+//     if (!empty($errors)) {
+//         $data['success'] = false;
+//         $data['errors'] = $errors;
+//     } else {
+//         $data['success'] = true;
+//         $data['result'] = $result;
+//     }
+
+//     echo json_encode($data);
+// }
+
 function emptyInput($userID, $password)
 {
     if (empty($userID) || empty($password)) {
@@ -37,7 +66,7 @@ function userExists($con, $userID)
         $stmt->bindParam(1, $userID, PDO::PARAM_STR);
         $stmt->execute();
 
-        if ($row = $stmt->fetch()) {
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             return $row;
         } else {
             $result = false;
@@ -90,6 +119,7 @@ function loginUser($con, $userID, $password)
         // log the user in and create a session variable of their userID
         session_start();
         $_SESSION["userID"] = $userData["userID"];
+        $_SESSION["role"] = $userData["role"];
         header("Location: ../index.php");
     }
 }
@@ -106,7 +136,7 @@ function checkLogin($con)
             $stmt->bindParam(1, $id, PDO::PARAM_STR);
             $stmt->execute();
 
-            if ($row = $stmt->fetch()) {
+            if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 return $row;
             } else {
                 $result = false;
@@ -126,14 +156,14 @@ function checkLogin($con)
 
 function getSupervisor($con, $supervisorID)
 {
-    $sql = "SELECT name, research_area, email, proposed_topics, description FROM supervisor_details WHERE supervisorID = ?;";
+    $sql = "SELECT name, email, research_areas, proposed_topics, description FROM supervisor_details WHERE supervisorID = ?;";
 
     try {
         $stmt = $con->prepare($sql);
         $stmt->bindParam(1, $supervisorID, PDO::PARAM_STR);
 
         $stmt->execute();
-        if ($row = $stmt->fetch()) {
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             return $row;
         } else {
             $result = false;
@@ -144,15 +174,15 @@ function getSupervisor($con, $supervisorID)
     }
 }
 
-function getAllLecturers($con)
+function getAllSupervisors($con)
 {
-    $sql = "SELECT supervisorID, name, research_area, email FROM supervisor_details ORDER BY name;";
+    $sql = "SELECT supervisorID, name, email, research_areas FROM supervisor_details ORDER BY name;";
 
     try {
         $stmt = $con->prepare($sql);
 
         if ($stmt->execute()) {
-            $result = $stmt->fetchAll();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         }
     } catch (PDOException $e) {
@@ -188,7 +218,7 @@ function requestExists($con, $userID)
         $stmt->bindParam(1, $userID, PDO::PARAM_STR);
         $stmt->execute();
 
-        if ($row = $stmt->fetch()) {
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             return $row;
         } else {
             $result = false;
@@ -207,7 +237,7 @@ function getAllStudentsForSupervisor($con, $supervisorID)
         $stmt->bindParam(1, $supervisorID, PDO::PARAM_STR);
 
         if ($stmt->execute()) {
-            $result = $stmt->fetchAll();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         }
     } catch (PDOException $e) {
