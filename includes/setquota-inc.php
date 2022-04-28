@@ -64,6 +64,6 @@ if (isset($_POST['quota'])) {
 
     echo json_encode($data);
 } else {
-    header("location: ../managesupervisors.php");
+    header("location: ../manage-supervisors.php");
     exit();
 }

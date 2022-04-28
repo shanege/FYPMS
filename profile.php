@@ -8,7 +8,7 @@ $user = userExists($con, $id);
 if ($user == false) {
     echo '<div class="text-center">This user does not exist</div>';
 } else if ($user["role"] == "student") {
-    require_once 'student_profile.php';
+    require_once 'student-profile.php';
 } else if ($user["role"] == "supervisor") {
-    require_once 'supervisor_profile.php';
+    require_once 'supervisor-profile.php';
 }

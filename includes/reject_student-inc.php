@@ -47,6 +47,6 @@ if (isset($_POST['rowNum']) && isset($_POST['studentID'])) {
 
     echo json_encode($data);
 } else {
-    header("location: ../managestudents.php");
+    header("location: ../manage-students.php");
     exit();
 }

@@ -11,6 +11,6 @@ if (isset($_POST['supervisorID'])) {
 
     echo json_encode($result);
 } else {
-    header("location: ../managesupervisors.php");
+    header("location: ../manage-supervisors.php");
     exit();
 }

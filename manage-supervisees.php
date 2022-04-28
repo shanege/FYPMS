@@ -31,13 +31,19 @@ if (!empty($students)) {
 </nav>
 <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-ongoing" role="tabpanel" aria-labelledby="nav-ongoing-tab">
+        <?php
+        require_once 'ongoing-students.php';
+        ?>
     </div>
     <div class="tab-pane fade" id="nav-requests" role="tabpanel" aria-labelledby="nav-requests-tab">
         <?php
-        require_once 'studentsrequests.php';
+        require_once 'students-requests.php';
         ?>
     </div>
     <div class="tab-pane fade" id="nav-completed" role="tabpanel" aria-labelledby="nav-completed-tab">
+        <?php
+        require_once 'completed-students.php';
+        ?>
     </div>
 </div>
 

@@ -8,7 +8,7 @@ if ($userData["role"] != "coordinator") {
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-auto">
-            <a class="btn" href="managestudents.php" role="button">
+            <a class="btn" href="manage-students.php" role="button">
                 <div class="card text-center" style="width: 18rem;">
                     <i class="bi bi-people card-img-top " style="font-size: 8rem;"></i>
                     <div class="card-body">
@@ -18,7 +18,7 @@ if ($userData["role"] != "coordinator") {
             </a>
         </div>
         <div class="col-md-auto">
-            <a class="btn" href="managestudents.php" role="button">
+            <a class="btn" href="manage-students.php" role="button">
                 <div class="card text-center" style="width: 18rem;">
                     <i class="bi bi-people card-img-top " style="font-size: 8rem;"></i>
                     <div class="card-body">
@@ -28,7 +28,7 @@ if ($userData["role"] != "coordinator") {
             </a>
         </div>
         <div class="col-md-auto">
-            <a class="btn" href="managesupervisors.php" role="button">
+            <a class="btn" href="manage-supervisors.php" role="button">
                 <div class="card text-center" style="width: 18rem;">
                     <i class="bi bi-people card-img-top " style="font-size: 8rem;"></i>
                     <div class="card-body">
