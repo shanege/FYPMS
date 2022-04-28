@@ -1,7 +1,7 @@
 <?php
-require_once 'connection-inc.php';
-
 if (isset($_POST['requestingStudentID']) && isset($_POST['requestedSupervisorID'])) {
+    require_once 'connection-inc.php';
+
     $studentID = $_POST['requestingStudentID'];
     $supervisorID = $_POST['requestedSupervisorID'];
     $status = "Pending";

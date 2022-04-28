@@ -49,7 +49,7 @@ Register users by bulk
         </tr>
     </table>
 </form>
-<span id="response1"></span>
+<span id="response"></span>
 
 
 </body>

@@ -33,7 +33,11 @@ if (isset($_POST['rowNum']) && isset($_POST['studentID'])) {
 
             $stmt->execute();
         } catch (PDOException $e) {
-            $errors['sql'] = $e->getMessage();
+            if (str_contains($e->getMessage(), "Quota reached")) {
+                $errors['sql'] = "You have hit the quota for FYP students";
+            } else {
+                $errors['sql'] = $e->getMessage();
+            }
         }
     } else {
         $errors['mismatch'] = "There is a mismatch with the database";

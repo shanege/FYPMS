@@ -30,10 +30,17 @@ if ($userData["role"] != "supervisor") {
                 echo
                 '<tr id="' . $pendingStudentID . '">
                     <td>
-                        <div class="d-flex w-40"><a href="profile.php?id=' . $pendingStudentID . '">' . $student["name"] . '</div></a>
-                    </td>
+                        <div class="d-flex w-40"><a href="profile.php?id=' . $pendingStudentID . '">';
+
+                // if the student has not set up their name in profile, display their studentID, else display their name
+                echo ($student["name"] == "") ?  $pendingStudentID  :  $student["name"];
+                echo
+                '</div></a></td>
                     <td>
-                        <div class="d-flex w-40">' . $student["working_title"] . '</div>
+                        <div class="d-flex w-40">';
+                echo ($student["working_title"] == "") ? 'No working title yet' : $student["working_title"];
+                echo
+                '</div>
                     </td>
                     <td>
                         <div class="d-flex justify-content-evenly">

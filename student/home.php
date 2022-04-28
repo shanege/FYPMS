@@ -36,7 +36,7 @@ use \League\Flysystem\StorageAttributes;
                 <div class="card text-center" style="width: 18rem;">
                     <i class="bi bi-pen card-img-top " style="font-size: 8rem;"></i>
                     <div class="card-body">
-                        <p class="card-text"> Edit FYP details </p>
+                        <p class="card-text"> View proposed topics </p>
                     </div>
                 </div>
             </a>

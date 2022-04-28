@@ -6,6 +6,18 @@
         if (!$supervisorDetails) {
             echo 'This supervisor could not be found.';
         } else {
+
+            // get current semester
+            $thisYear = date('Y');
+            $thisMonth = date('n');
+
+            // if within April and September, set semester as 4, else set as 9
+            $semesterMonth = ($thisMonth >= 4 && $thisMonth < 9) ? 4 : 9;
+            $thisSemester = $thisYear . "0" . $semesterMonth;
+            $quota = getSupervisorStudentQuota($con, $thisSemester);
+
+            $studentCount = countStudentsPerSupervisor($con, $id);
+
             echo
             '<div class="table-responsive">
                 <table class="table table-striped" style="width:50rem;">
@@ -30,6 +42,10 @@
                             <th scope="row">Description</th>
                             <td>' . $supervisorDetails["description"] . '</td>
                         </tr>
+                        <tr>
+                            <th scope="row">Quota</th>
+                            <td>' . $studentCount . ' / ' . $quota . '</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>';
@@ -38,21 +54,24 @@
         if ($userData['role'] == "student") {
             $supervisorRequest = requestExists($con, $userData['userID']);
 
-            // if the student does not have an existing request button
-            if ($supervisorRequest == false) {
-                // create button to trigger request supervisor modal
-                echo
-                '<div class="d-flex justify-content-end">
+            if ($studentCount >= $quota) {
+                echo '<div class="text-danger">This supervisor has hit the quota for FYP students</div>';
+            } else {
+                // if the student does not have an existing request
+                if ($supervisorRequest == false) {
+                    // create button to trigger request supervisor modal
+                    echo
+                    '<div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#requestSupervisorModal">
                         Request to be supervisor
                     </button>
                 </div>';
-            }
-            // if the student has a request and it is for this supervisor
-            else if ($supervisorRequest['supervisorID'] == $id && $supervisorRequest['status'] == "Pending") {
-                // create button for triggering cancel request modal
-                echo
-                '<div class="d-flex justify-content-end">
+                }
+                // if the student has a request and it is for this supervisor
+                else if ($supervisorRequest['supervisorID'] == $id && $supervisorRequest['status'] == "Pending") {
+                    // create button for triggering cancel request modal
+                    echo
+                    '<div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-secondary mx-2" data-bs-toggle="modal" data-bs-target="#cancelRequestModal">
                         Cancel request
                     </button>
@@ -60,6 +79,7 @@
                         Request pending...
                     </button>
                 </div>';
+                }
             }
         } else if ($userData['role'] == "supervisor" && $userData['userID'] == $id) {
             echo

@@ -10,6 +10,16 @@
                 </div>
             </a>
         </div>
+        <div class="col-md-auto">
+            <a class="btn" href="supervisorslist.php" role="button">
+                <div class="card text-center" style="width: 18rem;">
+                    <i class="bi bi-search card-img-top " style="font-size: 8rem;"></i>
+                    <div class="card-body">
+                        <p class="card-text">View supervisor list</p>
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
 </body>

@@ -156,7 +156,7 @@ function checkLogin($con)
 
 function getSupervisor($con, $supervisorID)
 {
-    $sql = "SELECT name, email, research_areas, proposed_topics, description FROM supervisor_details WHERE supervisorID = ?;";
+    $sql = "SELECT name, email, research_areas, proposed_topics, description FROM supervisor_details WHERE supervisorID = ? LIMIT 1;";
 
     try {
         $stmt = $con->prepare($sql);
@@ -192,7 +192,7 @@ function getAllSupervisors($con)
 
 function getStudent($con, $studentID)
 {
-    $sql = "SELECT name, email, working_title, fyp_status FROM student_details WHERE studentID = ?;";
+    $sql = "SELECT name, email, working_title, fyp_status FROM student_details WHERE studentID = ? LIMIT 1;";
 
     try {
         $stmt = $con->prepare($sql);
@@ -212,7 +212,7 @@ function getStudent($con, $studentID)
 
 function requestExists($con, $userID)
 {
-    $sql = "SELECT * FROM supervisor_student_pairs WHERE studentID = ?;";
+    $sql = "SELECT supervisorID, status FROM supervisor_student_pairs WHERE studentID = ? LIMIT 1;";
     try {
         $stmt = $con->prepare($sql);
         $stmt->bindParam(1, $userID, PDO::PARAM_STR);
@@ -231,13 +231,53 @@ function requestExists($con, $userID)
 
 function getAllStudentsForSupervisor($con, $supervisorID)
 {
-    $sql = "SELECT * FROM supervisor_student_pairs WHERE supervisorID = ? ;";
+    $sql = "SELECT studentID, supervisorID, starting_semester, status FROM supervisor_student_pairs WHERE supervisorID = ?;";
     try {
         $stmt = $con->prepare($sql);
         $stmt->bindParam(1, $supervisorID, PDO::PARAM_STR);
 
         if ($stmt->execute()) {
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+function getSupervisorStudentQuota($con, $semester)
+{
+    $sql = "SELECT quota FROM supervisor_student_quotas WHERE semester = ? LIMIT 1;";
+    try {
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(1, $semester, PDO::PARAM_INT);
+        $stmt->execute();
+
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            return $row['quota'];
+        } else {
+            $result = false;
+            return $result;
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+function countStudentsPerSupervisor($con, $supervisorID)
+{
+    $status = "Ongoing";
+    $sql = "SELECT COUNT(studentID) as total_students FROM supervisor_student_pairs WHERE supervisorID = ? AND status = ? LIMIT 1;";
+    try {
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(1, $supervisorID, PDO::PARAM_STR);
+        $stmt->bindParam(2, $status, PDO::PARAM_STR);
+        $stmt->execute();
+
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            return $row['total_students'];
+        } else {
+            $result = false;
             return $result;
         }
     } catch (PDOException $e) {

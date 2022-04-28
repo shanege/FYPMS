@@ -6,17 +6,17 @@ if ($userData["role"] != "coordinator") {
 ?>
 
 <div class="position-relative">
-    <div class="position-absolute top-0 start-50 translate-middle-x w-75">
-        <div class="vstack gap-3">
+    <div class="position-absolute top-0 start-50 translate-middle-x w-75 my-5">
+        <div class="vstack gap-5">
             <div>
                 <h3>Update supervisors details (Bulk)</h3>
                 <div class="bg-light border p-4">
                     <form id="updateSupervisorsDetailsBulk" method="POST" enctype="multipart/form-data">
-                        Select Excel file
-                        <input type="file" name="supervisorFile">
-                        <input type="submit" name="updateSupervisors" id="updateSupervisors" value="Import">
+                        <label for="supervisorFile" class="form-label">Select Excel file</label>
+                        <input type="file" name="supervisorFile" class="form-control mb-3">
+                        <input type="submit" name="updateSupervisors" id="updateSupervisors" class="btn btn-primary" value="Import">
                     </form>
-                    <span id="response"></span>
+                    <div id="updateSupervisorsDetailsBulkError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 text-white user-select-none">&nbsp;</div>
                 </div>
             </div>
             <div>
@@ -25,9 +25,9 @@ if ($userData["role"] != "coordinator") {
                     <form id="updateSupervisorsDetailsSingleForm" method="POST">
                         <fieldset>
                             <div id="nameSelectGroup" class="mb-3">
-                                <label for="supervisorID">Select supervisor</label>
+                                <label for="supervisorID" class="mb-2">Supervisor</label>
                                 <select id="selectSupervisor" name="supervisorID" class="form-select">
-                                    <option disabled selected value> -- select an option -- </option>
+                                    <option disabled selected value> -- select a supervisor -- </option>
                                 </select>
                             </div>
                             <div id="nameGroup" class="mb-3 ">
@@ -50,24 +50,37 @@ if ($userData["role"] != "coordinator") {
                                 <label for="description" class="form-label">Description</label>
                                 <textarea id="descriptionInput" name="description" class="form-control"></textarea>
                             </div>
-                            <div id="message" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 text-white user-select-none">&nbsp;</div>
                             <div class="d-flex justify-content-end">
                                 <input id="saveBtn" type="submit" class="btn btn-primary mx-2" value="Save changes">
                             </div>
                         </fieldset>
                     </form>
+                    <div id="updateSupervisorsDetailsSingleError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 text-white user-select-none">&nbsp;</div>
                 </div>
             </div>
-            <!-- <div>
+            <div>
                 <h3>Set supervisor quota</h3>
                 <div class="bg-light border p-4">
-                    <form id="supervisorQuota" method="POST">
-                        <input type="number" name="supervisorQuota" min="1">
-                        <input type="submit" name="updateSupervisors" id="updateSupervisors" class="btn btn-primary" value="Set">
+                    <form id="setSupervisorQuotaForm" method="POST">
+                        <fieldset>
+                            <div class="row g-3 mb-3">
+                                <div id="semesterGroup" class="col">
+                                    <label for="semester" class="mb-2">Semester</label>
+                                    <select id="semesterInput" name="semester" class="form-select" aria-label="Select semester">
+                                        <option disabled selected value> -- select a semester -- </option>
+                                    </select>
+                                </div>
+                                <div id="quotaGroup" class="col">
+                                    <label for="quota" class="mb-2">Quota</label>
+                                    <input type="number" id="quotaInput" name="quota" class="form-control" min="1">
+                                </div>
+                            </div>
+                        </fieldset>
+                        <input type="submit" name="setQuotaBtn" id="setQuotaBtn" class="btn btn-primary px-3" value="Set">
                     </form>
-                    <span id="response"></span>
+                    <div id="setSupervisorQuotaError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 text-white user-select-none">&nbsp;</div>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
     <div class="position-fixed bottom-0 end-0 p-3 toast-container" style="z-index: 11"></div>
@@ -79,7 +92,7 @@ if ($userData["role"] != "coordinator") {
         $('#updateSupervisorsDetailsBulk').on('submit', function(event) {
             event.preventDefault();
             $.ajax({
-                url: "includes/supervisor_details-inc.php",
+                url: "includes/supervisor_details_bulk-inc.php",
                 method: "POST",
                 data: new FormData(this),
                 contentType: false,
@@ -90,7 +103,7 @@ if ($userData["role"] != "coordinator") {
                     $('#updateSupervisors').val('Importing...');
                 },
                 success: function(data) {
-                    $('#response').html(data);
+                    $('#updateSupervisorsDetailsBulk').html(data);
                     $('#updateSupervisorsDetailsBulk')[0].reset();
                     $('#updateSupervisors').attr('disabled', false);
                     $('#updateSupervisors').val('Import');
@@ -108,7 +121,9 @@ if ($userData["role"] != "coordinator") {
         $('#selectSupervisor').select2();
 
         $('#selectSupervisor').on('select2:select', function(event) {
+            event.preventDefault();
             var selected = event.params.data;
+
             $.ajax({
                 url: "includes/getsupervisor-inc.php",
                 method: "POST",
@@ -147,7 +162,7 @@ if ($userData["role"] != "coordinator") {
 
             $(".invalid-feedback").remove();
             $(".form-control").removeClass("is-invalid");
-            $("#message").html("").removeClass("bg-success").addClass("bg-light");
+            $("#updateSupervisorsDetailsSingleError").html("").removeClass("bg-success").addClass("bg-light");
 
             $.ajax({
                 url: "includes/supervisor_editprofile-inc.php",
@@ -161,7 +176,6 @@ if ($userData["role"] != "coordinator") {
                     $('#saveBtn').val('Saving...');
                 },
                 success: function(data) {
-                    console.log(data);
                     var response = JSON.parse(data);
 
                     if (!response.success) {
@@ -187,7 +201,7 @@ if ($userData["role"] != "coordinator") {
                         }
 
                         if (response.errors.sql) {
-                            $("#message").html(response.errors.sql).removeClass("bg-light").addClass("bg-danger");
+                            $("#updateSupervisorsDetailsSingleError").html(response.errors.sql).removeClass("bg-body").addClass("bg-danger");
                         }
                     } else {
                         var toast = $(createToast(response.message));
@@ -210,10 +224,98 @@ if ($userData["role"] != "coordinator") {
                 }
             })
         });
-    });
 
-    function createToast(text) {
-        return `<div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        const now = new Date();
+        var thisYear = now.getFullYear();
+        var thisMonth = now.getMonth();
+
+        // getMonth() returns month as value from 0 - 11
+        // if within April and September, set semester as 4, else set as 9
+        var semesterMonth = (thisMonth >= 3 && thisMonth < 8) ? 4 : 9;
+
+        // adds options for semesters in the past 2 years
+        for (var i = 0; i < 2; i++) {
+            $('#semesterInput').append(
+                new Option(
+                    thisYear.toString() + "0" + semesterMonth.toString(),
+                    thisYear.toString() + "0" + semesterMonth.toString()
+                )
+            );
+
+            if (semesterMonth - 5 == 4) {
+                semesterMonth -= 5;
+                $('#semesterInput').append(
+                    new Option(
+                        thisYear.toString() + "0" + semesterMonth.toString(),
+                        thisYear.toString() + "0" + semesterMonth.toString()
+                    )
+                );
+            }
+
+            thisYear -= 1;
+            semesterMonth = 9;
+        }
+
+        $('#setSupervisorQuotaForm').on('submit', function(event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: "includes/setquota-inc.php",
+                method: "POST",
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData: false,
+                beforeSend: function() {
+                    $('#setQuotaBtn').attr('disabled', 'disabled');
+                    $('#setQuotaBtn').val('Setting...');
+                },
+                success: function(data) {
+                    console.log(data);
+
+                    var response = JSON.parse(data);
+
+                    if (!response.success) {
+                        if (response.errors.semester) {
+                            $("#semesterInput").addClass("is-invalid");
+                            $("#semesterGroup").append(
+                                '<div class="invalid-feedback">' + response.errors.semester + "</div>"
+                            );
+                        }
+
+                        if (response.errors.quota) {
+                            $("#quotaInput").addClass("is-invalid");
+                            $("#quotaGroup").append(
+                                '<div class="invalid-feedback">' + response.errors.quota + "</div>"
+                            );
+                        }
+
+                        if (response.errors.sql) {
+                            $("#setSupervisorQuotaError").html(response.errors.sql).removeClass("bg-light").addClass("bg-danger");
+                        }
+                    } else {
+                        var toast = $(createToast(response.message));
+
+                        $(".toast-container").append(toast);
+
+                        toast.on('hidden.bs.toast', function() {
+                            $(this).remove();
+                        });
+
+                        // create bootstrap toast and show it
+                        var bsToast = new bootstrap.Toast(toast);
+                        bsToast.show();
+                    }
+
+                    $('#setSupervisorQuotaForm')[0].reset();
+                    $('#setQuotaBtn').attr('disabled', false);
+                    $('#setQuotaBtn').val('Set');
+                }
+            })
+        });
+
+        function createToast(text) {
+            return `<div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="d-flex">
                         <div class="toast-body">
                             ${text}
@@ -221,5 +323,6 @@ if ($userData["role"] != "coordinator") {
                         <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>
                 </div>`;
-    }
+        }
+    });
 </script>
