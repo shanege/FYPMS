@@ -12,7 +12,7 @@ use \League\Flysystem\StorageAttributes;
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-auto">
-            <a class="btn" href="supervisorslist.php" role="button">
+            <a class="btn" href="supervisors-list.php" role="button">
                 <div class="card text-center" style="width: 18rem;">
                     <i class="bi bi-search card-img-top " style="font-size: 8rem;"></i>
                     <div class="card-body">

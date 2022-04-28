@@ -51,7 +51,7 @@
             $("#message").html("").removeClass("bg-success").addClass("bg-body");
 
             $.ajax({
-                url: "includes/supervisor_editprofile-inc.php",
+                url: "includes/supervisor-edit-profile-inc.php",
                 method: "POST",
                 data: new FormData(this),
                 contentType: false,

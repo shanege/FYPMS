@@ -93,7 +93,7 @@ if ($userData["role"] != "supervisor") {
 
             confirmModal.find(".confirm-button").click(function(event) {
                 $.ajax({
-                    url: "includes/accept_student-inc.php",
+                    url: "includes/accept-student-inc.php",
                     method: "POST",
                     data: {
                         studentID: studentID,
@@ -188,7 +188,7 @@ if ($userData["role"] != "supervisor") {
 
             confirmModal.find(".confirm-button").click(function(event) {
                 $.ajax({
-                    url: "includes/reject_student-inc.php",
+                    url: "includes/reject-student-inc.php",
                     method: "POST",
                     data: {
                         studentID: studentID,

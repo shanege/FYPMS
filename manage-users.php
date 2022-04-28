@@ -60,7 +60,7 @@ Register users by bulk
         $('#registerUsersExcel').on('submit', function(event) {
             event.preventDefault();
             $.ajax({
-                url: "includes/bulk_register-inc.php",
+                url: "includes/bulk-register-inc.php",
                 method: "POST",
                 data: new FormData(this),
                 contentType: false,

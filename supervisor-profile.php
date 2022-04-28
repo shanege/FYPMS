@@ -84,7 +84,7 @@
         } else if ($userData['role'] == "supervisor" && $userData['userID'] == $id) {
             echo
             '<div class="d-flex justify-content-end">
-                <a href="editprofile.php" type="button" class="btn btn-primary mx-2">
+                <a href="edit-profile.php" type="button" class="btn btn-primary mx-2">
                     Edit Profile
                 </a>
             </div>';
@@ -156,7 +156,7 @@
 
             event.preventDefault();
             $.ajax({
-                url: "includes/request_supervisor-inc.php",
+                url: "includes/request-supervisor-inc.php",
                 method: "POST",
                 data: {
                     requestingStudentID: "<?php echo $_SESSION['userID'] ?>",
@@ -186,7 +186,7 @@
 
             event.preventDefault();
             $.ajax({
-                url: "includes/cancel_supervisor-inc.php",
+                url: "includes/cancel-supervisor-inc.php",
                 method: "POST",
                 data: {
                     requestingStudentID: "<?php echo $_SESSION['userID'] ?>",

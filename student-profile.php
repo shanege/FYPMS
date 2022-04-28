@@ -34,7 +34,7 @@
         if ($userData['role'] == "student" && $userData['userID'] == $id) {
             echo
             '<div class="d-flex justify-content-end">
-                <a href="editprofile.php" type="button" class="btn btn-primary mx-2">
+                <a href="edit-profile.php" type="button" class="btn btn-primary mx-2">
                     Edit Profile
                 </a>
             </div>';

@@ -92,7 +92,7 @@ if ($userData["role"] != "coordinator") {
         $('#updateSupervisorsDetailsBulk').on('submit', function(event) {
             event.preventDefault();
             $.ajax({
-                url: "includes/supervisor_details_bulk-inc.php",
+                url: "includes/supervisor-details-bulk-inc.php",
                 method: "POST",
                 data: new FormData(this),
                 contentType: false,
@@ -125,7 +125,7 @@ if ($userData["role"] != "coordinator") {
             var selected = event.params.data;
 
             $.ajax({
-                url: "includes/getsupervisor-inc.php",
+                url: "includes/get-supervisor-inc.php",
                 method: "POST",
                 data: {
                     supervisorID: selected["id"]
@@ -165,7 +165,7 @@ if ($userData["role"] != "coordinator") {
             $("#updateSupervisorsDetailsSingleError").html("").removeClass("bg-success").addClass("bg-light");
 
             $.ajax({
-                url: "includes/supervisor_editprofile-inc.php",
+                url: "includes/supervisor-edit-profile-inc.php",
                 method: "POST",
                 data: new FormData(this),
                 contentType: false,
@@ -260,7 +260,7 @@ if ($userData["role"] != "coordinator") {
             event.preventDefault();
 
             $.ajax({
-                url: "includes/setquota-inc.php",
+                url: "includes/set-quota-inc.php",
                 method: "POST",
                 data: new FormData(this),
                 contentType: false,

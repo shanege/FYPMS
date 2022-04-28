@@ -41,7 +41,7 @@
             $("#message").html("").removeClass("bg-success").addClass("bg-body");
 
             $.ajax({
-                url: "includes/student_editprofile-inc.php",
+                url: "includes/student-edit-profile-inc.php",
                 method: "POST",
                 data: new FormData(this),
                 contentType: false,
