@@ -6,6 +6,7 @@
         if (!$supervisorDetails) {
             echo 'This supervisor could not be found.';
         } else {
+            $proposedTopics = getProposedTopics($con, $id);
 
             // get current semester
             $thisYear = date('Y');
@@ -36,11 +37,21 @@
                         </tr>
                         <tr>
                             <th scope="row">Proposed topic(s)</th>
-                            <td>' . $supervisorDetails["proposed_topics"] . '</td>
+                            <td>';
+            if (empty($proposedTopics)) {
+                echo "No proposed topics yet";
+            } else {
+                foreach ($proposedTopics as $proposedTopic) {
+                    echo $proposedTopic["topic_title"] . '<br/>';
+                }
+            }
+            echo '</td>
                         </tr>
                         <tr>
                             <th scope="row">Description</th>
-                            <td>' . $supervisorDetails["description"] . '</td>
+                            <td>';
+            echo (empty($supervisorDetails["description"])) ? "No description yet" : $supervisorDetails["description"];
+            echo '</td>
                         </tr>
                         <tr>
                             <th scope="row">Quota</th>

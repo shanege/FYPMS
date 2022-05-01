@@ -12,9 +12,9 @@ if (isset($_POST['rowNum']) && isset($_POST['studentID'])) {
     $pendingStudentsIDs = [];
 
     if (!empty($students)) {
-        foreach ($students as $key => $val) {
-            if ($val['status'] == "Pending") {
-                array_push($pendingStudentsIDs, $val['studentID']);
+        foreach ($students as $student) {
+            if ($student['status'] == "Pending") {
+                array_push($pendingStudentsIDs, $student['studentID']);
             }
         }
     } else {

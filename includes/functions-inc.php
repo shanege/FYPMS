@@ -156,7 +156,7 @@ function checkLogin($con)
 
 function getSupervisor($con, $supervisorID)
 {
-    $sql = "SELECT name, email, research_areas, proposed_topics, description FROM supervisor_details WHERE supervisorID = ? LIMIT 1;";
+    $sql = "SELECT name, email, research_areas, description FROM supervisor_details WHERE supervisorID = ? LIMIT 1;";
 
     try {
         $stmt = $con->prepare($sql);
@@ -192,7 +192,7 @@ function getAllSupervisors($con)
 
 function getStudent($con, $studentID)
 {
-    $sql = "SELECT name, email, working_title, fyp_status FROM student_details WHERE studentID = ? LIMIT 1;";
+    $sql = "SELECT name, email, working_title FROM student_details WHERE studentID = ? LIMIT 1;";
 
     try {
         $stmt = $con->prepare($sql);
@@ -278,6 +278,22 @@ function countStudentsPerSupervisor($con, $supervisorID)
             return $row['total_students'];
         } else {
             $result = false;
+            return $result;
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+function getProposedTopics($con, $supervisorID)
+{
+    $sql = "SELECT topicID, topic, description, expected_output, skills, field_of_study FROM proposed_topics WHERE supervisorID = ?;";
+    try {
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(1, $supervisorID, PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         }
     } catch (PDOException $e) {

@@ -17,14 +17,14 @@
                 </div>
                 <div id="workingTitleGroup" class="mb-3">
                     <label for="workingTitle" class="form-label">Working title</label>
-                    <textarea id="workingTitleInput" type="workingTitle" name="workingTitle" class="form-control">' . $supervisorDetails['working_title'] . '</textarea>
+                    <textarea id="workingTitleInput" name="workingTitle" class="form-control">' . $supervisorDetails['working_title'] . '</textarea>
                 </div>
                 <div id="message" class="rounded-3 mb-2 bg-body p-2 text-white bg-opacity-75 user-select-none">&nbsp;</div>
                 <div class="d-flex justify-content-end">
                     <a href="profile.php?id=' . $userData['userID'] . '" type="button" class="btn btn-secondary mx-2">
                         Cancel
                     </a>
-                    <input id="saveBtn" type="submit" class="btn btn-primary mx-2" value="Save changes">
+                    <input id="saveBtn" name="saveBtn" type="submit" class="btn btn-primary mx-2" value="Save changes">
                 </div>
             </fieldset>
         </form>';
@@ -89,12 +89,8 @@
                         $(form).submit();
                     }
 
-                    // resets the forms inputs, but does not affect textareas
+                    // resets the forms inputs
                     $('#editProfileForm')[0].reset();
-
-                    // resets the forms textareas
-                    $('#editProfileForm textarea').val('');
-
                     $('#saveBtn').attr('disabled', false);
                     $('#saveBtn').val('Save changes');
                 }

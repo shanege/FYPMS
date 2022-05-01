@@ -1,5 +1,5 @@
 <?php
-if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['researchAreas'])) {
+if (isset($_POST['saveBtn'])) {
     session_start();
 
     require_once 'connection-inc.php';
@@ -23,7 +23,6 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['researchAre
         $name = $_POST['name'];
         $email = $_POST['email'];
         $researchAreas = $_POST['researchAreas'];
-        $proposedTopics = $_POST['proposedTopics'];
         $description = $_POST['description'];
 
         // if this page is accessed by supervisor, supervisorID is their user id
@@ -34,15 +33,14 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['researchAre
             $supervisorID = $_POST['supervisorID'];
         }
 
-        $sql = "UPDATE supervisor_details SET name = ?, email = ?, research_areas = ?, proposed_topics = ?, description = ? WHERE supervisorID = ?";
+        $sql = "UPDATE supervisor_details SET name = ?, email = ?, research_areas = ?, description = ? WHERE supervisorID = ?";
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindParam(1, $name, PDO::PARAM_STR);
             $stmt->bindParam(2, $email, PDO::PARAM_STR);
             $stmt->bindParam(3, $researchAreas, PDO::PARAM_STR);
-            $stmt->bindParam(4, $proposedTopics, PDO::PARAM_STR);
-            $stmt->bindParam(5, $description, PDO::PARAM_STR);
-            $stmt->bindParam(6, $supervisorID, PDO::PARAM_STR);
+            $stmt->bindParam(4, $description, PDO::PARAM_STR);
+            $stmt->bindParam(5, $supervisorID, PDO::PARAM_STR);
 
             $stmt->execute();
         } catch (PDOException $e) {

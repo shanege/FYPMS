@@ -31,20 +31,17 @@ require_once 'header.php';
             $thisSemester = $thisYear . "0" . $semesterMonth;
             $quota = getSupervisorStudentQuota($con, $thisSemester);
 
-            foreach ($supervisorDetailsList as $key => $value) {
+            foreach ($supervisorDetailsList as $supervisorDetails) {
                 echo
                 '<tr>
-                    <td><a href="profile.php?id=' . $value["supervisorID"] . '">' . $value["name"] . '</a></td>
-                    <td>' . $value["research_areas"] . '</td>
-                    <td>' . $value["email"] . '</td>';
+                    <td><a href="profile.php?id=' . $supervisorDetails["supervisorID"] . '">' . $supervisorDetails["name"] . '</a></td>
+                    <td>' . $supervisorDetails["research_areas"] . '</td>
+                    <td>' . $supervisorDetails["email"] . '</td>';
 
-                $studentCount = countStudentsPerSupervisor($con, $value["supervisorID"]);
+                $studentCount = countStudentsPerSupervisor($con, $supervisorDetails["supervisorID"]);
 
-                if (!$quota) {
-                    echo '<td>No quota set yet</td>';
-                } else {
-                    echo '<td>' . $studentCount . ' / ' . $quota . '</td>';
-                }
+                // if a quota had not yet been set for the semester print 'no quota set yet', else print the current student count and quota
+                echo (!$quota) ? '<td>No quota set yet</td>' : '<td>' . $studentCount . ' / ' . $quota . '</td>';
                 echo '</tr>';
             }
 

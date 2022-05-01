@@ -10,13 +10,13 @@ $ongoingStudentsIDs = [];
 $completedStudentsIDs = [];
 
 if (!empty($students)) {
-    foreach ($students as $key => $val) {
-        if ($val['status'] == "Pending") {
-            array_push($pendingStudentsIDs, $val['studentID']);
-        } else if ($val['status'] == "Ongoing") {
-            array_push($ongoingStudentsIDs, $val['studentID']);
-        } else if ($val['status'] == "Completed") {
-            array_push($completedStudentsIDs, $val['studentID']);
+    foreach ($students as $student) {
+        if ($student['status'] == "Pending") {
+            array_push($pendingStudentsIDs, $student['studentID']);
+        } else if ($student['status'] == "Ongoing") {
+            array_push($ongoingStudentsIDs, $student['studentID']);
+        } else if ($student['status'] == "Completed") {
+            array_push($completedStudentsIDs, $student['studentID']);
         }
     }
 }

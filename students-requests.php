@@ -4,10 +4,7 @@ if ($userData["role"] != "supervisor") {
 } ?>
 <div id="requests-content" class="position-relative">
     <div class="position-absolute top-0 start-50 translate-middle-x">
-        <?php
-
-        echo
-        '<div class="table-responsive my-3">
+        <div class="table-responsive my-3">
             <table class="table table-striped align-middle" style="width:80rem;">
                 <colgroup>
                     <col span="1" style="width:20%;">
@@ -21,41 +18,48 @@ if ($userData["role"] != "supervisor") {
                         <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody>';
+                <tbody>
+                    <?php
 
-        if (!empty($pendingStudentsIDs)) {
-            foreach ($pendingStudentsIDs as $pendingStudentID) {
-                $student = getStudent($con, $pendingStudentID);
+                    echo
+                    '';
 
-                echo
-                '<tr id="' . $pendingStudentID . '">
-                    <td>
-                        <div class="d-flex w-40"><a href="profile.php?id=' . $pendingStudentID . '">';
+                    if (!empty($pendingStudentsIDs)) {
+                        foreach ($pendingStudentsIDs as $pendingStudentID) {
+                            $student = getStudent($con, $pendingStudentID);
 
-                // if the student has not set up their name in profile, display their studentID, else display their name
-                echo ($student["name"] == "") ?  $pendingStudentID  :  $student["name"];
-                echo
-                '</div></a></td>
-                    <td>
-                        <div class="d-flex w-40">';
-                echo ($student["working_title"] == "") ? 'No working title yet' : $student["working_title"];
-                echo
-                '</div>
-                    </td>
-                    <td>
-                        <div class="d-flex justify-content-evenly">
-                            <button type="button" class="btn btn-success"><i class="bi bi-person-check"></i>&nbsp;Accept</button>
-                            <button type="button" class="btn btn-danger"><i class="bi bi-person-x"></i>&nbsp;Decline</button>
-                        </div>
-                    </td>
-                </tr>';
-            }
-        } else {
-            echo '<tr><td colspan="3">No student requests at the moment.</td></tr>';
-        }
+                            echo
+                            '<tr id="' . $pendingStudentID . '">
+                                <td>
+                                    <div class="d-flex w-40"><a href="profile.php?id=' . $pendingStudentID . '">';
 
-        echo '</tbody></table></div>';
-        ?>
+                            // if the student has not set up their name in profile, display their studentID, else display their name
+                            echo ($student["name"] == "") ?  $pendingStudentID  :  $student["name"];
+                            echo
+                            '</div></a></td>
+                                <td>
+                                    <div class="d-flex w-40">';
+                            echo ($student["working_title"] == "") ? 'No working title yet' : $student["working_title"];
+                            echo
+                            '</div>
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-evenly">
+                                        <button type="button" class="btn btn-success"><i class="bi bi-person-check"></i>&nbsp;Accept</button>
+                                        <button type="button" class="btn btn-danger"><i class="bi bi-person-x"></i>&nbsp;Decline</button>
+                                    </div>
+                                </td>
+                            </tr>';
+                        }
+                    } else {
+                        echo '<tr><td colspan="3">No student requests at the moment.</td></tr>';
+                    }
+
+                    echo '';
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="position-fixed bottom-0 end-0 p-3 toast-container" style="z-index: 11"></div>
 </div>

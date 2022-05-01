@@ -55,7 +55,7 @@ if ($userData["role"] != "coordinator") {
                             </div>
                         </fieldset>
                     </form>
-                    <div id="updateSupervisorsDetailsSingleError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 text-white user-select-none">&nbsp;</div>
+                    <div id="updateSupervisorsDetailsSingleError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 user-select-none">&nbsp;</div>
                 </div>
             </div>
             <div>

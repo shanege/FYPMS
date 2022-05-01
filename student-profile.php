@@ -22,10 +22,6 @@
                             <th scope="row">Working Title</th>
                             <td>' . $studentDetails["working_title"] . '</td>
                         </tr>
-                        <tr>
-                            <th scope="row">FYP Status</th>
-                            <td>' . $studentDetails["fyp_status"] . '</td>
-                        </tr>
                     </tbody>
                 </table>
             </div>';

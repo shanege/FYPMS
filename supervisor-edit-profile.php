@@ -21,10 +21,6 @@
                         <textarea id="researchAreasInput" name="researchAreas" class="form-control">' . $supervisorDetails['research_areas'] . '</textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="proposedTopics" class="form-label">Proposed topic(s)</label>
-                        <textarea name="proposedTopics" class="form-control">' . $supervisorDetails['proposed_topics'] . '</textarea>
-                    </div>
-                    <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
                         <textarea name="description" class="form-control">' . $supervisorDetails['description'] . '</textarea>
                     </div>
@@ -33,7 +29,7 @@
                         <a href="profile.php?id=' . $userData['userID'] . '" type="button" class="btn btn-secondary mx-2">
                             Cancel
                         </a>
-                        <input id="saveBtn" type="submit" class="btn btn-primary mx-2" value="Save changes">
+                        <input id="saveBtn" name="saveBtn" type="submit" class="btn btn-primary mx-2" value="Save changes">
                     </div>
                 </fieldset>
             </form>';
