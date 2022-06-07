@@ -12,8 +12,8 @@ if ($userData["role"] != "coordinator") {
                 <h3>Update supervisors details (Bulk)</h3>
                 <div class="bg-light border p-4">
                     <form id="updateSupervisorsDetailsBulk" method="POST" enctype="multipart/form-data">
-                        <label for="supervisorFile" class="form-label">Select Excel file</label>
-                        <input type="file" name="supervisorFile" class="form-control mb-3">
+                        <label for="supervisorDetailsFile" class="form-label">Select Excel file</label>
+                        <input type="file" name="supervisorDetailsFile" class="form-control mb-3">
                         <input type="submit" name="updateSupervisors" id="updateSupervisors" class="btn btn-primary" value="Import">
                     </form>
                     <div id="updateSupervisorsDetailsBulkError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 text-white user-select-none">&nbsp;</div>
@@ -43,15 +43,11 @@ if ($userData["role"] != "coordinator") {
                                 <textarea id="researchAreasInput" name="researchAreas" class="form-control"></textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="proposedTopics" class="form-label">Proposed topic(s)</label>
-                                <textarea id="proposedTopicsInput" name="proposedTopics" class="form-control"></textarea>
-                            </div>
-                            <div class="mb-3">
                                 <label for="description" class="form-label">Description</label>
                                 <textarea id="descriptionInput" name="description" class="form-control"></textarea>
                             </div>
                             <div class="d-flex justify-content-end">
-                                <input id="saveBtn" type="submit" class="btn btn-primary mx-2" value="Save changes">
+                                <input id="saveBtn" name="saveBtn" type="submit" class="btn btn-primary mx-2" value="Save changes">
                             </div>
                         </fieldset>
                     </form>
@@ -103,7 +99,7 @@ if ($userData["role"] != "coordinator") {
                     $('#updateSupervisors').val('Importing...');
                 },
                 success: function(data) {
-                    $('#updateSupervisorsDetailsBulk').html(data);
+                    $('#updateSupervisorsDetailsBulkError').html(data);
                     $('#updateSupervisorsDetailsBulk')[0].reset();
                     $('#updateSupervisors').attr('disabled', false);
                     $('#updateSupervisors').val('Import');
@@ -177,6 +173,7 @@ if ($userData["role"] != "coordinator") {
                 },
                 success: function(data) {
                     var response = JSON.parse(data);
+                    console.log(data);
 
                     if (!response.success) {
                         if (response.errors.name) {
@@ -271,8 +268,6 @@ if ($userData["role"] != "coordinator") {
                     $('#setQuotaBtn').val('Setting...');
                 },
                 success: function(data) {
-                    console.log(data);
-
                     var response = JSON.parse(data);
 
                     if (!response.success) {

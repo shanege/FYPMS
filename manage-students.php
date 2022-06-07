@@ -27,7 +27,7 @@ if ($userData["role"] != "coordinator") {
                     <div id="updateStudentsDetailsBulkError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 user-select-none">&nbsp;</div>
                 </div>
             </div>
-            <div>
+            <!-- <div>
                 <h3>Update Students details (Single)</h3>
                 <div class="bg-light border p-4">
                     <form id="updateStudentsDetailsSingleForm" method="POST">
@@ -65,7 +65,7 @@ if ($userData["role"] != "coordinator") {
                     </form>
                     <div id="updateStudentsDetailsSingleError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 text-white user-select-none">&nbsp;</div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="position-fixed bottom-0 end-0 p-3 toast-container" style="z-index: 11"></div>
@@ -97,7 +97,6 @@ if ($userData["role"] != "coordinator") {
                     $('#updateStudentsDetailsBulk')[0].reset();
                     $('#updateStudents').attr('disabled', false);
                     $('#updateStudents').val('Import');
-
 
                     var toast = $(createToast("Student details imported"));
 

@@ -92,103 +92,104 @@ if ($userData["role"] != "supervisor") {
 </div>
 
 <script>
-    $(".btn-danger").click(function(event) {
-        event.preventDefault();
+    $(document).ready(function() {
+        $(".btn-danger").click(function(event) {
+            event.preventDefault();
 
-        var thisBtn = $(this);
+            var thisBtn = $(this);
 
-        // get the index of the parent tr of the clicked button
-        var topicID = thisBtn.closest("tr").prop('id');
+            // get the index of the parent tr of the clicked button
+            var topicID = thisBtn.closest("tr").prop('id');
 
-        // get row number of the clicked button
-        var row = thisBtn.closest("tr");
-        var rowNum = $("tbody tr").index(row);
+            // get row number of the clicked button
+            var row = thisBtn.closest("tr");
+            var rowNum = $("tbody tr").index(row);
 
-        var confirmModal = $(createModal("Before you proceed!", "Remove this topic?"));
+            var confirmModal = $(createModal("Before you proceed!", "Remove this topic?"));
 
-        // add confirmation button to the modal
-        confirmModal.find(".modal-content").append(
-            `<div class="modal-footer">
-                <button type="button" class="btn btn-primary confirm-button">Reject</button>
+            // add confirmation button to the modal
+            confirmModal.find(".modal-content").append(
+                `<div class="modal-footer">
+                <button type="button" class="btn btn-primary confirm-button">Remove</button>
             </div>`
-        );
+            );
 
-        // event listener to destroy the data on the DOM element once it is closed
-        confirmModal.on('hidden.bs.modal', function() {
-            $(this).remove();
-        });
-
-        // create bootstrap modal and show it
-        var bsConfirmModal = new bootstrap.Modal(confirmModal);
-        bsConfirmModal.show();
-
-        confirmModal.find(".confirm-button").click(function(event) {
-            $.ajax({
-                url: "includes/remove-topic-inc.php",
-                method: "POST",
-                data: {
-                    topicID: topicID,
-                    rowNum: rowNum
-                },
-                cache: false,
-                beforeSend: function() {
-                    thisBtn.attr('disabled', 'disabled');
-                    thisBtn.siblings(".btn-danger").attr('disabled', 'disabled');
-                },
-                success: function(data) {
-                    var response = JSON.parse(data);
-                    var errorMessage = '';
-
-                    if (!response.success) {
-                        if (response.errors.empty) {
-                            errorMessage = errorMessage + response.errors.empty + "<br/>";
-                        }
-
-                        if (response.errors.mismatch) {
-                            errorMessage = errorMessage + response.errors.mismatch + "<br/>";
-                        }
-
-                        if (response.errors.sql) {
-                            errorMessage = errorMessage + response.errors.sql + "<br/>";
-                        }
-
-                        var errorModal = $(createModal("Something went wrong", errorMessage));
-
-                        // add a listener that forces a reload on the page when the modal is closed
-                        errorModal.on('hidden.bs.modal', function() {
-                            window.location.reload();
-                        });
-
-                        $("#requests-content").append(errorModal);
-
-                        // create bootstrap modal and show it
-                        var bsErrorModal = new bootstrap.Modal(errorModal);
-                        bsErrorModal.show();
-                    } else {
-                        row.remove();
-                        var toast = $(createToast(response.message));
-
-                        toast.on('hidden.bs.toast', function() {
-                            $(this).remove();
-                        });
-
-                        $(".toast-container").append(toast);
-
-                        // create bootstrap toast and show it
-                        var bsToast = new bootstrap.Toast(toast);
-                        bsToast.show();
-                    }
-                }
+            // event listener to destroy the data on the DOM element once it is closed
+            confirmModal.on('hidden.bs.modal', function() {
+                $(this).remove();
             });
 
-            bsConfirmModal.hide();
+            // create bootstrap modal and show it
+            var bsConfirmModal = new bootstrap.Modal(confirmModal);
+            bsConfirmModal.show();
+
+            confirmModal.find(".confirm-button").click(function(event) {
+                $.ajax({
+                    url: "includes/remove-topic-inc.php",
+                    method: "POST",
+                    data: {
+                        topicID: topicID,
+                        rowNum: rowNum
+                    },
+                    cache: false,
+                    beforeSend: function() {
+                        thisBtn.attr('disabled', 'disabled');
+                        thisBtn.siblings(".btn-danger").attr('disabled', 'disabled');
+                    },
+                    success: function(data) {
+                        var response = JSON.parse(data);
+                        var errorMessage = '';
+
+                        if (!response.success) {
+                            if (response.errors.empty) {
+                                errorMessage = errorMessage + response.errors.empty + "<br/>";
+                            }
+
+                            if (response.errors.mismatch) {
+                                errorMessage = errorMessage + response.errors.mismatch + "<br/>";
+                            }
+
+                            if (response.errors.sql) {
+                                errorMessage = errorMessage + response.errors.sql + "<br/>";
+                            }
+
+                            var errorModal = $(createModal("Something went wrong", errorMessage));
+
+                            // add a listener that forces a reload on the page when the modal is closed
+                            errorModal.on('hidden.bs.modal', function() {
+                                window.location.reload();
+                            });
+
+                            $("#requests-content").append(errorModal);
+
+                            // create bootstrap modal and show it
+                            var bsErrorModal = new bootstrap.Modal(errorModal);
+                            bsErrorModal.show();
+                        } else {
+                            row.remove();
+                            var toast = $(createToast(response.message));
+
+                            toast.on('hidden.bs.toast', function() {
+                                $(this).remove();
+                            });
+
+                            $(".toast-container").append(toast);
+
+                            // create bootstrap toast and show it
+                            var bsToast = new bootstrap.Toast(toast);
+                            bsToast.show();
+                        }
+                    }
+                });
+
+                bsConfirmModal.hide();
+            });
+
+            $("#requests-content").append(confirmModal);
         });
 
-        $("#requests-content").append(confirmModal);
-    });
-
-    function createModal(title, text) {
-        return `<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        function createModal(title, text) {
+            return `<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -201,10 +202,10 @@ if ($userData["role"] != "supervisor") {
                     </div>
                 </div>
             </div>`;
-    }
+        }
 
-    function createToast(text) {
-        return `<div class="toast align-items-center text-white bg-success bg-opacity-75 border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        function createToast(text) {
+            return `<div class="toast align-items-center text-white bg-success bg-opacity-75 border-0" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
                     <div class="toast-body">
                         ${text}
@@ -212,18 +213,19 @@ if ($userData["role"] != "supervisor") {
                     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
             </div>`;
-    }
+        }
 
-    var proposeTopicToast = document.getElementById('proposeTopicToast');
-    if (proposeTopicToast) {
-        var toast = new bootstrap.Toast(proposeTopicToast);
+        var proposeTopicToast = document.getElementById('proposeTopicToast');
+        if (proposeTopicToast) {
+            var toast = new bootstrap.Toast(proposeTopicToast);
 
-        toast.show();
+            toast.show();
 
-        proposeTopicToast.on('hidden.bs.toast', function() {
-            $(this).remove();
-        });
-    }
+            proposeTopicToast.on('hidden.bs.toast', function() {
+                $(this).remove();
+            });
+        }
+    })
 </script>
 </body>
 

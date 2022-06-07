@@ -1,12 +1,12 @@
 <?php
-require_once 'adapters/FlySystemAdapter.php';
+// require_once 'adapters/FlySystemAdapter.php';
 require_once 'includes/functions-inc.php';
 
-use \League\Flysystem\FilesystemException;
-use \League\Flysystem\UnableToRetrieveMetadata;
-use \League\Flysystem\FileAttributes;
-use \League\Flysystem\DirectoryAttributes;
-use \League\Flysystem\StorageAttributes;
+// use \League\Flysystem\FilesystemException;
+// use \League\Flysystem\UnableToRetrieveMetadata;
+// use \League\Flysystem\FileAttributes;
+// use \League\Flysystem\DirectoryAttributes;
+// use \League\Flysystem\StorageAttributes;
 ?>
 
 <div class="container">
@@ -44,30 +44,31 @@ use \League\Flysystem\StorageAttributes;
     </div>
 </div>
 
-<!-- <?php
-        try {
-            $listing = $filesystem->listContents('test/', false);
+<?php
+// try {
+//     $listing = $filesystem->listContents('test/', false);
 
-            foreach ($listing as $item) {
-                $path = $item->path();
+//     foreach ($listing as $item) {
+//         $path = $item->path();
 
-                if ($item instanceof FileAttributes) {
-                    // handle the file
-                    try {
-                        $fileName = explode("/", $path);
-                        echo '<div><a href="#" onclick="download();">' . $fileName[1] . '</a></div>';
-                    } catch (FilesystemException | UnableToRetrieveMetadata $exception) {
-                        echo "couldnt retrieve file metadata";
-                    }
-                } elseif ($item instanceof DirectoryAttributes) {
-                    // handle the directory
-                }
-            }
-        } catch (FilesystemException $exception) {
-            // handle the error
-            echo "folder does not exist";
-        }
-        ?> -->
+//         if ($item instanceof FileAttributes) {
+//             // handle the file
+//             try {
+//                 $fileName = explode("/", $path);
+//                 echo '<div><a href="#" onclick="download();">' . $fileName[1] . '</a></div>';
+//             } catch (FilesystemException | UnableToRetrieveMetadata $exception) {
+//                 echo "couldnt retrieve file metadata";
+//             }
+//         } elseif ($item instanceof DirectoryAttributes) {
+//             // handle the directory
+//         }
+//     }
+// } catch (FilesystemException $exception) {
+//     // handle the error
+//     echo "folder does not exist";
+// }
+// 
+?>
 </body>
 
 </html>

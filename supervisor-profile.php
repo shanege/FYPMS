@@ -42,7 +42,7 @@
                 echo "No proposed topics yet";
             } else {
                 foreach ($proposedTopics as $proposedTopic) {
-                    echo $proposedTopic["topic_title"] . '<br/>';
+                    echo $proposedTopic["topic"] . '<br/>';
                 }
             }
             echo '</td>

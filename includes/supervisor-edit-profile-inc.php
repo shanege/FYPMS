@@ -1,5 +1,5 @@
 <?php
-if (isset($_POST['saveBtn'])) {
+if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['researchAreas'])) {
     session_start();
 
     require_once 'connection-inc.php';

@@ -39,8 +39,6 @@ if ($_FILES['studentDetailsFile']['name'] != '') {
                 array_push($intake, str_replace(array('/', '-'), '', $sheetData[$i][2]));
             }
 
-            echo $rowCount;
-
             $userCount = $rowCount - 1;
 
             $sql = "UPDATE student_details SET name = ?, intake = ? WHERE studentID = ?";
