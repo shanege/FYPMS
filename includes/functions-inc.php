@@ -199,7 +199,7 @@ function getStudent($con, $studentID)
         $stmt->bindParam(1, $studentID, PDO::PARAM_STR);
 
         $stmt->execute();
-        if ($row = $stmt->fetch()) {
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             return $row;
         } else {
             $result = false;
@@ -285,7 +285,7 @@ function countStudentsPerSupervisor($con, $supervisorID)
     }
 }
 
-function getProposedTopics($con, $supervisorID)
+function getAllProposedTopics($con, $supervisorID)
 {
     $sql = "SELECT topicID, topic, description, expected_output, skills, field_of_study FROM proposed_topics WHERE supervisorID = ?;";
     try {
@@ -294,6 +294,26 @@ function getProposedTopics($con, $supervisorID)
 
         if ($stmt->execute()) {
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+function getProposedTopic($con, $topicID)
+{
+    $sql = "SELECT topic, description, expected_output, skills, field_of_study FROM proposed_topics WHERE topicID = ? LIMIT 1;";
+
+    try {
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(1, $topicID, PDO::PARAM_STR);
+
+        $stmt->execute();
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            return $row;
+        } else {
+            $result = false;
             return $result;
         }
     } catch (PDOException $e) {

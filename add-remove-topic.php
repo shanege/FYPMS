@@ -25,7 +25,7 @@ if ($userData["role"] != "supervisor") {
                 </thead>
                 <tbody>
                     <?php
-                    $proposedTopics = getProposedTopics($con, $userData['userID']);
+                    $proposedTopics = getAllProposedTopics($con, $userData['userID']);
                     if (!empty($proposedTopics)) {
                         $i = 0;
 
@@ -60,7 +60,7 @@ if ($userData["role"] != "supervisor") {
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-evenly">
-                                        <a href="#" role="button" class="btn btn-secondary"><i class="fa-solid fa-pen-to-square"></i>&nbsp;Edit</a>
+                                        <button type="button" class="btn btn-secondary"><i class="fa-solid fa-pen-to-square"></i>&nbsp;Edit</button>
                                         <button type="button" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i>&nbsp;Remove</button>
                                     </div>
                                 </td>
@@ -93,7 +93,7 @@ if ($userData["role"] != "supervisor") {
 
 <script>
     $(document).ready(function() {
-        $(".btn-danger").click(function(event) {
+        $(document).on('click', ".btn-danger", function(event) {
             event.preventDefault();
 
             var thisBtn = $(this);
@@ -186,6 +186,26 @@ if ($userData["role"] != "supervisor") {
             });
 
             $("#requests-content").append(confirmModal);
+        });
+
+        $(document).on('click', ".btn-secondary", function(event) {
+            var thisBtn = $(this);
+            var row = thisBtn.closest("tr");
+            var topicID = row.attr('id'); // the id of the row is the topicID
+
+            var form = $(document.createElement('form'));
+            $(form).attr("action", "edit-topic.php");
+            $(form).attr("method", "POST");
+            $(form).css("display", "none");
+
+            var topicIDInput = $("<input>")
+                .attr("type", "text")
+                .attr("name", "topicID")
+                .val(topicID);
+            $(form).append($(topicIDInput));
+
+            form.appendTo(document.body);
+            $(form).submit();
         });
 
         function createModal(title, text) {

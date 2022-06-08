@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     require_once 'connection-inc.php';
     require_once 'functions-inc.php';
 
-    $proposedTopics = getProposedTopics($con, $_SESSION['userID']);
+    $proposedTopics = getAllProposedTopics($con, $_SESSION['userID']);
 
     $proposedTopicsIDs = [];
 
