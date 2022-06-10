@@ -1,10 +1,10 @@
 <?php
-require_once 'vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 $options = [
     'credentials' => array(
-        'key' => 'AKIAWUPPR5I4IRICFYR5',
-        'secret' => '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'
+        'key' => 'AKIAWUPPR5I4NZT4JIDA',
+        'secret' => '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'
     ),
     'region' => 'us-west-1',
     'version' => 'latest'
