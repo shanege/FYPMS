@@ -21,7 +21,7 @@
             </a>
         </div>
         <div class="col-md-auto">
-            <a class="btn" href="#" role="button">
+            <a class="btn" href="proposed-topics-list.php" role="button">
                 <div class="card text-center" style="width: 18rem;">
                     <i class="bi bi-pen card-img-top " style="font-size: 8rem;"></i>
                     <div class="card-body">

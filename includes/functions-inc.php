@@ -285,7 +285,7 @@ function countStudentsPerSupervisor($con, $supervisorID)
     }
 }
 
-function getAllProposedTopics($con, $supervisorID)
+function getAllProposedTopicsForSupervisor($con, $supervisorID)
 {
     $sql = "SELECT topicID, topic, description, expected_output, skills, field_of_study FROM proposed_topics WHERE supervisorID = ?;";
     try {

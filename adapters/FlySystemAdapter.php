@@ -3,8 +3,8 @@ require_once '../vendor/autoload.php';
 
 $options = [
     'credentials' => array(
-        'key' => 'AKIAWUPPR5I4NZT4JIDA',
-        'secret' => '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'
+        'key' => getenv('AWS_ACCESS_KEY_ID'),
+        'secret' => getenv('AWS_SECRET_ACCESS_KEY')
     ),
     'region' => 'us-west-1',
     'version' => 'latest'

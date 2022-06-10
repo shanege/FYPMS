@@ -25,7 +25,7 @@ if ($userData["role"] != "supervisor") {
                 </thead>
                 <tbody>
                     <?php
-                    $proposedTopics = getAllProposedTopics($con, $userData['userID']);
+                    $proposedTopics = getAllProposedTopicsForSupervisor($con, $userData['userID']);
                     if (!empty($proposedTopics)) {
                         $i = 0;
 

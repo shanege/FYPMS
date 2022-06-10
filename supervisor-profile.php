@@ -6,7 +6,7 @@
         if (!$supervisorDetails) {
             echo 'This supervisor could not be found.';
         } else {
-            $proposedTopics = getAllProposedTopics($con, $id);
+            $proposedTopics = getAllProposedTopicsForSupervisor($con, $id);
 
             // get current semester
             $thisYear = date('Y');
