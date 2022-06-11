@@ -41,6 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     echo json_encode($data);
 } else {
-    header("location: ../add-remove-topic.php");
+    header("location: ../manage-topics.php");
     exit();
 }

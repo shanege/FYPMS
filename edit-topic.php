@@ -35,7 +35,7 @@ $topic = getProposedTopic($con, $_POST['topicID']);
                 </div>
                 <div id="message" class="rounded-3 mb-2 bg-body p-2 text-white bg-opacity-75 user-select-none">&nbsp;</div>
                 <div class="d-flex justify-content-end">
-                    <a href="add-remove-topic.php" type="button" class="btn btn-secondary mx-2">
+                    <a href="manage-topics.php" type="button" class="btn btn-secondary mx-2">
                         Cancel
                     </a>
                     <input id="saveBtn" name="saveBtn" type="submit" class="btn btn-primary mx-2" value="Save changes">
@@ -116,7 +116,7 @@ $topic = getProposedTopic($con, $_POST['topicID']);
                     } else {
                         // make a hidden form to send POST variable to tell add/remove topic page that the edit was a success
                         var form = $(document.createElement('form'));
-                        $(form).attr("action", "add-remove-topic.php");
+                        $(form).attr("action", "manage-topics.php");
                         $(form).attr("method", "POST");
                         $(form).css("display", "none");
 

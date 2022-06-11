@@ -7,6 +7,7 @@ if ($userData["role"] != "supervisor") {
 <div class="position-relative">
     <div class="position-absolute top-0 start-50 translate-middle-x my-3">
         <div class="d-flex justify-content-end">
+            <a href="proposed-topics-list.php" type="button" class="btn btn-outline-secondary mx-2">View all topics</a>
             <a href="propose-topic.php" type="button" class="btn btn-primary mx-2">Propose a topic</a>
         </div>
         <div class="table-responsive my-3">

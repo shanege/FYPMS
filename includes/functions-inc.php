@@ -210,12 +210,12 @@ function getStudent($con, $studentID)
     }
 }
 
-function requestExists($con, $userID)
+function requestExists($con, $studentID)
 {
     $sql = "SELECT supervisorID, status FROM supervisor_student_pairs WHERE studentID = ? LIMIT 1;";
     try {
         $stmt = $con->prepare($sql);
-        $stmt->bindParam(1, $userID, PDO::PARAM_STR);
+        $stmt->bindParam(1, $studentID, PDO::PARAM_STR);
         $stmt->execute();
 
         if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -301,6 +301,21 @@ function getAllProposedTopicsForSupervisor($con, $supervisorID)
     }
 }
 
+function getAllProposedTopics($con)
+{
+    $sql = "SELECT topicID, supervisorID, topic, description, expected_output, skills, field_of_study FROM proposed_topics ORDER BY topicID;";
+    try {
+        $stmt = $con->prepare($sql);
+
+        if ($stmt->execute()) {
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
 function getProposedTopic($con, $topicID)
 {
     $sql = "SELECT topic, description, expected_output, skills, field_of_study FROM proposed_topics WHERE topicID = ? LIMIT 1;";
@@ -314,6 +329,23 @@ function getProposedTopic($con, $topicID)
             return $row;
         } else {
             $result = false;
+            return $result;
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+function getTasksForPair($con, $studentID, $supervisorID)
+{
+    $sql = "SELECT taskID, title, description, createdAt, editedAt, deadlineAt, bucketPath, status FROM student_tasks WHERE studentID = ? AND supervisorID = ?;";
+    try {
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(1, $studentID, PDO::PARAM_STR);
+        $stmt->bindParam(2, $supervisorID, PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         }
     } catch (PDOException $e) {

@@ -21,7 +21,7 @@
             </a>
         </div>
         <div class="col-md-auto">
-            <a class="btn" href="add-remove-topic.php" role="button">
+            <a class="btn" href="manage-topics.php" role="button">
                 <div class="card text-center" style="width: 18rem;">
                     <i class="fa-solid fa-file-invoice fa-10x my-3" style="--fa-beat-scale: 1.1;"></i>
                     <div class="card-body">
