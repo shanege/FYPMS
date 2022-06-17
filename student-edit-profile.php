@@ -38,7 +38,7 @@
 
             $(".invalid-feedback").remove();
             $(".form-control").removeClass("is-invalid");
-            $("#message").html("").removeClass("bg-success").addClass("bg-body");
+            $("#message").html("&nbsp;").removeClass("bg-success").addClass("bg-body");
 
             $.ajax({
                 url: "includes/student-edit-profile-inc.php",

@@ -22,7 +22,7 @@ $userData = checkLogin($con);
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <span class="navbar-brand">XMUM FYPMS</span>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -37,9 +37,7 @@ $userData = checkLogin($con);
                             echo $userData['userID']; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <?php
-                            echo '<li><a class="dropdown-item" href="profile.php?id=' . $userData['userID'] . '">Profile</a></li>';
-                            ?>
+                            <li><a class="dropdown-item" href="profile.php?id=<?php echo $userData['userID'] ?>">Profile</a></li>
                             <li><a class="dropdown-item" href="includes/logout-inc.php">Logout</a></li>
                         </ul>
                     </li>

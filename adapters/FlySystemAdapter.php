@@ -13,9 +13,6 @@ $options = [
 $client = new Aws\S3\S3Client($options);
 
 $buckets = $client->listBuckets();
-// foreach ($buckets['Buckets'] as $bucket) {
-//     echo $bucket['Name'] . "\n";
-// }
 
 // The internal adapter
 $adapter = new League\Flysystem\AwsS3V3\AwsS3V3Adapter(

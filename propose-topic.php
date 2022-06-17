@@ -47,7 +47,7 @@ if ($userData["role"] != "supervisor") {
 
             $(".invalid-feedback").remove();
             $(".form-control").removeClass("is-invalid");
-            $("#message").html("").removeClass("bg-danger").addClass("bg-body");
+            $("#message").html("&nbsp;").removeClass("bg-danger").addClass("bg-body");
 
             $.ajax({
                 url: "includes/propose-topic-inc.php",

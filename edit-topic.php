@@ -52,7 +52,7 @@ $topic = getProposedTopic($con, $_POST['topicID']);
 
             $(".invalid-feedback").remove();
             $(".form-control").removeClass("is-invalid");
-            $("#message").html("").removeClass("bg-danger").addClass("bg-body");
+            $("#message").html("&nbsp;").removeClass("bg-danger").addClass("bg-body");
 
             var formData = new FormData(this);
             formData.append("topicID", "<?php echo $_POST['topicID'] ?>");

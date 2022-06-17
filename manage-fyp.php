@@ -9,7 +9,7 @@ if ($userData["role"] != "student") {
         <div class="col-md-auto">
             <a class="btn" href="general-documents.php" role="button">
                 <div class="card text-center" style="width: 18rem;">
-                    <i class="bi bi-search card-img-top " style="font-size: 8rem;"></i>
+                    <i class="fa-solid fa-file fa-10x my-3" style="--fa-beat-scale: 1.1;"></i>
                     <div class="card-body">
                         <p class="card-text">General documents</p>
                     </div>
@@ -17,9 +17,9 @@ if ($userData["role"] != "student") {
             </a>
         </div>
         <div class="col-md-auto">
-            <a class="btn" href="#" role="button">
+            <a class="btn" href="student-tasks.php" role="button">
                 <div class="card text-center" style="width: 18rem;">
-                    <i class="bi bi-card-heading card-img-top " style="font-size: 8rem;"></i>
+                    <i class="fa-solid fa-bars-progress fa-10x my-3" style="--fa-beat-scale: 1.1;"></i>
                     <div class="card-body">
                         <p class="card-text"> Manage FYP tasks </p>
                     </div>
@@ -28,3 +28,20 @@ if ($userData["role"] != "student") {
         </div>
     </div>
 </div>
+
+<script>
+    $('.fa-file').hover(function() {
+        $(this).addClass('fa-beat');
+    }, function() {
+        $(this).removeClass('fa-beat');
+    });
+
+    $('.fa-bars-progress').hover(function() {
+        $(this).addClass('fa-beat');
+    }, function() {
+        $(this).removeClass('fa-beat');
+    });
+</script>
+</body>
+
+</html>

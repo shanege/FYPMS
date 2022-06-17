@@ -39,7 +39,7 @@ if (!empty($ongoingStudentsIDs)) {
         '</div>
         </td>
         <td>
-            <a href="student-task.php?student=' . $ongoingStudentID . '" type="button" class="btn btn-outline-primary"><i class="fa-solid fa-list-check"></i>&nbsp;View progress</a>
+            <a href="student-tasks.php?student=' . $ongoingStudentID . '" type="button" class="btn btn-outline-primary"><i class="fa-solid fa-list-check"></i>&nbsp;View progress</a>
         </td>
     </tr>';
     }

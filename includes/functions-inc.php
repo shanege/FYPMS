@@ -338,7 +338,10 @@ function getProposedTopic($con, $topicID)
 
 function getTasksForPair($con, $studentID, $supervisorID)
 {
-    $sql = "SELECT taskID, title, description, createdAt, editedAt, deadlineAt, bucketPath, status FROM student_tasks WHERE studentID = ? AND supervisorID = ?;";
+    $sql = "SELECT taskID, title, description, deadline_at, 
+    supervisor_upload_path, student_submit_path, submission_text, 
+    status, grade, remarks 
+    FROM student_tasks WHERE studentID = ? AND supervisorID = ?;";
     try {
         $stmt = $con->prepare($sql);
         $stmt->bindParam(1, $studentID, PDO::PARAM_STR);
@@ -346,6 +349,29 @@ function getTasksForPair($con, $studentID, $supervisorID)
 
         if ($stmt->execute()) {
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+function getTask($con, $taskID)
+{
+    $sql = "SELECT studentID, supervisorID, title, description,  
+    deadline_at, supervisor_upload_path, student_submit_path, 
+    submission_text, status, grade, remarks 
+    FROM student_tasks WHERE taskID = ? LIMIT 1;";
+
+    try {
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(1, $taskID, PDO::PARAM_STR);
+
+        $stmt->execute();
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            return $row;
+        } else {
+            $result = false;
             return $result;
         }
     } catch (PDOException $e) {
