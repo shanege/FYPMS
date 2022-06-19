@@ -1,35 +1,6 @@
 <?php
 if (count(get_included_files()) == 1) exit("Direct access not permitted.");
 
-// $data = [];
-// $errors = [];
-
-// if (isset($_POST['function']) && isset($_POST['arguments'])) {
-//     switch ($_POST['function']) {
-//         case 'getSupervisor':
-//             if (!is_array($_POST['arguments']) || (count($_POST['arguments']) < 2)) {
-//                 $errors['arguments'] = "Error in arguments";
-//             } else {
-//                 $result = getSupervisor($_POST['arguments'][0], $_POST['arguments'][1]);
-//             }
-//             break;
-
-//         default:
-//             $errors['function'] = 'Function ' . $_POST['function'] . 'not found';
-//             break;
-//     }
-
-//     if (!empty($errors)) {
-//         $data['success'] = false;
-//         $data['errors'] = $errors;
-//     } else {
-//         $data['success'] = true;
-//         $data['result'] = $result;
-//     }
-
-//     echo json_encode($data);
-// }
-
 function emptyInput($userID, $password)
 {
     if (empty($userID) || empty($password)) {
@@ -372,6 +343,41 @@ function getTask($con, $taskID)
             return $row;
         } else {
             $result = false;
+            return $result;
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+function getStudentPairByStatus($con, $status, $semester)
+{
+    $sql = "SELECT studentID, supervisorID FROM supervisor_student_pairs WHERE status = ? AND starting_semester = ?;";
+
+    try {
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(1, $status, PDO::PARAM_STR);
+        $stmt->bindParam(1, $semester, PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+function getStudentsWithNoSupervisor($con, $semester)
+{
+    $sql = `SELECT studentID FROM student_details WHERE studentID NOT IN
+        (SELECT studentID FROM supervisor_student_pairs WHERE status="Ongoing")`;
+
+    try {
+        $stmt = $con->prepare($sql);
+
+        if ($stmt->execute()) {
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         }
     } catch (PDOException $e) {
