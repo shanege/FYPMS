@@ -2,6 +2,7 @@
 
 use \League\Flysystem\FilesystemException;
 use \League\Flysystem\UnableToWriteFile;
+use \League\Flysystem\UnableToDeleteDirectory;
 
 if (isset($_POST['submissionText'])) {
     session_start();
@@ -41,17 +42,30 @@ if (isset($_POST['submissionText'])) {
                 $bytes = random_bytes(5);
                 $randomAlphanumeric = bin2hex($bytes);
 
-                $bucketPath = "Student tasks/" . $studentID . "/Task " . $randomAlphanumeric . '/Student upload/';
+                $bucketPath = "Student tasks/" . $studentID . "/" . $randomAlphanumeric . '/';
 
                 $uploadPath = $bucketPath . basename($_FILES['submissionFile']['name']);
 
                 require_once '../adapters/FlySystemAdapter.php';
 
-                try {
-                    $filesystem->writeStream($uploadPath, $fileStream);
-                } catch (FilesystemException | UnableToWriteFile $exception) {
-                    // handle the error
-                    $errors['submissionFile'] = "Cannot upload file.";
+                // delete previous upload if there was one
+                // this is for cases where the student edits their submission
+                if ($_POST['previousFolder'] != "") {
+                    try {
+                        $filesystem->deleteDirectory($_POST['previousFolder']);
+                    } catch (FilesystemException | UnableToDeleteDirectory $exception) {
+                        // handle the error
+                        $errors['submissionFile'] = "Could not delete previous folder.";
+                    }
+                }
+
+                if (empty($errors)) {
+                    try {
+                        $filesystem->writeStream($uploadPath, $fileStream);
+                    } catch (FilesystemException | UnableToWriteFile $exception) {
+                        // handle the error
+                        $errors['submissionFile'] = "Cannot upload file.";
+                    }
                 }
             }
         } else {

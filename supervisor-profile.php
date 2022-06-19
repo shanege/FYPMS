@@ -118,7 +118,7 @@
                             Please make sure you have contacted this supervisor (e.g., via email or Microsoft Teams) and have gotten their agreement to be your supervisor
                         </div>
                         <div class="modal-footer">
-                            <button id="requestBtn" type="button" class="btn btn-primary" >Make request</button>
+                            <button id="requestBtn" type="button" class="btn btn-primary">Make request</button>
                         </div>
                     </div>
                 </div>
@@ -137,7 +137,7 @@
                             Are you sure you want to cancel your request?
                         </div>
                         <div class="modal-footer">
-                            <button id="cancelBtn" type="button" class="btn btn-primary" >Cancel request</button>
+                            <button id="cancelBtn" type="button" class="btn btn-primary">Cancel request</button>
                         </div>
                     </div>
                 </div>

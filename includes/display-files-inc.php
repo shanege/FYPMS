@@ -21,7 +21,7 @@ if ($folder == "") {
             if ($item instanceof FileAttributes) {
                 // handle the file
                 try {
-                    echo '<a class="list-group-item list-group-item-action" href="includes/download-inc.php?file=' . $path . '" target="_blank">' . basename($path) . '</a></div>';
+                    echo '<a class="list-group-item list-group-item-action" href="includes/download-inc.php?file=' . $path . '" target="_blank">' . basename($path) . '</a>';
                 } catch (FilesystemException | UnableToRetrieveMetadata $exception) {
                     echo "couldnt retrieve file metadata";
                 }

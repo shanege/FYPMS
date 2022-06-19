@@ -2,10 +2,12 @@
 
 use \League\Flysystem\FilesystemException;
 use \League\Flysystem\UnableToWriteFile;
+use \League\Flysystem\UnableToDeleteDirectory;
 
-if (isset($_POST['title']) && isset($_POST['date']) && isset($_POST['time']) && isset($_POST['studentID'])) {
-    session_start();
-
+if (
+    isset($_POST['title']) && isset($_POST['date']) && isset($_POST['time']) && isset($_POST['description'])
+    && isset($_POST['studentID']) && isset($_POST['taskID']) && isset($_POST['previousFolder'])
+) {
     require_once 'connection-inc.php';
 
     $data = [];
@@ -32,6 +34,10 @@ if (isset($_POST['title']) && isset($_POST['date']) && isset($_POST['time']) && 
 
     if (empty($_POST['studentID'])) {
         $errors['student'] = "Could not find student.";
+    }
+
+    if (empty($_POST['taskID'])) {
+        $errors['task'] = "Could not find student.";
     }
 
     $studentID = $_POST['studentID'];
@@ -61,6 +67,16 @@ if (isset($_POST['title']) && isset($_POST['date']) && isset($_POST['time']) && 
 
                 require_once '../adapters/FlySystemAdapter.php';
 
+                // delete previous upload if there was one
+                if ($_POST['previousFolder'] != "") {
+                    try {
+                        $filesystem->deleteDirectory($_POST['previousFolder']);
+                    } catch (FilesystemException | UnableToDeleteDirectory $exception) {
+                        // handle the error
+                        $errors['submissionFile'] = "Could not delete previous folder.";
+                    }
+                }
+
                 try {
                     $filesystem->writeStream($uploadPath, $fileStream);
                 } catch (FilesystemException | UnableToWriteFile $exception) {
@@ -75,24 +91,19 @@ if (isset($_POST['title']) && isset($_POST['date']) && isset($_POST['time']) && 
 
     // if no errors at this point, run sql code
     if (empty($errors)) {
-        $supervisorID = $_SESSION['userID'];
         $title = $_POST['title'];
         $description = $_POST['description'];
-        $status = "Ongoing";
+        $taskID = $_POST['taskID'];
 
-        $sql = "INSERT INTO student_tasks 
-        (studentID, supervisorID, title, description, deadline_at, supervisor_upload_path, status) 
-        VALUES (?, ?, ?, ?, ?, ?, ?);";
+        $sql = "UPDATE student_tasks SET title = ?, description = ?, deadline_at = ?, supervisor_upload_path = ? WHERE taskID = ?;";
 
         try {
             $stmt = $con->prepare($sql);
-            $stmt->bindParam(1, $studentID, PDO::PARAM_STR);
-            $stmt->bindParam(2, $supervisorID, PDO::PARAM_STR);
-            $stmt->bindParam(3, $title, PDO::PARAM_STR);
-            $stmt->bindParam(4, $description, PDO::PARAM_STR);
-            $stmt->bindParam(5, $deadlineAt, PDO::PARAM_STR);
-            $stmt->bindParam(6, $bucketPath, PDO::PARAM_STR);
-            $stmt->bindParam(7, $status, PDO::PARAM_STR);
+            $stmt->bindParam(1, $title, PDO::PARAM_STR);
+            $stmt->bindParam(2, $description, PDO::PARAM_STR);
+            $stmt->bindParam(3, $deadlineAt, PDO::PARAM_STR);
+            $stmt->bindParam(4, $bucketPath, PDO::PARAM_STR);
+            $stmt->bindParam(5, $taskID, PDO::PARAM_STR);
 
             $stmt->execute();
         } catch (PDOException $e) {
