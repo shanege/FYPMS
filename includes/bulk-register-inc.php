@@ -3,10 +3,10 @@ require_once '../vendor/autoload.php';
 require_once '../vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/IOFactory.php';
 require_once 'connection-inc.php';
 
-if ($_FILES['registerFile']['name'] != '') {
+if ($_FILES['registerUsersFile']['name'] != '') {
 
     $allowedExtensions = array('xls', 'csv', 'xlsx');
-    $arrFile = explode('.', $_FILES['registerFile']['name']);
+    $arrFile = explode('.', $_FILES['registerUsersFile']['name']);
     $extension = end($arrFile);
 
     if (in_array($extension, $allowedExtensions)) {
@@ -18,7 +18,7 @@ if ($_FILES['registerFile']['name'] != '') {
         } else
             $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
 
-        $spreadsheet = $reader->load($_FILES['registerFile']['tmp_name']);
+        $spreadsheet = $reader->load($_FILES['registerUsersFile']['tmp_name']);
 
         $sheetData = $spreadsheet->getActiveSheet()->toArray();
         $rowCount = $spreadsheet->getActiveSheet()->getHighestDataRow();

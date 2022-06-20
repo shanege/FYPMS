@@ -227,6 +227,16 @@ if (count(get_included_files()) == 1) exit("Direct access not permitted.");
                 }
             })
         });
+        var editSuccessToast = document.getElementById('editSuccessToast');
+        if (editSuccessToast) {
+            var toast = new bootstrap.Toast(editSuccessToast);
+
+            toast.show();
+
+            editSuccessToast.on('hidden.bs.toast', function() {
+                $(this).remove();
+            });
+        }
     });
     $(document).ajaxStop(function() {
         // check if DOM element exists 
@@ -249,17 +259,6 @@ if (count(get_included_files()) == 1) exit("Direct access not permitted.");
             })
         }
     });
-
-    var editSuccessToast = document.getElementById('editSuccessToast');
-    if (editSuccessToast) {
-        var toast = new bootstrap.Toast(editSuccessToast);
-
-        toast.show();
-
-        editSuccessToast.on('hidden.bs.toast', function() {
-            $(this).remove();
-        });
-    }
 </script>
 </body>
 

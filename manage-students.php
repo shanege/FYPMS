@@ -6,13 +6,15 @@ if ($userData["role"] != "coordinator") {
 ?>
 
 <div class="position-relative">
-    <div class="position-absolute top-0 start-50 translate-middle-x w-75 my-5">
+    <div class="position-absolute top-0 start-50 translate-middle-x w-75">
+        <h1 class="mt-5 mb-1 fw-bold">Manage students</h1>
+        <div class="mb-5 fst-italic">You can update student details by bulk or assign a supervisor to a student who does not have one.</div>
         <div class="vstack gap-5">
             <div>
                 <h3>
                     Update student details (Bulk)
                     <button type="button" class="btn btn-primary" data-bs-html="true" data-bs-toggle="tooltip" data-bs-placement="right" title="
-                    <p class='text-start'>Columns should have these columns in this order: Student ID, Name, Intake<br/><br/>
+                    <p class='text-start'>Excel files should have these columns in this order: Student ID, Name, Intake<br/><br/>
                     Settings in the sheet such as 'Wrap Text' will cause the Excel reader to think an empty cell is not empty, 
                     use 'Clear All' under the Editing tab in Excel to be safe</p>">
                         ?
@@ -27,57 +29,55 @@ if ($userData["role"] != "coordinator") {
                     <div id="updateStudentsDetailsBulkError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 user-select-none">&nbsp;</div>
                 </div>
             </div>
-            <!-- <div>
-                <h3>Update Students details (Single)</h3>
+            <div class="mb-5">
+                <h3>Assign supervisor</h3>
                 <div class="bg-light border p-4">
-                    <form id="updateStudentsDetailsSingleForm" method="POST">
+                    <form id="assignSupervisorForm" method="POST">
                         <fieldset>
-                            <div id="nameSelectGroup" class="mb-3">
-                                <label for="studentID" class="mb-2">Student</label>
-                                <select id="selectStudent" name="studentID" class="form-select">
-                                    <option disabled selected value> -- select a student -- </option>
-                                </select>
-                            </div>
-                            <div id="nameGroup" class="mb-3 ">
-                                <label for="name" class="form-label">Name<span class="text-danger">&#42;</span></label>
-                                <input id="nameInput" type="text" name="name" class="form-control">
-                            </div>
-                            <div id="emailGroup" class="mb-3">
-                                <label for="email" class="form-label">Email<span class="text-danger">&#42;</span></label>
-                                <input id="emailInput" type="email" name="email" class="form-control">
-                            </div>
-                            <div id="researchAreasGroup" class="mb-3">
-                                <label for="researchAreas" class="form-label">Research area(s)<span class="text-danger">&#42;</span></label>
-                                <textarea id="researchAreasInput" name="researchAreas" class="form-control"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="proposedTopics" class="form-label">Proposed topic(s)</label>
-                                <textarea id="proposedTopicsInput" name="proposedTopics" class="form-control"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <textarea id="descriptionInput" name="description" class="form-control"></textarea>
-                            </div>
-                            <div class="d-flex justify-content-end">
-                                <input id="saveBtn" type="submit" class="btn btn-primary mx-2" value="Save changes">
+                            <div class="row g-3 mb-3">
+                                <div id="studentIDGroup" class="col">
+                                    <label for="studentID" class="mb-2">Student ID</label>
+                                    <select id="studentIDInput" name="studentID" class="form-select m-0" aria-label="Select Student ID">
+                                        <option disabled selected value> -- select a Student ID -- </option>
+                                    </select>
+                                </div>
+                                <div id="supervisorIDGroup" class="col">
+                                    <label for="supervisorID" class="mb-2">Supervisor ID</label>
+                                    <select id="supervisorIDInput" name="supervisorID" class="form-select m-0" aria-label="Select Supervisor ID">
+                                        <option disabled selected value> -- select a Supervisor ID -- </option>
+                                    </select>
+                                </div>
                             </div>
                         </fieldset>
+                        <input type="submit" id="assignBtn" name="assignBtn" class="btn btn-primary px-3 mb-3" value="Assign">
                     </form>
-                    <div id="updateStudentsDetailsSingleError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 text-white user-select-none">&nbsp;</div>
+                    <div id="assignSupervisorError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 user-select-none text-white">&nbsp;</div>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
-    <div class="position-fixed bottom-0 end-0 p-3 toast-container" style="z-index: 11"></div>
+    <div class="position-fixed bottom-0 end-0 p-3 toast-container" style="z-index: 11">
+        <?php
+        if (isset($_POST['assignResult']) && $_POST['assignResult'] == "success") {
+            echo '
+        <div id="assignSuccessToast" class="toast align-items-center text-white bg-success bg-opacity-75 border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                Success!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>';
+        }
+        ?>
+    </div>
 </div>
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
         var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
-        })
+        });
 
         $('#updateStudentsDetailsBulk').on('submit', function(event) {
             event.preventDefault();
@@ -113,15 +113,108 @@ if ($userData["role"] != "coordinator") {
             })
         });
 
-        function createToast(text) {
-            return `<div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            ${text}
-                        </div>
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                </div>`;
+        var studentOptions = <?php echo json_encode(getStudentsWithoutSupervisor($con)) ?>;
+        for (var i = 0; i < Object.keys(studentOptions).length; i++) {
+            $('#studentIDInput').append(new Option(studentOptions[i]['studentID'], studentOptions[i]['studentID']));
+        }
+
+        // initialise the select2 selector
+        $('#studentIDInput').select2();
+
+        // get supervisors and add them as options to the select tag
+        var supervisorOptions = <?php echo json_encode(getAllSupervisors($con)) ?>;
+        for (var i = 0; i < Object.keys(supervisorOptions).length; i++) {
+            $('#supervisorIDInput').append(new Option(supervisorOptions[i]['name'], supervisorOptions[i]['supervisorID']));
+        }
+
+        // initialise the select2 selector
+        $('#supervisorIDInput').select2();
+
+        $('#assignSupervisorForm').on('submit', function(event) {
+            event.preventDefault();
+
+            $(".invalid-feedback").remove();
+            $(".form-select").removeClass("is-invalid");
+            $("#assignSupervisorError").html("&nbsp;").removeClass("bg-danger").addClass("bg-light");
+
+            var formData = new FormData(this);
+            formData.append("assign", "true");
+
+            $.ajax({
+                url: "includes/assign-pair-inc.php",
+                method: "POST",
+                data: formData,
+                contentType: false,
+                cache: false,
+                processData: false,
+                beforeSend: function() {
+                    $('#assignBtn').attr('disabled', 'disabled');
+                    $('#assignBtn').val('Assigning...');
+                },
+                success: function(data) {
+                    console.log(data);
+                    var response = JSON.parse(data);
+
+                    if (!response.success) {
+                        if (response.errors.studentID) {
+                            // adding style display block as the select2 selector is somehow setting elements below it display none by default
+                            $("#studentIDGroup").append(
+                                '<div class="invalid-feedback" style="display:block">' + response.errors.studentID + "</div>"
+                            );
+                        }
+
+                        if (response.errors.supervisorID) {
+                            // adding style display block as the select2 selector is somehow setting elements below it display none by default
+                            $("#supervisorIDGroup").append(
+                                '<div class="invalid-feedback" style="display:block">' + response.errors.supervisorID + "</div>"
+                            );
+                        }
+
+                        if (response.errors.sql) {
+                            $("#assignSupervisorError").html(response.errors.sql).removeClass("bg-light").addClass("bg-danger");
+                        }
+                    } else {
+                        // make a hidden form to send POST variable to itself that the assignment was a success
+                        var form = $(document.createElement('form'));
+                        $(form).attr("action", "");
+                        $(form).attr("method", "POST");
+                        $(form).css("display", "none");
+
+                        var assignResult = $("<input>")
+                            .attr("type", "text")
+                            .attr("name", "assignResult")
+                            .val("success");
+                        $(form).append($(assignResult));
+
+                        form.appendTo(document.body);
+                        $(form).submit();
+                    }
+                    $('#assignBtn').attr('disabled', false);
+                    $('#assignBtn').val('Assign');
+                }
+            })
+        });
+
+        var assignSuccessToast = document.getElementById('assignSuccessToast');
+        if (assignSuccessToast) {
+            var toast = new bootstrap.Toast(assignSuccessToast);
+
+            toast.show();
+
+            assignSuccessToast.on('hidden.bs.toast', function() {
+                $(this).remove();
+            });
         }
     });
+
+    function createToast(text) {
+        return `<div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    ${text}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>`;
+    }
 </script>

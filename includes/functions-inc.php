@@ -45,28 +45,6 @@ function userExists($con, $userID)
         }
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
-        header("location: ../signup.php?error=stmtfailed");
-        exit();
-    }
-}
-
-function createUser($con, $userID, $password)
-{
-    // updates whenever PHP discovers the hashing algorithm is no longer secure
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    // prepared statement to create user
-    $sql = "INSERT INTO users (userID, password) VALUES (?, ?);";
-    try {
-        $stmt = $con->prepare($sql);
-        $stmt->bindParam(1, $userID, PDO::PARAM_STR);
-        $stmt->bindParam(2, $hashedPassword, PDO::PARAM_STR);
-        $stmt->execute();
-
-        header("Location: ../index.php");
-        exit();
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
-        header("location: ../signup.php?error=stmtfailed");
         exit();
     }
 }

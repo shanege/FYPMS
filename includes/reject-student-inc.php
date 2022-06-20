@@ -4,7 +4,6 @@ if (isset($_POST['studentID'])) {
     $errors = [];
 
     require_once 'connection-inc.php';
-    require_once 'functions-inc.php';
 
     if (empty($_POST['studentID'])) {
         $errors['empty'] = "Could not find student.";

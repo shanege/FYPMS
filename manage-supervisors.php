@@ -6,23 +6,33 @@ if ($userData["role"] != "coordinator") {
 ?>
 
 <div class="position-relative">
-    <div class="position-absolute top-0 start-50 translate-middle-x w-75 my-5">
+    <div class="position-absolute top-0 start-50 translate-middle-x w-75">
+        <h1 class="mt-5 mb-1 fw-bold">Manage supervisors</h1>
+        <div class="mb-5 fst-italic">You can update supervisor details by bulk or individually and update supervisor quota for a semester.</div>
         <div class="vstack gap-5">
             <div>
-                <h3>Update supervisors details (Bulk)</h3>
+                <h3>
+                    Update supervisors details (Bulk)
+                    <button type="button" class="btn btn-primary" data-bs-html="true" data-bs-toggle="tooltip" data-bs-placement="right" title="
+                    <p class='text-start'>Excel files should have these columns in this order: SupervisorID, Name, Research Area, Email<br/><br/>
+                    Settings in the sheet such as 'Wrap Text' will cause the Excel reader to think an empty cell is not empty, 
+                    use 'Clear All' under the Editing tab in Excel to be safe</p>">
+                        ?
+                    </button>
+                </h3>
                 <div class="bg-light border p-4">
-                    <form id="updateSupervisorsDetailsBulk" method="POST" enctype="multipart/form-data">
+                    <form id="updateSupervisorsDetailsBulkForm" enctype="multipart/form-data">
                         <label for="supervisorDetailsFile" class="form-label">Select Excel file</label>
                         <input type="file" name="supervisorDetailsFile" class="form-control mb-3">
                         <input type="submit" name="updateSupervisors" id="updateSupervisors" class="btn btn-primary" value="Import">
                     </form>
-                    <div id="updateSupervisorsDetailsBulkError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 text-white user-select-none">&nbsp;</div>
+                    <div id="updateSupervisorsDetailsBulkError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 user-select-none">&nbsp;</div>
                 </div>
             </div>
             <div>
                 <h3>Update supervisors details (Single)</h3>
                 <div class="bg-light border p-4">
-                    <form id="updateSupervisorsDetailsSingleForm" method="POST">
+                    <form id="updateSupervisorsDetailsSingleForm">
                         <fieldset>
                             <div id="nameSelectGroup" class="mb-3">
                                 <label for="supervisorID" class="mb-2">Supervisor</label>
@@ -51,10 +61,10 @@ if ($userData["role"] != "coordinator") {
                             </div>
                         </fieldset>
                     </form>
-                    <div id="updateSupervisorsDetailsSingleError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 user-select-none">&nbsp;</div>
+                    <div id="updateSupervisorsDetailsSingleError" class="rounded-3 mb-2 text-light bg-opacity-75 p-2 user-select-none">&nbsp;</div>
                 </div>
             </div>
-            <div>
+            <div class="mb-5">
                 <h3>Set supervisor quota</h3>
                 <div class="bg-light border p-4">
                     <form id="setSupervisorQuotaForm" method="POST">
@@ -85,7 +95,12 @@ if ($userData["role"] != "coordinator") {
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#updateSupervisorsDetailsBulk').on('submit', function(event) {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+
+        $('#updateSupervisorsDetailsBulkForm').on('submit', function(event) {
             event.preventDefault();
             $.ajax({
                 url: "includes/supervisor-details-bulk-inc.php",
@@ -100,7 +115,7 @@ if ($userData["role"] != "coordinator") {
                 },
                 success: function(data) {
                     $('#updateSupervisorsDetailsBulkError').html(data);
-                    $('#updateSupervisorsDetailsBulk')[0].reset();
+                    $('#updateSupervisorsDetailsBulkForm')[0].reset();
                     $('#updateSupervisors').attr('disabled', false);
                     $('#updateSupervisors').val('Import');
                 }
@@ -308,9 +323,10 @@ if ($userData["role"] != "coordinator") {
                 }
             })
         });
+    });
 
-        function createToast(text) {
-            return `<div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    function createToast(text) {
+        return `<div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="d-flex">
                         <div class="toast-body">
                             ${text}
@@ -318,6 +334,5 @@ if ($userData["role"] != "coordinator") {
                         <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>
                 </div>`;
-        }
-    });
+    }
 </script>

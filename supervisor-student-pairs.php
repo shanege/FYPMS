@@ -143,7 +143,7 @@ if ($userData["role"] != "coordinator") {
         <div id="none-content" class="position-relative">
             <div class="position-absolute top-0 start-50 translate-middle-x">
                 <h1 class="mt-5 mb-1 fw-bold">Students without supervisor</h1>
-                <div class="mb-5 fst-italic">Click on any table heading to sort the table.</div>
+                <div class="mb-5 fst-italic">Click on any table heading to sort the table. Go to Manage Users > Manage Students > Set Supervisor to assign a supervisor to these students.</div>
                 <div class="table-responsive my-3">
                     <table class="table table-striped align-middle sortable">
                         <colgroup>

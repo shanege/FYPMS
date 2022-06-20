@@ -13,11 +13,6 @@ if (isset($_POST["submit"])) {
         exit();
     }
 
-    // if (invalidPassword($password) !== false) {
-    //     header("location: ../login.php?error=wrongpass");
-    //     exit();
-    // }
-
     loginUser($con, $userID, $password);
 } else {
     header("location: ../login.php");

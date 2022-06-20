@@ -60,16 +60,18 @@ if (count(get_included_files()) == 1) exit("Direct access not permitted.");
     ?>
 </div>
 <script>
-    var editSuccessToast = document.getElementById('editSuccessToast');
-    if (editSuccessToast) {
-        var toast = new bootstrap.Toast(editSuccessToast);
+    $(document).ready(function() {
+        var editSuccessToast = document.getElementById('editSuccessToast');
+        if (editSuccessToast) {
+            var toast = new bootstrap.Toast(editSuccessToast);
 
-        toast.show();
+            toast.show();
 
-        editSuccessToast.on('hidden.bs.toast', function() {
-            $(this).remove();
-        });
-    }
+            editSuccessToast.on('hidden.bs.toast', function() {
+                $(this).remove();
+            });
+        }
+    });
 </script>
 </body>
 
