@@ -1,5 +1,10 @@
+<?php
+if (count(get_included_files()) == 1) exit("Direct access not permitted.");
+?>
+
 <div class="position-relative">
     <div class="position-absolute top-0 start-50 translate-middle-x w-50 my-3">
+        <h1 class="my-5 fw-bold">Edit profile details</h1>
         <?php
         if ($userData['role'] == "supervisor") {
             $supervisorID = $userData['userID'];
@@ -7,7 +12,6 @@
             echo
             '<form id="editProfileForm" method="POST">
                 <fieldset>
-                    <legend>Edit profile details</legend>
                     <div id="nameGroup" class="mb-3 ">
                         <label for="name" class="form-label">Name<span class="text-danger">&#42;</span></label>
                         <input id="nameInput" type="text" name="name" class="form-control" value="' . $supervisorDetails['name'] . '">

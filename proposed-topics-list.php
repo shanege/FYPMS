@@ -1,9 +1,15 @@
 <?php
 require_once 'header.php';
+
+if ($userData["role"] == "coordinator") {
+    exit("You are not allowed to access this page");
+}
 ?>
 
 <div class="position-relative">
     <div class="position-absolute top-0 start-50 translate-middle-x my-3">
+        <h1 class="mt-5 mb-1 fw-bold">List of proposed topics</h1>
+        <div class="mb-5 fst-italic">Click on a topic to expand its details.</div>
         <div class="table-responsive my-3">
             <table class="table table-striped align-middle" style="width:80rem;">
                 <colgroup>

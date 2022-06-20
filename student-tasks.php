@@ -14,6 +14,10 @@ require_once 'header.php';
             }
         }
 
+        echo '
+        <h1 class="mt-5 mb-1 fw-bold">FYP Tasks</h1>
+        <div class="mb-5 fst-italic">Click on a task to view its details. A task is highlighted red if it is overdue; or green if it is completed.</div>';
+
         require_once 'display-tasks.php';
         ?>
     </div>

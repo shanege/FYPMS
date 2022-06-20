@@ -4,6 +4,8 @@ require_once 'header.php';
 
 <div class="position-relative">
     <div class="position-absolute top-0 start-50 translate-middle-x my-3">
+        <h1 class="mt-5 mb-1 fw-bold">List of ICT Supervisors</h1>
+        <div class="mb-5 fst-italic">Click on supervisor names to view their profile.</div>
         <div class="table-responsive">
             <table class="table table-striped" style="width:80rem;">
                 <thead class="table-light">
@@ -35,7 +37,7 @@ require_once 'header.php';
                                 <td>' . $supervisorDetails["research_areas"] . '</td>
                                 <td>' . $supervisorDetails["email"] . '</td>';
 
-                            $studentCount = countStudentsPerSupervisor($con, $supervisorDetails["supervisorID"]);
+                            $studentCount = countStudentsForSupervisor($con, $supervisorDetails["supervisorID"]);
 
                             // if a quota had not yet been set for the semester print 'no quota set yet', else print the current student count and quota
                             echo (!$quota) ? '<td>No quota set yet</td>' : '<td>' . $studentCount . ' / ' . $quota . '</td>';

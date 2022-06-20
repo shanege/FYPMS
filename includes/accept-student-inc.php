@@ -1,27 +1,16 @@
 <?php
-if (isset($_POST['rowNum']) && isset($_POST['studentID'])) {
+if (isset($_POST['studentID'])) {
     $data = [];
     $errors = [];
 
-    session_start();
     require_once 'connection-inc.php';
     require_once 'functions-inc.php';
 
-    $students = getAllStudentsForSupervisor($con, $_SESSION['userID']);
-
-    $pendingStudentsIDs = [];
-
-    if (!empty($students)) {
-        foreach ($students as $student) {
-            if ($student['status'] == "Pending") {
-                array_push($pendingStudentsIDs, $student['studentID']);
-            }
-        }
-    } else {
-        $errors['empty'] = "No pending students";
+    if (empty($_POST['studentID'])) {
+        $errors['empty'] = "Could not find student.";
     }
 
-    if ($pendingStudentsIDs[$_POST['rowNum']] == $_POST['studentID']) {
+    if (empty($errors)) {
         $status = "Ongoing";
         $studentID = $_POST['studentID'];
 
@@ -39,8 +28,6 @@ if (isset($_POST['rowNum']) && isset($_POST['studentID'])) {
                 $errors['sql'] = $e->getMessage();
             }
         }
-    } else {
-        $errors['mismatch'] = "There is a mismatch with the database";
     }
 
     if (!empty($errors)) {

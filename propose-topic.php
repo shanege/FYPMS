@@ -6,9 +6,9 @@ if ($userData["role"] != "supervisor") {
 ?>
 <div class="position-relative">
     <div class="position-absolute top-0 start-50 translate-middle-x w-50 my-3">
+        <h1 class="my-5 fw-bold">Propose a topic</h1>
         <form id="addTopicForm" method="POST">
             <fieldset>
-                <legend>Propose a topic</legend>
                 <div id="topicGroup" class="mb-3 ">
                     <label for="topic" class="form-label">Topic<span class="text-danger">&#42;</span></label>
                     <textarea id="topicInput" name="topic" class="form-control" placeholder="E.g., Social Media Sentiment Analysis Using Python Programming"></textarea>
@@ -30,8 +30,8 @@ if ($userData["role"] != "supervisor") {
                     <textarea id="fieldOfStudyInput" name="fieldOfStudy" class="form-control" placeholder="E.g., Linguistics, Artificial Intelligence, Natural Language Processing, etc."></textarea>
                 </div>
                 <div id="message" class="rounded-3 mb-2 bg-body p-2 text-white bg-opacity-75 user-select-none">&nbsp;</div>
-                <div class="d-flex justify-content-end">
-                    <a href="manage-topics-topic.php" type="button" class="btn btn-secondary mx-2">
+                <div class="d-flex justify-content-end mb-5">
+                    <a href="manage-topics.php" type="button" class="btn btn-secondary mx-2">
                         Cancel
                     </a>
                     <input id="proposeBtn" name="proposeBtn" type="submit" class="btn btn-primary mx-2" value="Propose this topic">

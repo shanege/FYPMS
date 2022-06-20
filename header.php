@@ -37,7 +37,11 @@ $userData = checkLogin($con);
                             echo $userData['userID']; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="profile.php?id=<?php echo $userData['userID'] ?>">Profile</a></li>
+                            <?php
+                            if ($userData['role'] == "student" || $userData['role'] == "supervisor") {
+                                echo '<li><a class="dropdown-item" href="profile.php?id=' . $userData['userID'] . '">Profile</a></li>';
+                            }
+                            ?>
                             <li><a class="dropdown-item" href="includes/logout-inc.php">Logout</a></li>
                         </ul>
                     </li>

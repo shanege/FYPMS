@@ -1,55 +1,49 @@
 <?php
 require_once 'header.php';
+if ($userData["role"] != "coordinator") {
+    exit("You are not allowed to access this page");
+}
 ?>
 <nav>
     <div class="nav nav-tabs mt-3" id="nav-tab" role="tablist">
-        <button class="nav-link active" id="nav-ongoing-tab" data-bs-toggle="tab" data-bs-target="#nav-ongoing" type="button" role="tab" aria-controls="nav-ongoing" aria-selected="true">ongoing</button>
-        <button class="nav-link" id="nav-requests-tab" data-bs-toggle="tab" data-bs-target="#nav-requests" type="button" role="tab" aria-controls="nav-requests" aria-selected="false">requests</button>
-        <button class="nav-link" id="nav-none-tab" data-bs-toggle="tab" data-bs-target="#nav-none" type="button" role="tab" aria-controls="nav-none" aria-selected="false">none</button>
+        <button class="nav-link active" id="nav-ongoing-tab" data-bs-toggle="tab" data-bs-target="#nav-ongoing" type="button" role="tab" aria-controls="nav-ongoing" aria-selected="true">Ongoing</button>
+        <button class="nav-link" id="nav-pending-tab" data-bs-toggle="tab" data-bs-target="#nav-pending" type="button" role="tab" aria-controls="nav-pending" aria-selected="false">Pending</button>
+        <button class="nav-link" id="nav-completed-tab" data-bs-toggle="tab" data-bs-target="#nav-completed" type="button" role="tab" aria-controls="nav-completed" aria-selected="false">Completed</button>
+        <button class="nav-link" id="nav-none-tab" data-bs-toggle="tab" data-bs-target="#nav-none" type="button" role="tab" aria-controls="nav-none" aria-selected="false">None</button>
     </div>
 </nav>
 <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-ongoing" role="tabpanel" aria-labelledby="nav-ongoing-tab">
         <div id="ongoing-content" class="position-relative">
             <div class="position-absolute top-0 start-50 translate-middle-x">
+                <h1 class="mt-5 mb-1 fw-bold">Ongoing student supervisor pairings</h1>
+                <div class="mb-5 fst-italic">Click on any table heading to sort the table.</div>
                 <div class="table-responsive my-3">
-                    <table class="table table-striped align-middle" style="width:80rem;">
+                    <table class="table table-striped align-middle sortable" style="width:80rem;">
                         <colgroup>
-                            <col span="1" style="width:20%;">
-                            <col span="1" style="width:60%;">
-                            <col span="1" style="width:20%;">
+                            <col span="1" style="width:33.3%;">
+                            <col span="1" style="width:33.3%;">
+                            <col span="1" style="width:33.3%;">
                         </colgroup>
                         <thead class="table-light">
                             <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Working title</th>
-                                <th scope="col"></th>
+                                <th scope="col">Student ID</th>
+                                <th scope="col">Supervisor ID</th>
+                                <th scope="col">Starting Semester</th>
                             </tr>
                         </thead>
                         <tbody id="ongoingTableBody">
                             <?php
-                            if (!empty($ongoingStudentsIDs)) {
-                                foreach ($ongoingStudentsIDs as $ongoingStudentID) {
-                                    $ongoingStudent = getStudent($con, $ongoingStudentID);
+                            $ongoingPairs = getStudentSupervisorPairsByStatus($con, "Ongoing");
 
+                            if (!empty($ongoingPairs)) {
+                                foreach ($ongoingPairs as $ongoingPair) {
                                     echo
                                     '<tr>
-                                        <td>
-                                            <div class="d-flex w-40"><a href="profile.php?id=' . $ongoingStudentID . '">';
-
-                                    // if the student has not set up their name in profile, display their studentID, else display their name
-                                    echo ($ongoingStudent["name"] == "") ?  $ongoingStudentID  :  $ongoingStudent["name"];
-                                    echo '</div></a></td>
-                                    <td>
-                                        <div class="d-flex w-40">';
-                                    echo ($ongoingStudent["working_title"] == "") ? 'No working title yet' : $ongoingStudent["working_title"];
-                                    echo
-                                    '</div>
-                                    </td>
-                                    <td>
-                                        <a href="student-tasks.php?student=' . $ongoingStudentID . '" type="button" class="btn btn-outline-primary"><i class="fa-solid fa-list-check"></i>&nbsp;View progress</a>
-                                    </td>
-                                </tr>';
+                                        <td><a href="profile.php?id=' . $ongoingPair['studentID'] . '">' . $ongoingPair['studentID'] . '</a></td>
+                                        <td><a href="profile.php?id=' . $ongoingPair['supervisorID'] . '">' . $ongoingPair['supervisorID'] . '</a></td>
+                                        <td>' . $ongoingPair['starting_semester'] . '</td>
+                                    </tr>';
                                 }
                             } else {
                                 echo '<tr><td colspan="3">No ongoing students at the moment.</td></tr>';
@@ -61,101 +55,119 @@ require_once 'header.php';
             </div>
         </div>
     </div>
-    <div class="tab-pane fade" id="nav-requests" role="tabpanel" aria-labelledby="nav-requests-tab">
-        <div id="requests-content" class="position-relative">
+    <div class="tab-pane fade" id="nav-pending" role="tabpanel" aria-labelledby="nav-pending-tab">
+        <div id="pending-content" class="position-relative">
             <div class="position-absolute top-0 start-50 translate-middle-x">
+                <h1 class="mt-5 mb-1 fw-bold">Pending student supervisor pairings</h1>
+                <div class="mb-5 fst-italic">Click on any table heading to sort the table.</div>
                 <div class="table-responsive my-3">
-                    <table class="table table-striped align-middle" style="width:80rem;">
+                    <table class="table table-striped align-middle sortable" style="width:80rem;">
                         <colgroup>
-                            <col span="1" style="width:20%;">
-                            <col span="1" style="width:60%;">
-                            <col span="1" style="width:20%;">
+                            <col span="1" style="width:33.3%;">
+                            <col span="1" style="width:33.3%;">
+                            <col span="1" style="width:33.3%;">
                         </colgroup>
                         <thead class="table-light">
                             <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Working title</th>
-                                <th scope="col"></th>
+                                <th scope="col">Student ID</th>
+                                <th scope="col">Supervisor ID</th>
+                                <th scope="col">Starting Semester</th>
                             </tr>
                         </thead>
-                        <tbody id="requestsTableBody">
+                        <tbody id="pendingTableBody">
                             <?php
-                            if (!empty($pendingStudentsIDs)) {
-                                foreach ($pendingStudentsIDs as $pendingStudentID) {
-                                    $pendingStudent = getStudent($con, $pendingStudentID);
+                            $pendingPairs = getStudentSupervisorPairsByStatus($con, "Pending");
 
+                            if (!empty($pendingPairs)) {
+                                foreach ($pendingPairs as $pendingPair) {
                                     echo
-                                    '<tr id="' . $pendingStudentID . '">
-                                        <td>
-                                            <div class="d-flex w-40"><a href="profile.php?id=' . $pendingStudentID . '">';
-
-                                    // if the student has not set up their name in profile, display their studentID, else display their name
-                                    echo ($pendingStudent["name"] == "") ?  $pendingStudentID  :  $pendingStudent["name"];
-                                    echo '</div></a></td>
-                                        <td>
-                                            <div class="d-flex w-40">';
-                                    echo ($pendingStudent["working_title"] == "") ? 'No working title yet' : $pendingStudent["working_title"];
-                                    echo
-                                    '</div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex justify-content-evenly">
-                                                <button type="button" class="btn btn-success"><i class="bi bi-person-check"></i>&nbsp;Accept</button>
-                                                <button type="button" class="btn btn-danger"><i class="bi bi-person-x"></i>&nbsp;Decline</button>
-                                            </div>
-                                        </td>
+                                    '<tr>
+                                        <td><a href="profile.php?id=' . $pendingPair['studentID'] . '">' . $pendingPair['studentID'] . '</a></td>
+                                        <td><a href="profile.php?id=' . $pendingPair['supervisorID'] . '">' . $pendingPair['supervisorID'] . '</a></td>
+                                        <td>' . $pendingPair['starting_semester'] . '</td>
                                     </tr>';
                                 }
                             } else {
-                                echo '<tr><td colspan="3">No student requests at the moment.</td></tr>';
+                                echo '<tr><td colspan="3">No pending students at the moment.</td></tr>';
                             }
                             ?>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="position-fixed bottom-0 end-0 p-3 toast-container" style="z-index: 11"></div>
         </div>
     </div>
-    <div class="tab-pane fade" id="nav-none" role="tabpanel" aria-labelledby="nav-none-tab">
-        <div id="ongoing-content" class="position-relative">
+    <div class="tab-pane fade" id="nav-completed" role="tabpanel" aria-labelledby="nav-completed-tab">
+        <div id="completed-content" class="position-relative">
             <div class="position-absolute top-0 start-50 translate-middle-x">
+                <h1 class="mt-5 mb-1 fw-bold">Completed student supervisor pairings</h1>
+                <div class="mb-5 fst-italic">Click on any table heading to sort the table.</div>
                 <div class="table-responsive my-3">
-                    <table class="table table-striped align-middle" style="width:80rem;">
+                    <table class="table table-striped align-middle sortable" style="width:80rem;">
                         <colgroup>
-                            <col span="1" style="width:20%;">
-                            <col span="1" style="width:80%;">
+                            <col span="1" style="width:33.3%;">
+                            <col span="1" style="width:33.3%;">
+                            <col span="1" style="width:33.3%;">
                         </colgroup>
                         <thead class="table-light">
                             <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Working title</th>
+                                <th scope="col">Student ID</th>
+                                <th scope="col">Supervisor ID</th>
+                                <th scope="col">Starting Semester</th>
                             </tr>
                         </thead>
-                        <tbody id="ongoingTableBody">
+                        <tbody id="completedTableBody">
                             <?php
-                            if (!empty($completedStudentsIDs)) {
-                                foreach ($completedStudentsIDs as $completedStudentID) {
-                                    $completedStudent = getStudent($con, $completedStudentID);
+                            $completedPairs = getStudentSupervisorPairsByStatus($con, "Completed");
 
+                            if (!empty($completedPairs)) {
+                                foreach ($completedPairs as $completedPair) {
                                     echo
                                     '<tr>
-                                        <td>
-                                            <div class="d-flex w-40"><a href="profile.php?id=' . $completedStudentID . '">';
-
-                                    // if the student has not set up their name in profile, display their studentID, else display their name
-                                    echo ($completedStudent["name"] == "") ?  $completedStudentID  :  $ongoingStudent["name"];
-                                    echo '</div></a></td>
-                                    <td>
-                                        <div class="d-flex w-40">';
-                                    echo ($completedStudent["working_title"] == "") ? 'No working title yet' : $completedStudent["working_title"];
-                                    echo
-                                    '</div></td></tr>';
+                                        <td><a href="profile.php?id=' . $completedPair['studentID'] . '">' . $completedPair['studentID'] . '</a></td>
+                                        <td><a href="profile.php?id=' . $completedPair['supervisorID'] . '">' . $completedPair['supervisorID'] . '</a></td>
+                                        <td>' . $completedPair['starting_semester'] . '</td>
+                                    </tr>';
                                 }
                             } else {
-                                echo '<tr><td colspan="3">No students without supervisors.</td></tr>';
+                                echo '<tr><td colspan="3">No completed students at the moment.</td></tr>';
                             }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="nav-none" role="tabpanel" aria-labelledby="nav-none-tab">
+        <div id="none-content" class="position-relative">
+            <div class="position-absolute top-0 start-50 translate-middle-x">
+                <h1 class="mt-5 mb-1 fw-bold">Students without supervisor</h1>
+                <div class="mb-5 fst-italic">Click on any table heading to sort the table.</div>
+                <div class="table-responsive my-3">
+                    <table class="table table-striped align-middle sortable">
+                        <colgroup>
+                            <col span="1" style="width:33.3%;">
+                        </colgroup>
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">Student ID</th>
+                            </tr>
+                        </thead>
+                        <tbody id="noneTableBody">
+                            <?php
+                            $studentsWithoutSupervisor = getStudentsWithoutSupervisor($con);
 
+                            if (!empty($studentsWithoutSupervisor)) {
+                                foreach ($studentsWithoutSupervisor as $studentWithoutSupervisor) {
+                                    echo
+                                    '<tr>
+                                        <td><a href="profile.php?id=' . $studentWithoutSupervisor['studentID'] . '">' . $studentWithoutSupervisor['studentID'] . '</a></td>
+                                    </tr>';
+                                }
+                            } else {
+                                echo '<tr><td colspan="3">No students without supervisor at the moment.</td></tr>';
+                            }
                             ?>
                         </tbody>
                     </table>
@@ -164,3 +176,8 @@ require_once 'header.php';
         </div>
     </div>
 </div>
+
+<script src="includes/sorttable.js"></script>
+</body>
+
+</html>

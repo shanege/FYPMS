@@ -1,5 +1,11 @@
+<?php
+if (count(get_included_files()) == 1) exit("Direct access not permitted.");
+?>
+
 <div class="position-relative">
     <div class="position-absolute top-0 start-50 translate-middle-x my-3">
+        <h1 class="my-5 fw-bold">Profile page</h1>
+
         <?php
         $supervisorDetails = getSupervisor($con, $id);
 
@@ -17,7 +23,7 @@
             $thisSemester = $thisYear . "0" . $semesterMonth;
             $quota = getSupervisorStudentQuota($con, $thisSemester);
 
-            $studentCount = countStudentsPerSupervisor($con, $id);
+            $studentCount = countStudentsForSupervisor($con, $id);
 
             echo
             '<div class="table-responsive">

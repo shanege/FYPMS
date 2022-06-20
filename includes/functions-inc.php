@@ -200,12 +200,13 @@ function requestExists($con, $studentID)
     }
 }
 
-function getAllStudentsForSupervisor($con, $supervisorID)
+function getAllStudentIDsForSupervisorByStatus($con, $supervisorID, $status)
 {
-    $sql = "SELECT studentID, supervisorID, starting_semester, status FROM supervisor_student_pairs WHERE supervisorID = ?;";
+    $sql = "SELECT studentID FROM supervisor_student_pairs WHERE supervisorID = ? AND status = ?;";
     try {
         $stmt = $con->prepare($sql);
         $stmt->bindParam(1, $supervisorID, PDO::PARAM_STR);
+        $stmt->bindParam(2, $status, PDO::PARAM_STR);
 
         if ($stmt->execute()) {
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -235,7 +236,7 @@ function getSupervisorStudentQuota($con, $semester)
     }
 }
 
-function countStudentsPerSupervisor($con, $supervisorID)
+function countStudentsForSupervisor($con, $supervisorID)
 {
     $status = "Ongoing";
     $sql = "SELECT COUNT(studentID) as total_students FROM supervisor_student_pairs WHERE supervisorID = ? AND status = ? LIMIT 1;";
@@ -350,14 +351,13 @@ function getTask($con, $taskID)
     }
 }
 
-function getStudentPairByStatus($con, $status, $semester)
+function getStudentSupervisorPairsByStatus($con, $status)
 {
-    $sql = "SELECT studentID, supervisorID FROM supervisor_student_pairs WHERE status = ? AND starting_semester = ?;";
+    $sql = "SELECT studentID, supervisorID, starting_semester FROM supervisor_student_pairs WHERE status = ?;";
 
     try {
         $stmt = $con->prepare($sql);
         $stmt->bindParam(1, $status, PDO::PARAM_STR);
-        $stmt->bindParam(1, $semester, PDO::PARAM_STR);
 
         if ($stmt->execute()) {
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -368,10 +368,10 @@ function getStudentPairByStatus($con, $status, $semester)
     }
 }
 
-function getStudentsWithNoSupervisor($con, $semester)
+function getStudentsWithoutSupervisor($con)
 {
-    $sql = `SELECT studentID FROM student_details WHERE studentID NOT IN
-        (SELECT studentID FROM supervisor_student_pairs WHERE status="Ongoing")`;
+    $sql = 'SELECT studentID FROM student_details WHERE studentID NOT IN
+        (SELECT studentID FROM supervisor_student_pairs WHERE status="Ongoing")';
 
     try {
         $stmt = $con->prepare($sql);
