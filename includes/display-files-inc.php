@@ -8,6 +8,7 @@ use \League\Flysystem\FileAttributes;
 use \League\Flysystem\DirectoryAttributes;
 
 $folder = $_POST['folder'];
+$style = $_POST['style'];
 
 if ($folder == "") {
     echo "None";
@@ -21,7 +22,11 @@ if ($folder == "") {
             if ($item instanceof FileAttributes) {
                 // handle the file
                 try {
-                    echo '<a class="list-group-item list-group-item-action" href="includes/download-inc.php?file=' . $path . '" target="_blank">' . basename($path) . '</a>';
+                    if ($style == "normal") {
+                        echo '<a href="includes/download-inc.php?file=' . $path . '" target="_blank">' . basename($path) . '</a>';
+                    } else if ($style == "group") {
+                        echo '<a class="list-group-item list-group-item-action" href="includes/download-inc.php?file=' . $path . '" target="_blank">' . basename($path) . '</a>';
+                    }
                 } catch (FilesystemException | UnableToRetrieveMetadata $exception) {
                     echo "couldnt retrieve file metadata";
                 }

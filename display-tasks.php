@@ -90,13 +90,13 @@ if (!empty($tasks)) {
                 if ($diff->days < 7) {
                     if ($diff->d == 0) {
                         if ($diff->h == 0) {
-                            if ($diff->m == 0) {
-                                $timeLeft = $diff->s;
+                            if ($diff->i == 0) {
+                                $timeLeft = $diff->s . ' second(s)';
                             } else {
-                                $timeLeft = $diff->m . ' minute(s) ' . $diff->s . ' second(s)';
+                                $timeLeft = $diff->i . ' minute(s) ' . $diff->s . ' second(s)';
                             }
                         } else {
-                            $timeLeft = $diff->h . ' hour(s) ' . $diff->m . ' minute(s)';
+                            $timeLeft = $diff->h . ' hour(s) ' . $diff->i . ' minute(s)';
                         }
                     } else {
                         $timeLeft = $diff->d . ' day(s) ' . $diff->h . ' hour(s)';
@@ -120,13 +120,13 @@ if (!empty($tasks)) {
                 if ($diff->days < 7) {
                     if ($diff->d == 0) {
                         if ($diff->h == 0) {
-                            if ($diff->m == 0) {
-                                $timeLeft = $diff->s;
+                            if ($diff->i == 0) {
+                                $timeLeft = $diff->s . ' second(s)';
                             } else {
-                                $timeLeft = $diff->m . ' minute(s) ' . $diff->s . ' second(s)';
+                                $timeLeft = $diff->i . ' minute(s) ' . $diff->s . ' second(s)';
                             }
                         } else {
-                            $timeLeft = $diff->h . ' hour(s) ' . $diff->m . ' minute(s)';
+                            $timeLeft = $diff->h . ' hour(s) ' . $diff->i . ' minute(s)';
                         }
                     } else {
                         $timeLeft = $diff->d . ' day(s) ' . $diff->h . ' hour(s)';

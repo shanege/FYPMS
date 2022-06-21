@@ -37,7 +37,7 @@ if (count(get_included_files()) == 1) exit("Direct access not permitted.");
             </a>
         </div>
         <div class="col-md-auto mb-3">
-            <a class="btn" href="" role="button">
+            <a class="btn" href="thesis-archive.php" role="button">
                 <div class="card text-center" style="width: 18rem;">
                     <i class="fa-solid fa-box-archive fa-10x my-3" style="--fa-beat-scale: 1.1;"></i>
                     <div class="card-body">

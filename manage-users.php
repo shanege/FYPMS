@@ -6,10 +6,10 @@ if ($userData["role"] != "coordinator") {
 ?>
 
 <div class="container w-75">
-    <h1 class="mt-5 mb-1 fw-bold">Manage users</h1>
-    <div class="mb-5 fst-italic">Choose your action.</div>
-    <div class="row justify-content-center">
-        <div class="col-md-auto">
+    <h1 class="mt-2 mb-1 fw-bold">Manage users</h1>
+    <div class="mb-3 fst-italic">Choose your action.</div>
+    <div class="row justify-content-center mx-auto text-center w-75">
+        <div class="col-md-auto mb-3">
             <a class="btn" href="add-users.php" role="button">
                 <div class="card text-center" style="width: 18rem;">
                     <i class="fa-solid fa-user-plus fa-10x my-3" style="--fa-beat-scale: 1.1;"></i>
@@ -19,7 +19,7 @@ if ($userData["role"] != "coordinator") {
                 </div>
             </a>
         </div>
-        <div class="col-md-auto">
+        <div class="col-md-auto mb-3">
             <a class="btn" href="manage-students.php" role="button">
                 <div class="card text-center" style="width: 18rem;">
                     <i class="fa-solid fa-user-graduate fa-10x my-3" style="--fa-beat-scale: 1.1;"></i>
@@ -29,7 +29,7 @@ if ($userData["role"] != "coordinator") {
                 </div>
             </a>
         </div>
-        <div class="col-md-auto">
+        <div class="col-md-auto mb-3">
             <a class="btn" href="manage-supervisors.php" role="button">
                 <div class="card text-center" style="width: 18rem;">
                     <i class="fa-solid fa-chalkboard-user fa-10x my-3" style="--fa-beat-scale: 1.1;"></i>

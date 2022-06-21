@@ -18,7 +18,7 @@ if (!empty($ongoingStudentsIDs)) {
                 <div class="d-flex w-40"><a href="profile.php?id=' . $ongoingStudentID['studentID'] . '">';
 
         // if the student has not set up their name in profile, display their studentID, else display their name
-        echo ($ongoingStudent["name"] == "") ?  $ongoingStudentID  :  $ongoingStudent["name"];
+        echo ($ongoingStudent["name"] == "") ?  $ongoingStudentID['studentID']  :  $ongoingStudent["name"];
         echo '</div></a></td>
             <td>
                 <div class="d-flex w-40">';

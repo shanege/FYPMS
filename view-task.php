@@ -46,19 +46,19 @@ if ($task === false) {
                                 if ($diff->days < 7) {
                                     if ($diff->d == 0) {
                                         if ($diff->h == 0) {
-                                            if ($diff->m == 0) {
-                                                $timeLeft = $diff->s;
+                                            if ($diff->i == 0) {
+                                                $timeLeft = $diff->s . ' second(s)';
                                             } else {
-                                                $timeLeft = $diff->m . ' minute(s) ' . $diff->s . ' second(s)';
+                                                $timeLeft = $diff->i . ' minute(s) ' . $diff->s . ' second(s)';
                                             }
                                         } else {
-                                            $timeLeft = $diff->h . ' hour(s) ' . $diff->m . ' minute(s)';
+                                            $timeLeft = $diff->h . ' hour(s) ' . $diff->i . ' minute(s)';
                                         }
                                     } else {
                                         $timeLeft = $diff->d . ' day(s) ' . $diff->h . ' hour(s)';
                                     }
                                 } else {
-                                    $timeLeft = $deadline->format('D, d F Y H:i A');
+                                    $timeLeft = $deadline->format('D, d F Y, H:i A');
                                 }
 
                                 $statusIcon = '<span class="text-success"><i class="bi bi-check-circle text-success fs-4"></i> Completed</span>';
@@ -67,24 +67,22 @@ if ($task === false) {
 
                                 $statusIcon = '<span class="text-danger"><i class="bi bi-exclamation-circle fs-4"></i> Overdue</span>';
                             } else {
-                                $diff = $deadline->diff($now);
-
                                 if ($diff->days < 7) {
                                     if ($diff->d == 0) {
                                         if ($diff->h == 0) {
-                                            if ($diff->m == 0) {
-                                                $timeLeft = $diff->s;
+                                            if ($diff->i == 0) {
+                                                $timeLeft = $diff->s . ' second(s)';
                                             } else {
-                                                $timeLeft = $diff->m . ' minute(s) ' . $diff->s . ' second(s)';
+                                                $timeLeft = $diff->i . ' minute(s) ' . $diff->s . ' second(s)';
                                             }
                                         } else {
-                                            $timeLeft = $diff->h . ' hour(s) ' . $diff->m . ' minute(s)';
+                                            $timeLeft = $diff->h . ' hour(s) ' . $diff->i . ' minute(s)';
                                         }
                                     } else {
                                         $timeLeft = $diff->d . ' day(s) ' . $diff->h . ' hour(s)';
                                     }
                                 } else {
-                                    $timeLeft = $deadline->format('D, d F Y H:i A');
+                                    $timeLeft = $deadline->format('D, d F Y, H:i A');
                                 }
 
                                 $statusIcon = '<span><i class="bi bi-clock fs-4"></i> Ongoing</span>';
@@ -303,19 +301,23 @@ if ($task === false) {
 <script>
     $(document).ready(function() {
         $("#supervisorAttachedFile").load("includes/display-files-inc.php", {
-            folder: "<?php echo $task['supervisor_upload_path']; ?>"
+            folder: "<?php echo $task['supervisor_upload_path']; ?>",
+            style: "normal"
         });
 
         $("#studentSubmittedFile").load("includes/display-files-inc.php", {
-            folder: "<?php echo $task['student_submit_path']; ?>"
+            folder: "<?php echo $task['student_submit_path']; ?>",
+            style: "normal"
         });
 
         $("#previousAttachedFile").load("includes/display-files-inc.php", {
-            folder: "<?php echo $task['supervisor_upload_path']; ?>"
+            folder: "<?php echo $task['supervisor_upload_path']; ?>",
+            style: "normal"
         });
 
         $("#previousSubmittedFile").load("includes/display-files-inc.php", {
-            folder: "<?php echo $task['student_submit_path']; ?>"
+            folder: "<?php echo $task['student_submit_path']; ?>",
+            style: "normal"
         });
 
         $('#addSubmissionForm').on('submit', function(event) {

@@ -363,6 +363,47 @@ function getStudentsWithoutSupervisor($con)
     }
 }
 
+function getThesisArchive($con)
+{
+    $sql = 'SELECT st.studentID, st.thesis_bucket_path, sd.name, sd.working_title, ssp.supervisorID
+            FROM student_theses st
+            LEFT JOIN student_details sd
+            ON st.studentID = sd.studentID 
+            LEFT JOIN supervisor_student_pairs ssp
+            ON st.studentID = ssp.studentID';
+
+    try {
+        $stmt = $con->prepare($sql);
+
+        if ($stmt->execute()) {
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+function getThesisBucketPath($con, $studentID)
+{
+    $sql = "SELECT thesis_bucket_path FROM student_theses WHERE studentID = ? LIMIT 1;";
+
+    try {
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(1, $studentID, PDO::PARAM_STR);
+
+        $stmt->execute();
+        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            return $row['thesis_bucket_path'];
+        } else {
+            $result = false;
+            return $result;
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
 function mimeToExtension($mimeType)
 {
     $mimeMap = [
