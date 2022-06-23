@@ -9,7 +9,7 @@ if ($userData["role"] != "supervisor") {
         <h1 class="mt-5 mb-1 fw-bold">Manage your proposed topics</h1>
         <div class="fst-italic">Click on a topic to expand its details.</div>
         <div class="d-flex justify-content-end">
-            <a href="proposed-topics-list.php" type="button" class="btn btn-outline-secondary mx-2">View all topics</a>
+            <a href="proposed-topics-list.php" type="button" class="btn btn-secondary mx-2">View all topics</a>
             <a href="propose-topic.php" type="button" class="btn btn-primary mx-2">Propose a topic</a>
         </div>
         <div class="table-responsive my-3">
@@ -19,7 +19,7 @@ if ($userData["role"] != "supervisor") {
                     <col span="1" style="width:75%;">
                     <col span="1" style="width:20%;">
                 </colgroup>
-                <thead class="table-light">
+                <thead>
                     <tr>
                         <th scope="col">No.</th>
                         <th scope="col">Proposed topic</th>

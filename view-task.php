@@ -15,7 +15,7 @@ if ($task === false) {
 ?>
 <div class="position-relative">
     <div class="position-absolute top-0 start-50 translate-middle-x my-3 w-75">
-        <h1><?php echo $task['title']; ?></h1>
+        <h1 class="fw-bold"><?php echo $task['title']; ?></h1>
         <p class="fs-5 mt-4"><?php echo $task['description'] == "" ? "No description was given for this task" : $task['description']; ?></p>
         <h3 class="mt-4">Attached file:</h3>
         <p id="supervisorAttachedFile">Loading file <i class="fa-solid fa-spinner fa-spin-pulse fa-spin-reverse"></i></p>

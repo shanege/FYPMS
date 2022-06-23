@@ -8,7 +8,7 @@ require_once 'header.php';
         <div class="mb-5 fst-italic">Click on supervisor names to view their profile.</div>
         <div class="table-responsive">
             <table class="table table-striped" style="width:80rem;">
-                <thead class="table-light">
+                <thead>
                     <tr>
                         <th scope="col">Name</th>
                         <th scope="col">Research Area(s)</th>

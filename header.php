@@ -19,32 +19,36 @@ $userData = checkLogin($con);
     <script src="https://kit.fontawesome.com/9a5c141fbf.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<body class="bg-body">
+    <nav class="navbar navbar-expand-lg navbar-light bg-body">
         <div class="container-fluid">
-            <span class="navbar-brand">XMUM FYPMS</span>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                        <a class="nav-link active fw-bold" aria-current="page" href="index.php">Home</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                </ul>
+                <span class="navbar-brand fw-bolder">XMUM FYPMS</span>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown ">
+                        <a class="nav-link dropdown-toggle fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <?php
-                            echo $userData['userID']; ?>
+                            echo $userData['userID'];
+                            ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <?php
                             if ($userData['role'] == "student" || $userData['role'] == "supervisor") {
-                                echo '<li><a class="dropdown-item" href="profile.php?id=' . $userData['userID'] . '">Profile</a></li>';
+                                echo '<li><a class="dropdown-item fw-bold" href="profile.php?id=' . $userData['userID'] . '">Profile</a></li>';
                             }
                             ?>
-                            <li><a class="dropdown-item" href="includes/logout-inc.php">Logout</a></li>
+                            <li><a class="dropdown-item fw-bold" href="includes/logout-inc.php">Logout</a></li>
                         </ul>
                     </li>
                 </ul>

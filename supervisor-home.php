@@ -3,45 +3,43 @@ if (count(get_included_files()) == 1) exit("Direct access not permitted.");
 ?>
 
 <div class="container w-75">
-    <h1 class="mt-2 mb-1 fw-bold">Home page</h1>
-    <div class="mb-3 fst-italic">Choose your action.</div>
     <div class="row justify-content-center mx-auto text-center w-75">
         <div class="col-md-auto mb-3">
             <a class="btn" href="manage-supervisees.php" role="button">
-                <div class="card text-center" style="width: 18rem;">
-                    <i class="fa-solid fa-user-graduate fa-10x my-3" style="--fa-beat-scale: 1.1;"></i>
-                    <div class="card-body">
-                        <p class="card-text">Manage supervised students</p>
+                <div class="card shadow text-center p-3" style="width: 18rem; height: 18rem;">
+                    <img src="images/manage-supervised-students.png" class="card-img-top img-fluid" alt="..." style="max-height: 90%;">
+                    <div class="card-body d-flex align-items-end justify-content-center p-0">
+                        <p class="card-text fw-bold">Manage supervised students</p>
                     </div>
                 </div>
             </a>
         </div>
         <div class="col-md-auto mb-3">
             <a class="btn" href="supervisors-list.php" role="button">
-                <div class="card text-center" style="width: 18rem;">
-                    <i class="fa-solid fa-magnifying-glass fa-10x my-3" style="--fa-beat-scale: 1.1;"></i>
-                    <div class="card-body">
-                        <p class="card-text">View supervisor list</p>
+                <div class="card shadow text-center p-3" style="width: 18rem; height: 18rem;">
+                    <img src="images/view-supervisor-list.png" class="card-img-top img-fluid" alt="..." style="max-height: 90%;">
+                    <div class="card-body d-flex align-items-end justify-content-center p-0">
+                        <p class="card-text fw-bold">View supervisor list</p>
                     </div>
                 </div>
             </a>
         </div>
         <div class="col-md-auto mb-3">
             <a class="btn" href="manage-topics.php" role="button">
-                <div class="card text-center" style="width: 18rem;">
-                    <i class="fa-solid fa-file-invoice fa-10x my-3" style="--fa-beat-scale: 1.1;"></i>
-                    <div class="card-body">
-                        <p class="card-text">Add/remove proposed topics</p>
+                <div class="card shadow text-center p-3" style="width: 18rem; height: 18rem;">
+                    <img src="images/manage-proposed-topics.png" class="card-img-top img-fluid" alt="..." style="max-height: 90%;">
+                    <div class="card-body d-flex align-items-end justify-content-center p-0">
+                        <p class="card-text fw-bold">Manage proposed topics</p>
                     </div>
                 </div>
             </a>
         </div>
         <div class="col-md-auto mb-3">
             <a class="btn" href="thesis-archive.php" role="button">
-                <div class="card text-center" style="width: 18rem;">
-                    <i class="fa-solid fa-box-archive fa-10x my-3" style="--fa-beat-scale: 1.1;"></i>
-                    <div class="card-body">
-                        <p class="card-text">Manage student thesis archive</p>
+                <div class="card shadow text-center p-3" style="width: 18rem; height: 18rem;">
+                    <img src="images/manage-student-thesis-archive.png" class="card-img-top img-fluid" alt="..." style="max-height: 90%;">
+                    <div class="card-body d-flex align-items-end justify-content-center p-0">
+                        <p class="card-text fw-bold">Manage student thesis archive</p>
                     </div>
                 </div>
             </a>
@@ -49,31 +47,6 @@ if (count(get_included_files()) == 1) exit("Direct access not permitted.");
     </div>
 </div>
 
-<script>
-    $('.fa-file-invoice').hover(function() {
-        $(this).addClass('fa-beat');
-    }, function() {
-        $(this).removeClass('fa-beat');
-    });
-
-    $('.fa-magnifying-glass').hover(function() {
-        $(this).addClass('fa-beat');
-    }, function() {
-        $(this).removeClass('fa-beat');
-    });
-
-    $('.fa-user-graduate').hover(function() {
-        $(this).addClass('fa-beat');
-    }, function() {
-        $(this).removeClass('fa-beat');
-    });
-
-    $('.fa-box-archive').hover(function() {
-        $(this).addClass('fa-beat');
-    }, function() {
-        $(this).removeClass('fa-beat');
-    });
-</script>
 </body>
 
 </html>

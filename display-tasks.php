@@ -62,7 +62,7 @@ if (!empty($tasks)) {
         <col span="1" style="width:17.5%;">
         <col span="1" style="width:10%;">
     </colgroup>
-    <thead class="table-light">
+    <thead>
         <tr>
             <th scope="col">No</th>
             <th scope="col">Title</th>
@@ -75,7 +75,7 @@ if (!empty($tasks)) {
     if (!empty($tasks)) {
         $i = 0;
         foreach ($tasks as $task) {
-            echo '<tr style="transform: rotate(0);" class=';
+            echo '<tr style="transform: rotate(0);"';
 
             $deadline = new DateTime($task['deadline_at'], new DateTimeZone('Asia/Kuala_Lumpur'));
 
@@ -83,7 +83,7 @@ if (!empty($tasks)) {
             $now = new DateTime("now", new DateTimeZone('Asia/Kuala_Lumpur'));
 
             if ($task['status'] == "Completed") {
-                echo '"table-success">';
+                echo ' class="table-success">';
 
                 $diff = $deadline->diff($now);
 
@@ -107,13 +107,13 @@ if (!empty($tasks)) {
 
                 $statusIcon = '<span class="text-success"><i class="bi bi-check-circle text-success fs-4"></i> Completed</span>';
             } else if ($deadline < $now) {
-                echo '"table-danger">';
+                echo ' class="table-danger">';
 
                 $timeLeft = $deadline->format('D, d F Y, H:i A');
 
                 $statusIcon = '<span class="text-danger"><i class="bi bi-exclamation-circle fs-4"></i> Overdue</span>';
             } else {
-                echo '"table-light">';
+                echo '>';
 
                 $diff = $deadline->diff($now);
 

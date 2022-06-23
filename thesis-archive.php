@@ -30,7 +30,7 @@ if ($userData["role"] == "coordinator") {
                     <col span="1" style="width:15%;">
                     <col span="1" style="width:20%;">
                 </colgroup>
-                <thead class="table-light">
+                <thead>
                     <tr>
                         <th scope="col">No.</th>
                         <th scope="col">Title</th>

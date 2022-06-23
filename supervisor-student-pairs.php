@@ -25,7 +25,7 @@ if ($userData["role"] != "coordinator") {
                             <col span="1" style="width:33.3%;">
                             <col span="1" style="width:33.3%;">
                         </colgroup>
-                        <thead class="table-light">
+                        <thead>
                             <tr>
                                 <th scope="col">Student ID</th>
                                 <th scope="col">Supervisor ID</th>
@@ -67,7 +67,7 @@ if ($userData["role"] != "coordinator") {
                             <col span="1" style="width:33.3%;">
                             <col span="1" style="width:33.3%;">
                         </colgroup>
-                        <thead class="table-light">
+                        <thead>
                             <tr>
                                 <th scope="col">Student ID</th>
                                 <th scope="col">Supervisor ID</th>
@@ -109,7 +109,7 @@ if ($userData["role"] != "coordinator") {
                             <col span="1" style="width:33.3%;">
                             <col span="1" style="width:33.3%;">
                         </colgroup>
-                        <thead class="table-light">
+                        <thead>
                             <tr>
                                 <th scope="col">Student ID</th>
                                 <th scope="col">Supervisor ID</th>
@@ -149,7 +149,7 @@ if ($userData["role"] != "coordinator") {
                         <colgroup>
                             <col span="1" style="width:33.3%;">
                         </colgroup>
-                        <thead class="table-light">
+                        <thead>
                             <tr>
                                 <th scope="col">Student ID</th>
                             </tr>

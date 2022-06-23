@@ -19,7 +19,7 @@ if ($userData["role"] != "coordinator") {
                         ?
                     </button>
                 </h3>
-                <div class="bg-light border p-4">
+                <div class="ecru border p-4 rounded-3">
                     <form id="registerUsersBulkForm" enctype="multipart/form-data">
                         <label for="registerUsersFile" class="form-label">Select Excel file</label>
                         <input type="file" name="registerUsersFile" class="form-control mb-3">
@@ -30,7 +30,7 @@ if ($userData["role"] != "coordinator") {
             </div>
             <div class="mb-5">
                 <h3>Register users (Single)</h3>
-                <div class="bg-light border p-4">
+                <div class="ecru border p-4 rounded-3">
                     <form id="registerUsersSingleForm" method="POST">
                         <fieldset>
                             <div class="row g-3 mb-3">
@@ -55,7 +55,7 @@ if ($userData["role"] != "coordinator") {
                         </fieldset>
                         <input type="submit" id="registerBtn" class="btn btn-primary px-3" value="Register">
                     </form>
-                    <div id="updateSupervisorsDetailsSingleError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 user-select-none">&nbsp;</div>
+                    <div id="updateSupervisorsDetailsSingleError" class="rounded-3 mb-2 ecru bg-opacity-75 p-2 user-select-none">&nbsp;</div>
                 </div>
             </div>
         </div>
@@ -99,7 +99,7 @@ if ($userData["role"] != "coordinator") {
             $(".invalid-feedback").remove();
             $(".form-control").removeClass("is-invalid");
             $(".form-select").removeClass("is-invalid");
-            $("#updateSupervisorsDetailsSingleError").html("").removeClass("bg-success").addClass("bg-light");
+            $("#updateSupervisorsDetailsSingleError").html("").removeClass("bg-success").addClass("ecru");
 
             $.ajax({
                 url: "includes/single-register-inc.php",

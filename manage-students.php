@@ -20,18 +20,18 @@ if ($userData["role"] != "coordinator") {
                         ?
                     </button>
                 </h3>
-                <div class="bg-light border p-4">
+                <div class="ecru border p-4 rounded-3">
                     <form id="updateStudentsDetailsBulk" method="POST" enctype="multipart/form-data">
                         <label for="studentDetailsFile" class="form-label">Select Excel file</label>
                         <input type="file" name="studentDetailsFile" class="form-control mb-3">
                         <input type="submit" name="updateStudents" id="updateStudents" class="btn btn-primary" value="Import">
                     </form>
-                    <div id="updateStudentsDetailsBulkError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 user-select-none">&nbsp;</div>
+                    <div id="updateStudentsDetailsBulkError" class="rounded-3 mb-2 ecru bg-opacity-75 p-2 user-select-none">&nbsp;</div>
                 </div>
             </div>
             <div class="mb-5">
                 <h3>Assign supervisor</h3>
-                <div class="bg-light border p-4">
+                <div class="ecru border p-4 rounded-3">
                     <form id="assignSupervisorForm" method="POST">
                         <fieldset>
                             <div class="row g-3 mb-3">
@@ -51,7 +51,7 @@ if ($userData["role"] != "coordinator") {
                         </fieldset>
                         <input type="submit" id="assignBtn" name="assignBtn" class="btn btn-primary px-3 mb-3" value="Assign">
                     </form>
-                    <div id="assignSupervisorError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 user-select-none text-white">&nbsp;</div>
+                    <div id="assignSupervisorError" class="rounded-3 mb-2 ecru bg-opacity-75 p-2 user-select-none text-white">&nbsp;</div>
                 </div>
             </div>
         </div>
@@ -135,7 +135,7 @@ if ($userData["role"] != "coordinator") {
 
             $(".invalid-feedback").remove();
             $(".form-select").removeClass("is-invalid");
-            $("#assignSupervisorError").html("&nbsp;").removeClass("bg-danger").addClass("bg-light");
+            $("#assignSupervisorError").html("&nbsp;").removeClass("bg-danger").addClass("ecru");
 
             var formData = new FormData(this);
             formData.append("assign", "true");
@@ -171,7 +171,7 @@ if ($userData["role"] != "coordinator") {
                         }
 
                         if (response.errors.sql) {
-                            $("#assignSupervisorError").html(response.errors.sql).removeClass("bg-light").addClass("bg-danger");
+                            $("#assignSupervisorError").html(response.errors.sql).removeClass("ecru").addClass("bg-danger");
                         }
                     } else {
                         // make a hidden form to send POST variable to itself that the assignment was a success

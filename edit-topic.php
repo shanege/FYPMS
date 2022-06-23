@@ -10,9 +10,9 @@ $topic = getProposedTopic($con, $_POST['topicID']);
 
 <div class="position-relative">
     <div class="position-absolute top-0 start-50 translate-middle-x w-50 my-3">
+        <h1 class="my-5 mb-1 fw-bold">Edit topic details</h1>
         <form id="editTopicForm" method="POST">
             <fieldset>
-                <legend>Edit topic information</legend>
                 <div id="topicGroup" class="mb-3 ">
                     <label for="topic" class="form-label">Topic<span class="text-danger">&#42;</span></label>
                     <textarea id="topicInput" name="topic" class="form-control" placeholder="E.g., Social Media Sentiment Analysis Using Python Programming"><?php echo $topic['topic'] ?></textarea>

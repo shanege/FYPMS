@@ -25,7 +25,7 @@ if ($userData["role"] != "supervisor") {
                             <col span="1" style="width:60%;">
                             <col span="1" style="width:20%;">
                         </colgroup>
-                        <thead class="table-light">
+                        <thead>
                             <tr>
                                 <th scope="col">Name</th>
                                 <th scope="col">Working title</th>
@@ -54,7 +54,7 @@ if ($userData["role"] != "supervisor") {
                             <col span="1" style="width:60%;">
                             <col span="1" style="width:20%;">
                         </colgroup>
-                        <thead class="table-light">
+                        <thead>
                             <tr>
                                 <th scope="col">Name</th>
                                 <th scope="col">Working title</th>
@@ -83,7 +83,7 @@ if ($userData["role"] != "supervisor") {
                             <col span="1" style="width:20%;">
                             <col span="1" style="width:80%;">
                         </colgroup>
-                        <thead class="table-light">
+                        <thead>
                             <tr>
                                 <th scope="col">Name</th>
                                 <th scope="col">Working title</th>

@@ -1,0 +1,56 @@
+.bg-body {
+  background-color: #e6e1db !important;
+}
+
+.card {
+  background-color: #f5f2ed;
+  border-radius: 1.25rem;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+.nav .active {
+  background-color: #f5f2ed !important;
+}
+
+.modal .bg-body {
+  background-color: #ffffff !important;
+}
+
+.ecru {
+  background-color: #f5f2ed;
+}
+
+.login-bg {
+  height: 100vh;
+  background-image: url("../images/xmu-model.png");
+  /* background-size: cover; */
+  background-repeat: no-repeat;
+  background-position: center bottom;
+}
+
+.login-input {
+  border-color: #b8d0d1;
+  border-width: 0.2ch;
+}
+
+.login-input::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #b8d0d1;
+}
+
+.login-input:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #b8d0d1;
+}
+
+.login-input::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #b8d0d1;
+}
+
+.login-btn {
+  background-color: #e1b6cb;
+}

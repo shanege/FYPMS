@@ -20,18 +20,18 @@ if ($userData["role"] != "coordinator") {
                         ?
                     </button>
                 </h3>
-                <div class="bg-light border p-4">
+                <div class="ecru border p-4 rounded-3">
                     <form id="updateSupervisorsDetailsBulkForm" enctype="multipart/form-data">
                         <label for="supervisorDetailsFile" class="form-label">Select Excel file</label>
                         <input type="file" name="supervisorDetailsFile" class="form-control mb-3">
                         <input type="submit" name="updateSupervisors" id="updateSupervisors" class="btn btn-primary" value="Import">
                     </form>
-                    <div id="updateSupervisorsDetailsBulkError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 user-select-none">&nbsp;</div>
+                    <div id="updateSupervisorsDetailsBulkError" class="rounded-3 mb-2 ecru bg-opacity-75 p-2 user-select-none">&nbsp;</div>
                 </div>
             </div>
             <div>
                 <h3>Update supervisors details (Single)</h3>
-                <div class="bg-light border p-4">
+                <div class="ecru border p-4 rounded-3">
                     <form id="updateSupervisorsDetailsSingleForm">
                         <fieldset>
                             <div id="nameSelectGroup" class="mb-3">
@@ -66,7 +66,7 @@ if ($userData["role"] != "coordinator") {
             </div>
             <div class="mb-5">
                 <h3>Set supervisor quota</h3>
-                <div class="bg-light border p-4">
+                <div class="ecru border p-4 rounded-3">
                     <form id="setSupervisorQuotaForm" method="POST">
                         <fieldset>
                             <div class="row g-3 mb-3">
@@ -84,7 +84,7 @@ if ($userData["role"] != "coordinator") {
                         </fieldset>
                         <input type="submit" name="setQuotaBtn" id="setQuotaBtn" class="btn btn-primary px-3" value="Set">
                     </form>
-                    <div id="setSupervisorQuotaError" class="rounded-3 mb-2 bg-light bg-opacity-75 p-2 text-white user-select-none">&nbsp;</div>
+                    <div id="setSupervisorQuotaError" class="rounded-3 mb-2 ecru bg-opacity-75 p-2 text-white user-select-none">&nbsp;</div>
                 </div>
             </div>
         </div>
@@ -173,7 +173,7 @@ if ($userData["role"] != "coordinator") {
 
             $(".invalid-feedback").remove();
             $(".form-control").removeClass("is-invalid");
-            $("#updateSupervisorsDetailsSingleError").html("").removeClass("bg-success").addClass("bg-light");
+            $("#updateSupervisorsDetailsSingleError").html("").removeClass("bg-success").addClass("ecru");
 
             $.ajax({
                 url: "includes/supervisor-edit-profile-inc.php",
@@ -301,7 +301,7 @@ if ($userData["role"] != "coordinator") {
                         }
 
                         if (response.errors.sql) {
-                            $("#setSupervisorQuotaError").html(response.errors.sql).removeClass("bg-light").addClass("bg-danger");
+                            $("#setSupervisorQuotaError").html(response.errors.sql).removeClass("ecru").addClass("bg-danger");
                         }
                     } else {
                         var toast = $(createToast(response.message));
