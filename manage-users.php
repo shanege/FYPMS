@@ -8,11 +8,11 @@ if ($userData["role"] != "coordinator") {
 <div class="container w-75">
     <div class="row justify-content-center mx-auto text-center w-75">
         <div class="col-md-auto mb-3">
-            <a class="btn" href="add-users.php" role="button">
+            <a class="btn" href="register-users.php" role="button">
                 <div class="card shadow text-center p-3" style="width: 18rem; height: 18rem;">
-                    <img src="images/add-users.png" class="card-img-top img-fluid p-3" alt="..." style="max-height: 90%;">
+                    <img src="images/register-users.png" class="card-img-top img-fluid p-3" alt="..." style="max-height: 90%;">
                     <div class="card-body d-flex align-items-end justify-content-center p-0">
-                        <p class="card-text fw-bolder">Add users</p>
+                        <p class="card-text fw-bolder">Register users</p>
                     </div>
                 </div>
             </a>

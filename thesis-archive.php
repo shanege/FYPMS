@@ -121,21 +121,7 @@ if ($userData["role"] == "coordinator") {
         </div>';
     }
     ?>
-    <div class="position-fixed bottom-0 end-0 p-3 toast-container" style="z-index: 11">
-        <?php
-        if (isset($_POST['proposeTopicResult']) && $_POST['proposeTopicResult'] == "success") {
-            echo '
-            <div id="proposeTopicToast" class="toast align-items-center text-white bg-success bg-opacity-75 border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="d-flex">
-                    <div class="toast-body">
-                    Success! Topic added
-                    </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-            </div>';
-        }
-        ?>
-    </div>
+    <div class="position-fixed bottom-0 end-0 p-3 toast-container" style="z-index: 11"></div>
 </div>
 
 <script>
@@ -325,13 +311,13 @@ if ($userData["role"] == "coordinator") {
             </div>`;
         }
 
-        var proposeTopicToast = document.getElementById('proposeTopicToast');
-        if (proposeTopicToast) {
-            var toast = new bootstrap.Toast(proposeTopicToast);
+        var removeThesisToast = document.getElementById('removeThesisToast');
+        if (removeThesisToast) {
+            var toast = new bootstrap.Toast(removeThesisToast);
 
             toast.show();
 
-            proposeTopicToast.on('hidden.bs.toast', function() {
+            removeThesisToast.on('hidden.bs.toast', function() {
                 $(this).remove();
             });
         }

@@ -64,5 +64,5 @@ if (isset($_POST['userID']) && isset($_POST['password'])) {
 
     echo json_encode($data);
 } else {
-    header("location: ../add-users.php");
+    header("location: ../register-users.php");
 }

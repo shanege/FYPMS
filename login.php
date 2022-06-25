@@ -26,7 +26,7 @@
             if (isset($_GET["error"])) {
                 if ($_GET["error"] == "emptyinput") {
                     echo "<p class='text-danger'>Fill in all fields!</p>";
-                } else if ($_GET["error"] == "wrongpass") {
+                } else if ($_GET["error"] == "wrongpassword") {
                     echo "<p class='text-danger'>Wrong password!</p>";
                 } else if ($_GET["error"] == "nouser") {
                     echo "<p class='text-danger'>This user does not exist!</p>";

@@ -279,7 +279,7 @@ if ($task === false) {
                     <form id="gradeWorkForm">
                         <div class="modal-body">
                             <div id="gradeGroup" class="mb-3">
-                                <label for="gradeFile" class="col-form-label">Grade (1-100):</label>
+                                <label for="gradeFile" class="col-form-label">Grade (1-100):<span class="text-danger ms-2">&#42;</span></label>
                                 <input id="gradeInput" type="number" name="grade" class="form-control" min="1" max="100">
                             </div>
                             <div id="remarksGroup" class="mb-3">

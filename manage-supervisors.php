@@ -26,7 +26,7 @@ if ($userData["role"] != "coordinator") {
                         <input type="file" name="supervisorDetailsFile" class="form-control mb-3">
                         <input type="submit" name="updateSupervisors" id="updateSupervisors" class="btn btn-primary" value="Import">
                     </form>
-                    <div id="updateSupervisorsDetailsBulkError" class="rounded-3 mb-2 ecru bg-opacity-75 p-2 user-select-none">&nbsp;</div>
+                    <div id="updateSupervisorsDetailsBulkError" class="rounded-3 mb-2 ecru bg-opacity-75 p-2 user-select-none text-danger">&nbsp;</div>
                 </div>
             </div>
             <div>

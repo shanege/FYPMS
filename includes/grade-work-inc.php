@@ -9,6 +9,10 @@ if (isset($_POST['grade']) && isset($_POST['remarks'])) {
         $errors['grade'] = "Grade is a required field.";
     }
 
+    if ($_POST['grade'] < 1 || $_POST['grade'] > 100) {
+        $errors['grade'] = "Invalid grade.";
+    }
+
     if (empty($errors)) {
         $grade = $_POST['grade'];
         $remarks = $_POST['remarks'];

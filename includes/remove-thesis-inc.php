@@ -51,7 +51,7 @@ if (($_SERVER['REQUEST_METHOD'] === 'POST')) {
         $data['errors'] = $errors;
     } else {
         $data['success'] = true;
-        $data['message'] = 'Topic has been removed';
+        $data['message'] = 'Thesis has been removed';
     }
 
     echo json_encode($data);

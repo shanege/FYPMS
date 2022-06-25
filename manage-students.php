@@ -26,7 +26,7 @@ if ($userData["role"] != "coordinator") {
                         <input type="file" name="studentDetailsFile" class="form-control mb-3">
                         <input type="submit" name="updateStudents" id="updateStudents" class="btn btn-primary" value="Import">
                     </form>
-                    <div id="updateStudentsDetailsBulkError" class="rounded-3 mb-2 ecru bg-opacity-75 p-2 user-select-none">&nbsp;</div>
+                    <div id="updateStudentsDetailsBulkError" class="rounded-3 mb-2 ecru bg-opacity-75 p-2 user-select-none text-danger">&nbsp;</div>
                 </div>
             </div>
             <div class="mb-5">
@@ -44,7 +44,7 @@ if ($userData["role"] != "coordinator") {
                                 <div id="supervisorIDGroup" class="col">
                                     <label for="supervisorID" class="mb-2">Supervisor ID</label>
                                     <select id="supervisorIDInput" name="supervisorID" class="form-select m-0" aria-label="Select Supervisor ID">
-                                        <option disabled selected value> -- select a Supervisor ID -- </option>
+                                        <option disabled selected value> -- select a supervisor -- </option>
                                     </select>
                                 </div>
                             </div>

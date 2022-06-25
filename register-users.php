@@ -6,8 +6,8 @@ if ($userData["role"] != "coordinator") {
 ?>
 <div class="position-relative">
     <div class="position-absolute top-0 start-50 translate-middle-x w-75">
-        <h1 class="mt-5 mb-1 fw-bold">Add users</h1>
-        <div class="mb-5 fst-italic">You can add users by bulk or individually.</div>
+        <h1 class="mt-5 mb-1 fw-bold">Register users</h1>
+        <div class="mb-5 fst-italic">You can register users by bulk or individually.</div>
         <div class="vstack gap-5">
             <div>
                 <h3>
