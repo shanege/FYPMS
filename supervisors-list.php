@@ -33,9 +33,13 @@ require_once 'header.php';
                         foreach ($supervisorDetailsList as $supervisorDetails) {
                             echo
                             '<tr>
-                                <td><a href="profile.php?id=' . $supervisorDetails["supervisorID"] . '">' . $supervisorDetails["name"] . '</a></td>
-                                <td>' . $supervisorDetails["research_areas"] . '</td>
-                                <td>' . $supervisorDetails["email"] . '</td>';
+                                <td><a href="profile.php?id=' . $supervisorDetails["supervisorID"] . '">';
+                            echo $supervisorDetails["name"] == "" ? $supervisorDetails['supervisorID'] : $supervisorDetails['name'];
+                            echo '</a></td><td>';
+                            echo $supervisorDetails["research_areas"] == "" ? "Not set yet." : $supervisorDetails['research_areas'];
+                            echo '</td><td>';
+                            echo $supervisorDetails["email"] == "" ? "Not set yet." : $supervisorDetails["email"];
+                            echo '</td>';
 
                             $studentCount = countStudentsForSupervisor($con, $supervisorDetails["supervisorID"]);
 

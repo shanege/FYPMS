@@ -125,7 +125,11 @@ if ($userData["role"] != "coordinator") {
         // get supervisors and add them as options to the select tag
         var supervisorOptions = <?php echo json_encode(getAllSupervisors($con)) ?>;
         for (var i = 0; i < Object.keys(supervisorOptions).length; i++) {
-            $('#selectSupervisor').append(new Option(supervisorOptions[i]['name'], supervisorOptions[i]['supervisorID']));
+            if (supervisorOptions[i]['name'] == "") {
+                $('#selectSupervisor').append(new Option(supervisorOptions[i]['supervisorID'], supervisorOptions[i]['supervisorID']))
+            } else {
+                $('#selectSupervisor').append(new Option(supervisorOptions[i]['name'], supervisorOptions[i]['supervisorID']));
+            }
         }
 
         // initialise the select2 selector
