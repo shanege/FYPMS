@@ -21,14 +21,20 @@ if ($userData["role"] != "coordinator") {
                 <div class="table-responsive my-3">
                     <table class="table table-striped align-middle sortable" style="width:80rem;">
                         <colgroup>
-                            <col span="1" style="width:33.3%;">
-                            <col span="1" style="width:33.3%;">
-                            <col span="1" style="width:33.3%;">
+                            <col span="1" style="width:10%;">
+                            <col span="1" style="width:10%;">
+                            <col span="1" style="width:10%;">
+                            <col span="1" style="width:10%;">
+                            <col span="1" style="width:47.5%;">
+                            <col span="1" style="width:12.5%;">
                         </colgroup>
                         <thead>
                             <tr>
                                 <th scope="col">Student ID</th>
+                                <th scope="col">Student name</th>
                                 <th scope="col">Supervisor ID</th>
+                                <th scope="col">Supervisor name</th>
+                                <th scope="col">Working title</th>
                                 <th scope="col">Starting Semester</th>
                             </tr>
                         </thead>
@@ -40,9 +46,14 @@ if ($userData["role"] != "coordinator") {
                                 foreach ($ongoingPairs as $ongoingPair) {
                                     echo
                                     '<tr>
-                                        <td><a href="profile.php?id=' . $ongoingPair['studentID'] . '">' . $ongoingPair['studentID'] . '</a></td>
-                                        <td><a href="profile.php?id=' . $ongoingPair['supervisorID'] . '">' . $ongoingPair['supervisorID'] . '</a></td>
-                                        <td>' . $ongoingPair['starting_semester'] . '</td>
+                                        <td><a href="profile.php?id=' . $ongoingPair['studentID'] . '">' . $ongoingPair['studentID'] . '</a></td><td>';
+                                    echo $ongoingPair['student_name'] == "" ?  "Name not set yet." : $ongoingPair['student_name'];
+                                    echo '</td><td><a href="profile.php?id=' . $ongoingPair['supervisorID'] . '">' . $ongoingPair['supervisorID'] . '</a></td><td>';
+                                    echo $ongoingPair['supervisor_name'] == "" ? "Name not set yet." : $ongoingPair['supervisor_name'];
+                                    echo '</td><td>';
+                                    echo $ongoingPair['working_title'] == "" ? "No working title yet." : $ongoingPair['working_title'];
+                                    echo '</td>
+                                    <td class="text-center">' . $ongoingPair['starting_semester'] . '</td>
                                     </tr>';
                                 }
                             } else {
@@ -63,14 +74,20 @@ if ($userData["role"] != "coordinator") {
                 <div class="table-responsive my-3">
                     <table class="table table-striped align-middle sortable" style="width:80rem;">
                         <colgroup>
-                            <col span="1" style="width:33.3%;">
-                            <col span="1" style="width:33.3%;">
-                            <col span="1" style="width:33.3%;">
+                            <col span="1" style="width:10%;">
+                            <col span="1" style="width:10%;">
+                            <col span="1" style="width:10%;">
+                            <col span="1" style="width:10%;">
+                            <col span="1" style="width:47.5%;">
+                            <col span="1" style="width:12.5%;">
                         </colgroup>
                         <thead>
                             <tr>
                                 <th scope="col">Student ID</th>
+                                <th scope="col">Student name</th>
                                 <th scope="col">Supervisor ID</th>
+                                <th scope="col">Supervisor name</th>
+                                <th scope="col">Working title</th>
                                 <th scope="col">Starting Semester</th>
                             </tr>
                         </thead>
@@ -82,9 +99,14 @@ if ($userData["role"] != "coordinator") {
                                 foreach ($pendingPairs as $pendingPair) {
                                     echo
                                     '<tr>
-                                        <td><a href="profile.php?id=' . $pendingPair['studentID'] . '">' . $pendingPair['studentID'] . '</a></td>
-                                        <td><a href="profile.php?id=' . $pendingPair['supervisorID'] . '">' . $pendingPair['supervisorID'] . '</a></td>
-                                        <td>' . $pendingPair['starting_semester'] . '</td>
+                                        <td><a href="profile.php?id=' . $pendingPair['studentID'] . '">' . $pendingPair['studentID'] . '</a></td><td>';
+                                    echo $pendingPair['student_name'] == "" ?  "Name not set yet." : $pendingPair['student_name'];
+                                    echo '</td><td><a href="profile.php?id=' . $pendingPair['supervisorID'] . '">' . $pendingPair['supervisorID'] . '</a></td><td>';
+                                    echo $pendingPair['supervisor_name'] == "" ? "Name not set yet." : $pendingPair['supervisor_name'];
+                                    echo '</td><td>';
+                                    echo $pendingPair['working_title'] == "" ? "No working title yet." : $pendingPair['working_title'];
+                                    echo '</td>
+                                    <td class="text-center">' . $ongoingPair['starting_semester'] . '</td>
                                     </tr>';
                                 }
                             } else {
@@ -105,14 +127,20 @@ if ($userData["role"] != "coordinator") {
                 <div class="table-responsive my-3">
                     <table class="table table-striped align-middle sortable" style="width:80rem;">
                         <colgroup>
-                            <col span="1" style="width:33.3%;">
-                            <col span="1" style="width:33.3%;">
-                            <col span="1" style="width:33.3%;">
+                            <col span="1" style="width:10%;">
+                            <col span="1" style="width:10%;">
+                            <col span="1" style="width:10%;">
+                            <col span="1" style="width:10%;">
+                            <col span="1" style="width:47.5%;">
+                            <col span="1" style="width:12.5%;">
                         </colgroup>
                         <thead>
                             <tr>
                                 <th scope="col">Student ID</th>
+                                <th scope="col">Student name</th>
                                 <th scope="col">Supervisor ID</th>
+                                <th scope="col">Supervisor name</th>
+                                <th scope="col">Working title</th>
                                 <th scope="col">Starting Semester</th>
                             </tr>
                         </thead>
@@ -122,11 +150,15 @@ if ($userData["role"] != "coordinator") {
 
                             if (!empty($completedPairs)) {
                                 foreach ($completedPairs as $completedPair) {
-                                    echo
-                                    '<tr>
-                                        <td><a href="profile.php?id=' . $completedPair['studentID'] . '">' . $completedPair['studentID'] . '</a></td>
-                                        <td><a href="profile.php?id=' . $completedPair['supervisorID'] . '">' . $completedPair['supervisorID'] . '</a></td>
-                                        <td>' . $completedPair['starting_semester'] . '</td>
+                                    echo '<tr>
+                                        <td><a href="profile.php?id=' . $completedPair['studentID'] . '">' . $completedPair['studentID'] . '</a></td><td>';
+                                    echo $completedPair['student_name'] == "" ?  "Name not set yet." : $completedPair['student_name'];
+                                    echo '</td><td><a href="profile.php?id=' . $completedPair['supervisorID'] . '">' . $completedPair['supervisorID'] . '</a></td><td>';
+                                    echo $completedPair['supervisor_name'] == "" ? "Name not set yet." : $completedPair['supervisor_name'];
+                                    echo '</td><td>';
+                                    echo $completedPair['working_title'] == "" ? "No working title yet." : $completedPair['working_title'];
+                                    echo '</td>
+                                    <td class="text-center">' . $ongoingPair['starting_semester'] . '</td>
                                     </tr>';
                                 }
                             } else {
@@ -147,11 +179,15 @@ if ($userData["role"] != "coordinator") {
                 <div class="table-responsive my-3">
                     <table class="table table-striped align-middle sortable">
                         <colgroup>
-                            <col span="1" style="width:33.3%;">
+                            <col span="1" style="width:25%;">
+                            <col span="1" style="width:25%;">
+                            <col span="1" style="width:50%;">
                         </colgroup>
                         <thead>
                             <tr>
                                 <th scope="col">Student ID</th>
+                                <th scope="col">Student name</th>
+                                <th scope="col">Working title</th>
                             </tr>
                         </thead>
                         <tbody id="noneTableBody">
@@ -160,10 +196,12 @@ if ($userData["role"] != "coordinator") {
 
                             if (!empty($studentsWithoutSupervisor)) {
                                 foreach ($studentsWithoutSupervisor as $studentWithoutSupervisor) {
-                                    echo
-                                    '<tr>
-                                        <td><a href="profile.php?id=' . $studentWithoutSupervisor['studentID'] . '">' . $studentWithoutSupervisor['studentID'] . '</a></td>
-                                    </tr>';
+                                    echo '<tr>
+                                        <td><a href="profile.php?id=' . $studentWithoutSupervisor['studentID'] . '">' . $studentWithoutSupervisor['studentID'] . '</a></td><td>';
+                                    echo $studentWithoutSupervisor['name'] == "" ?  "Name not set yet." : $studentWithoutSupervisor['name'];
+                                    echo '</a></td><td>';
+                                    echo $studentWithoutSupervisor['working_title'] == "" ? "No working title yet." : $studentWithoutSupervisor['working_title'];
+                                    echo '</td></tr>';
                                 }
                             } else {
                                 echo '<tr><td colspan="3">No students without supervisor at the moment.</td></tr>';

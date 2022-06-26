@@ -331,7 +331,14 @@ function getTask($con, $taskID)
 
 function getStudentSupervisorPairsByStatus($con, $status)
 {
-    $sql = "SELECT studentID, supervisorID, starting_semester FROM supervisor_student_pairs WHERE status = ?;";
+    // $sql = "SELECT studentID, supervisorID, starting_semester FROM supervisor_student_pairs WHERE status = ?;";
+    $sql = 'SELECT ssp.studentID, ssp.supervisorID, ssp.starting_semester, std.working_title, std.name AS student_name, spd.name AS supervisor_name
+    FROM supervisor_student_pairs ssp
+    LEFT JOIN student_details std
+    ON ssp.studentID = std.studentID
+    LEFT JOIN supervisor_details spd
+    ON ssp.supervisorID = spd.supervisorID
+    WHERE status = ?;';
 
     try {
         $stmt = $con->prepare($sql);
@@ -348,8 +355,8 @@ function getStudentSupervisorPairsByStatus($con, $status)
 
 function getStudentsWithoutSupervisor($con)
 {
-    $sql = 'SELECT studentID FROM student_details WHERE studentID NOT IN
-        (SELECT studentID FROM supervisor_student_pairs WHERE status="Ongoing")';
+    $sql = 'SELECT studentID, name, working_title FROM student_details WHERE studentID NOT IN
+    (SELECT studentID FROM supervisor_student_pairs WHERE status="Ongoing" OR status="Completed");';
 
     try {
         $stmt = $con->prepare($sql);
