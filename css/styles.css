@@ -26,7 +26,6 @@ body {
 .login-bg {
   height: 100vh;
   background-image: url("../images/xmu-model.png");
-  /* background-size: cover; */
   background-repeat: no-repeat;
   background-position: center bottom;
 }

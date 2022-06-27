@@ -331,7 +331,6 @@ function getTask($con, $taskID)
 
 function getStudentSupervisorPairsByStatus($con, $status)
 {
-    // $sql = "SELECT studentID, supervisorID, starting_semester FROM supervisor_student_pairs WHERE status = ?;";
     $sql = 'SELECT ssp.studentID, ssp.supervisorID, ssp.starting_semester, std.working_title, std.name AS student_name, spd.name AS supervisor_name
     FROM supervisor_student_pairs ssp
     LEFT JOIN student_details std
