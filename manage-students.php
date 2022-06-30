@@ -42,7 +42,7 @@ if ($userData["role"] != "coordinator") {
                                     </select>
                                 </div>
                                 <div id="supervisorIDGroup" class="col">
-                                    <label for="supervisorID" class="mb-2">Supervisor ID</label>
+                                    <label for="supervisorID" class="mb-2">Supervisor</label>
                                     <select id="supervisorIDInput" name="supervisorID" class="form-select m-0" aria-label="Select Supervisor ID">
                                         <option disabled selected value> -- select a supervisor -- </option>
                                     </select>
@@ -97,18 +97,6 @@ if ($userData["role"] != "coordinator") {
                     $('#updateStudentsDetailsBulk')[0].reset();
                     $('#updateStudents').attr('disabled', false);
                     $('#updateStudents').val('Import');
-
-                    var toast = $(createToast("Student details imported"));
-
-                    $(".toast-container").append(toast);
-
-                    toast.on('hidden.bs.toast', function() {
-                        $(this).remove();
-                    });
-
-                    // create bootstrap toast and show it
-                    var bsToast = new bootstrap.Toast(toast);
-                    bsToast.show();
                 }
             })
         });
@@ -124,7 +112,11 @@ if ($userData["role"] != "coordinator") {
         // get supervisors and add them as options to the select tag
         var supervisorOptions = <?php echo json_encode(getAllSupervisors($con)) ?>;
         for (var i = 0; i < Object.keys(supervisorOptions).length; i++) {
-            $('#supervisorIDInput').append(new Option(supervisorOptions[i]['name'], supervisorOptions[i]['supervisorID']));
+            if (supervisorOptions[i]['name'] == "") {
+                $('#supervisorIDInput').append(new Option(supervisorOptions[i]['supervisorID'], supervisorOptions[i]['supervisorID']))
+            } else {
+                $('#supervisorIDInput').append(new Option(supervisorOptions[i]['name'], supervisorOptions[i]['supervisorID']));
+            }
         }
 
         // initialise the select2 selector

@@ -275,6 +275,11 @@ if ($userData["role"] != "coordinator") {
         $('#setSupervisorQuotaForm').on('submit', function(event) {
             event.preventDefault();
 
+            $(".invalid-feedback").remove();
+            $(".form-select").removeClass("is-invalid");
+            $(".form-control").removeClass("is-invalid");
+            $("#setSupervisorQuotaError").html("&nbsp;").removeClass("bg-danger").addClass("ecru");
+
             $.ajax({
                 url: "includes/set-quota-inc.php",
                 method: "POST",
