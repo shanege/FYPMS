@@ -84,8 +84,6 @@ if (
                     $errors['taskFile'] = "Cannot upload file.";
                 }
             }
-        } else {
-            $bucketPath = "";
         }
     }
 
@@ -95,19 +93,35 @@ if (
         $description = $_POST['description'];
         $taskID = $_POST['taskID'];
 
-        $sql = "UPDATE student_tasks SET title = ?, description = ?, deadline_at = ?, supervisor_upload_path = ? WHERE taskID = ?;";
+        if (isset($bucketPath)) {
+            $sql = "UPDATE student_tasks SET title = ?, description = ?, deadline_at = ?, supervisor_upload_path = ? WHERE taskID = ?;";
 
-        try {
-            $stmt = $con->prepare($sql);
-            $stmt->bindParam(1, $title, PDO::PARAM_STR);
-            $stmt->bindParam(2, $description, PDO::PARAM_STR);
-            $stmt->bindParam(3, $deadlineAt, PDO::PARAM_STR);
-            $stmt->bindParam(4, $bucketPath, PDO::PARAM_STR);
-            $stmt->bindParam(5, $taskID, PDO::PARAM_STR);
+            try {
+                $stmt = $con->prepare($sql);
+                $stmt->bindParam(1, $title, PDO::PARAM_STR);
+                $stmt->bindParam(2, $description, PDO::PARAM_STR);
+                $stmt->bindParam(3, $deadlineAt, PDO::PARAM_STR);
+                $stmt->bindParam(4, $bucketPath, PDO::PARAM_STR);
+                $stmt->bindParam(5, $taskID, PDO::PARAM_STR);
 
-            $stmt->execute();
-        } catch (PDOException $e) {
-            $errors['sql'] = $e->getMessage();
+                $stmt->execute();
+            } catch (PDOException $e) {
+                $errors['sql'] = $e->getMessage();
+            }
+        } else {
+            $sql = "UPDATE student_tasks SET title = ?, description = ?, deadline_at = ? WHERE taskID = ?;";
+
+            try {
+                $stmt = $con->prepare($sql);
+                $stmt->bindParam(1, $title, PDO::PARAM_STR);
+                $stmt->bindParam(2, $description, PDO::PARAM_STR);
+                $stmt->bindParam(3, $deadlineAt, PDO::PARAM_STR);
+                $stmt->bindParam(4, $taskID, PDO::PARAM_STR);
+
+                $stmt->execute();
+            } catch (PDOException $e) {
+                $errors['sql'] = $e->getMessage();
+            }
         }
     }
 
